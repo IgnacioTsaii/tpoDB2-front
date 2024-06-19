@@ -1,202 +1,148 @@
-'use client';
-import React, { useState,useEffect } from 'react';
-import { ImSpinner8 } from 'react-icons/im';
-import { Project } from '@luca/interface/projects';
+"use client";
+import React, { useState, MouseEvent } from 'react';
+import { projecto } from '@luca/interface/projectos';
+import FormProject from "@luca/components/formularios/formProject";
 
-
-// Datos de ejemplo con imágenes ficticias
-const projects: Project[] = [
+// Datos de proyectos
+const projects: projecto[] = [
   {
     id: 1,
-    name: 'Desarrollo Web',
-    activities: 'Diseño de interfaz, integración de backend',
-    comments: 'Revisar los colores de la interfaz',
-    progress: 'En curso',
-    employee: 'Juan Pérez',
-    company: 'Tech Solutions',
-    deadline: '2024-07-30',
-    specialty: 'Desarrollo Web',
-    imageUrl: '/images/migrating.jpg'
+    name: "Sistema de Gestión de Recursos",
+    description: "Desarrollo de un sistema integral para la gestión de recursos humanos, financieros y materiales.",
+    start_date: new Date("2023-01-01"),
+    end_date: new Date("2023-12-31"),
+    status: "En desarrollo"
   },
   {
     id: 2,
-    name: 'Optimización de Base de Datos',
-    activities: 'Mejora del rendimiento, reducción de tiempos de consulta',
-    comments: 'Priorizar consultas más lentas',
-    progress: 'Iniciado',
-    employee: 'Ana Gómez',
-    company: 'Data Tech',
-    deadline: '2024-08-15',
-    specialty: 'Base de Datos',
-    imageUrl: '/images/optimizacion.png'
+    name: 'Plataforma Educativa Online',
+    description: 'Desarrollo de una plataforma educativa interactiva para cursos en línea.',
+    start_date: new Date('2023-02-15'),
+    end_date: new Date('2024-02-14'),
+    status: 'Planificado'
   },
   {
     id: 3,
     name: 'Aplicación Móvil de Salud',
-    activities: 'Desarrollo de funcionalidades, pruebas de usuario',
-    comments: 'Incluir recordatorios de medicación',
-    progress: 'Finalizado',
-    employee: 'Luis Navarro',
-    company: 'Health Innovations',
-    deadline: '2024-05-20',
-    specialty: 'Desarrollo Móvil',
-    imageUrl: '/images/comunication.jpg'
-  },
-  {
-    id: 4,
-    name: 'Rebranding Corporativo',
-    activities: 'Diseño de nuevo logo, actualización de materiales de marketing',
-    comments: 'Asegurar coherencia de marca en todas las plataformas',
-    progress: 'En curso',
-    employee: 'Sofía Martín',
-    company: 'Creative Design Ltd.',
-    deadline: '2024-09-01',
-    specialty: 'Diseño Gráfico',
-    imageUrl: '/images/ux.jpg'
-  },
-  {
-    id: 5,
-    name: 'Integración de Sistema ERP',
-    activities: 'Configuración de módulos, capacitación de usuarios',
-    comments: 'Verificar la compatibilidad con software existente',
-    progress: 'Iniciado',
-    employee: 'Carlos Ruiz',
-    company: 'Efficiency Tech',
-    deadline: '2024-12-10',
-    specialty: 'Sistemas ERP',
-    imageUrl: '/images/resources.jpg'
-  },
-  {
-    id: 6,
-    name: 'Campaña de Marketing Digital',
-    activities: 'Creación de contenido, gestión de redes sociales',
-    comments: 'Enfocarse en incrementar el engagement',
-    progress: 'En curso',
-    employee: 'Elena Torres',
-    company: 'Digital Solutions',
-    deadline: '2024-06-30',
-    specialty: 'Marketing Digital',
-    imageUrl: '/images/pngwing.com.png'
-  },
-  {
-    id: 7,
-    name: 'Desarrollo de Videojuego',
-    activities: 'Programación de gameplay, diseño de personajes',
-    comments: 'Balancear niveles de dificultad',
-    progress: 'Iniciado',
-    employee: 'Marco Fernández',
-    company: 'Games Dev Studio',
-    deadline: '2025-01-15',
-    specialty: 'Desarrollo de Juegos',
-    imageUrl: '/images/mockup.png'
-  },
-  {
-    id: 8,
-    name: 'Automatización de Procesos',
-    activities: 'Instalación de robots, programación PLC',
-    comments: 'Realizar pruebas de seguridad',
-    progress: 'Finalizado',
-    employee: 'Claudia Jiménez',
-    company: 'Automation Advanced',
-    deadline: '2024-10-05',
-    specialty: 'Automatización',
-    imageUrl: '/images/asd.png'
-  },
-  {
-    id: 9,
-    name: 'Desarrollo de E-commerce',
-    activities: 'Configuración de carrito de compras, optimización SEO',
-    comments: 'Asegurar transacciones seguras',
-    progress: 'En curso',
-    employee: 'David Sánchez',
-    company: 'Online Retail Inc.',
-    deadline: '2024-11-20',
-    specialty: 'Comercio Electrónico',
-    imageUrl: '/images/comunication.jpg'
-  },
+    description: 'Desarrollo de funcionalidades, pruebas de usuario. Incluir recordatorios de medicación.',
+    start_date: new Date('2023-04-01'),
+    end_date: new Date('2024-05-20'),
+    status: 'Finalizado'
+  }
 ];
 
-const ProjectCard: React.FC<{ project: Project, onSelected: () => void, isSingleView?: boolean }> = ({ project, onSelected, isSingleView = false }) => {
-  const [showDetails, setShowDetails] = useState(false);
+// Componente para mostrar la lista de proyectos
+const ProjectList: React.FC = () => {
+  const [selectedProject, setSelectedProject] = useState<projecto | null>(null);
+  const [showFormProject, setShowFormProject] = useState(false);
 
-  const handleShowDetails = () => {
-    setShowDetails(!showDetails);
-    onSelected(); // Siempre llama a onSelected, independientemente del estado de showDetails
+  function resetForms(event: MouseEvent<HTMLButtonElement>): void {
+    setShowFormProject(false);
+  }
+
+  const handleEdit = (project: projecto) => {
+    // Lógica para editar el proyecto
+    console.log("Edit project:", project);
+  };
+
+  const handleViewDetails = (project: projecto) => {
+    // Lógica para ver más detalles del proyecto
+    setSelectedProject(project);
+  };
+
+  const handleMarkTasksDone = (project: projecto) => {
+    // Lógica para marcar tareas como hechas
+    console.log("Mark tasks done for project:", project);
+  };
+  
+  const handleAddProject = () => {
+    // Lógica para agregar un nuevo proyecto
+    setShowFormProject(true);
   };
 
   return (
-    <div className={`bg-white shadow-lg rounded-lg p-4 mb-4 ${isSingleView ? 'max-w-xl mx-auto col-span-3' : ''}`}>
-      {!isSingleView && (
-        // eslint-disable-next-line @next/next/no-img-element
-        <img src={project.imageUrl} alt={`Imagen de ${project.name}`} className="w-full h-48 object-cover rounded-t-lg" />
-      )}
-      <div className="flex justify-center mt-3 items-center space-x-4 text-center">
-        <h2 className="text-xl text-gray-700 font-semibold">{project.name}</h2>
-        <button className="bg-green-400 text-white rounded p-2" onClick={handleShowDetails}>
-          {showDetails ? 'Hide Details' : 'Show Details'}
+    <div className="container mx-auto px-4 py-8">
+      <div className="flex justify-between items-center mb-6">
+        <h1 className="text-2xl font-bold">Proyectos</h1>
+        <button
+          className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
+          onClick={handleAddProject}
+        >
+          Agregar Proyecto
         </button>
       </div>
-      {showDetails && (
-        <div className={`text-gray-600 p-2 tracking-wider ${isSingleView ? 'text-lg' : ''}`}>
-          {/* Estilos mejorados para la vista única */}
-          <div className="flex flex-col justify-center items-center">
-            <p className="text-center text-gray-700 font-semibold mt-2"><strong>Actividades:</strong> {project.activities}</p>
-            <p className="text-center text-gray-700 font-semibold mt-2"><strong>Comentarios:</strong> {project.comments}</p>
-            <p className="text-center text-gray-700 font-semibold mt-2"><strong>Progreso:</strong> {project.progress}</p>
-            <p className="text-center text-gray-700 font-semibold mt-2"><strong>Empleado:</strong> {project.employee}</p>
-            <p className="text-center text-gray-700 font-semibold mt-2"><strong>Empresa:</strong> {project.company}</p>
-            <p className="text-center text-gray-700 font-semibold mt-2"><strong>Deadline:</strong> {project.deadline}</p>
-            <p className="text-center text-gray-700 font-semibold mt-2"><strong>Especialidad requerida:</strong> {project.specialty}</p>
-          </div>
+      <div className="bg-white shadow-md rounded-lg overflow-hidden">
+        <table className="min-w-full bg-white">
+          <thead className="bg-gray-800 text-white">
+            <tr>
+              <th className="w-1/4 py-2 px-4">Nombre</th>
+              <th className="w-1/4 py-2 px-4">Descripción</th>
+              <th className="w-1/4 py-2 px-4">Estado</th>
+              <th className="w-1/4 py-2 px-4">Acciones</th>
+            </tr>
+          </thead>
+          <tbody>
+            {projects.map((project) => (
+              <tr key={project.id} className="border-b">
+                <td className="py-2 px-4">{project.name}</td>
+                <td className="py-2 px-4">{project.description}</td>
+                <td className="py-2 px-4">{project.status}</td>
+                <td className="py-2 px-4">
+                  <button
+                    className="bg-yellow-500 hover:bg-yellow-700 text-white font-bold py-1 px-2 rounded mr-2"
+                    onClick={() => handleEdit(project)}
+                  >
+                    Editar
+                  </button>
+                  <button
+                    className="bg-green-500 hover:bg-green-700 text-white font-bold py-1 px-2 rounded mr-2"
+                    onClick={() => handleViewDetails(project)}
+                  >
+                    Ver Más
+                  </button>
+                  <button
+                    className="bg-red-500 hover:bg-red-700 text-white font-bold py-1 px-2 rounded"
+                    onClick={() => handleMarkTasksDone(project)}
+                  >
+                    Tareas Hechas
+                  </button>
+                </td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
+
+      {selectedProject && (
+        <div className="mt-8 bg-white shadow-md rounded-lg p-4">
+          <h2 className="text-xl font-bold mb-4">Detalles del Proyecto</h2>
+          <p><strong>Nombre:</strong> {selectedProject.name}</p>
+          <p><strong>Descripción:</strong> {selectedProject.description}</p>
+          <p><strong>Fecha de Inicio:</strong> {selectedProject.start_date.toLocaleDateString()}</p>
+          <p><strong>Fecha de Finalización:</strong> {selectedProject.end_date.toLocaleDateString()}</p>
+          <p><strong>Estado:</strong> {selectedProject.status}</p>
+          <button
+            className="mt-4 bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
+            onClick={() => setSelectedProject(null)}
+          >
+            Cerrar
+          </button>
+        </div>
+      )}
+
+      {showFormProject && (
+        <div className="mt-8 bg-white shadow-md rounded-lg p-4">
+          <FormProject />
+          <button
+            className="mt-4 bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded"
+            onClick={resetForms}
+          >
+            Cancelar
+          </button>
         </div>
       )}
     </div>
   );
 };
 
-  const ProjectsPage = () => {
-    const [selectedProject, setSelectedProject] = useState<Project | null>(null);
-    const [loading, setLoading] = useState(true);  // El estado de loading se inicializa en true y nunca cambia.
-  
-    const handleSelectProject = (project: Project) => {
-      setSelectedProject(selectedProject === project ? null : project);
-    };
-
-    useEffect(() => {
-        const timer = setTimeout(() => {
-          setLoading(false); // Oculta el spinner después de 3 segundos
-        }, 3000);
-        return () => clearTimeout(timer);
-      }, []);
-  
-    return (
-      <div className="min-h-screen bg-gray-100 py-10">
-        <div className="container pt-16 mx-auto px-4">
-          <div className="flex justify-center font-century font-semibold tracking-wider text-shadow items-center text-3xl text-center text-gray-700 mb-9">
-          <h1 className='underline-animation'>PROJECTS</h1>
-          <ImSpinner8 color="#32CD32" size={40} className='ml-4 mt-1 spin' style={{ animation: 'spin 2s linear infinite' }} />
-        </div>
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-            {selectedProject ? (
-              <ProjectCard 
-                key={selectedProject.id}
-                project={selectedProject}
-                onSelected={() => setSelectedProject(null)}
-                isSingleView={true}
-              />
-            ) : (
-              projects.map(project => (
-                <ProjectCard 
-                  key={project.id} 
-                  project={project} 
-                  onSelected={() => handleSelectProject(project)}
-                />
-              ))
-            )}
-          </div>
-        </div>
-      </div>
-    );
-  };
-  
-  export default ProjectsPage;
+export default ProjectList;

@@ -7,8 +7,9 @@ import RegisterForm from "@luca/components/formularios/formRegister";
 import FormProject from "@luca/components/formularios/formProject";
 import UpdateProjectForm from "@luca/components/formularios/updateProject";
 import AdminPage from "../admin/page";
+import Employee from "../empleado/page";
 
-const Page = () => {
+function Page() {
   const [showAdminPage, setShowAdminPage] = useState(false);
   const [showRegisterForm, setShowRegisterForm] = useState(false);
 
@@ -59,7 +60,7 @@ const Page = () => {
         )}
         {showRegisterForm && (
           <div className="shadow-lg rounded-lg bg-white p-6 m-4 w-full">
-            <RegisterForm />
+            <Employee />
           </div>
         )}
         {(showAdminPage || showRegisterForm) && (

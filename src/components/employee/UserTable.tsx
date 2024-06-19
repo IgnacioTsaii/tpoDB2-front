@@ -10,9 +10,6 @@ interface UserTableProps {
       <div className="max-w-4xl mx-auto py-8">
         <div className="flex justify-between items-center mb-4">
           <h2 className="text-2xl font-semibold text-gray-900">Users</h2>
-          <button className="bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500">
-            Add user
-          </button>
         </div>
         <p className="mb-6 text-gray-600">A list of all the users in your account including their name, title, email and role.</p>
         <div className="shadow overflow-hidden border-b border-gray-200 sm:rounded-lg">
@@ -32,6 +29,7 @@ interface UserTableProps {
               {users.map((user) => (
                 <tr key={user.email}>
                   <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">{user.username}</td>
+                  {/* NO SE SI ESTA BIEN MOSTRAR EL PSW AJJAA */}
                   <td className="px-6 py-4 whitespace-nowrap text-sm text-graformRegister0">{user.password}</td>
                   <td className="px-6 py-4 whitespace-nowrap text-sm formRegister-gray-500">{user.nombre}</td>
                   <td className="px-6 py-4 whitespace-nowrap formRegister-sm text-gray-500">{user.email}</td>

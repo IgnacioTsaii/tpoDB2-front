@@ -85,7 +85,7 @@ export default function Navbar() {
                   href="/dashboard"
                   className="px-3 py-2 rounded-md text-md font-medium hover:text-gray-700 hover:bg-gray-300"
                 >
-                  Admin
+                  Gestionador para el Admin
                 </Link>
                 <Link
                   href="/proyects"
@@ -120,7 +120,7 @@ export default function Navbar() {
               href="./dashboard"
               className="block px-3 py-2 rounded-md text-base font-medium hover:bg-gray-700"
             >
-              Admin
+              Gestionador para el Admin
             </a>
             <a
               href="./proyects"
@@ -141,12 +141,6 @@ export default function Navbar() {
               className="group relative mt-1 flex justify-center py-2 px-4 border border-transparent text-md font-medium rounded-md text-white bg-green-700 hover:bg-green-500 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
             >
               <Link href={"/login"}>Login</Link>
-            </button>
-            <button
-              type="submit"
-              className="group relative mt-1 flex justify-center py-2 px-4 border border-transparent text-md font-medium rounded-md text-white bg-blue-700 hover:bg-blue-500 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
-            >
-              <Link href={"/register"}>Register</Link>
             </button>
           </div>
         </div>

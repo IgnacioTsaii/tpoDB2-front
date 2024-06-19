@@ -3,6 +3,7 @@ import { useState, MouseEvent } from "react";
 import Link from "next/link";
 import FormProject from "@luca/components/formularios/formProject";
 import UpdateProject from "@luca/components/formularios/updateProject";
+import { projecto } from "@luca/interface/projectos";
 
 const AdminPage = () => {
   const [showFormProject, setShowFormProject] = useState(false);
@@ -64,7 +65,9 @@ const AdminPage = () => {
         )}
         {showUpdateProject && (
           <div className="shadow-lg rounded-lg bg-white p-6 m-4 w-full">
-            <UpdateProject />
+            <UpdateProject projectData={undefined} onUpdate={function (data: Partial<projecto>): void {
+              throw new Error("Function not implemented.");
+            } } />
           </div>
         )}
       </div>

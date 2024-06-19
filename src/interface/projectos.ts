@@ -1,3 +1,4 @@
+import { Task } from './task';
 // Definiendo una interfaz para los proyectos
 export interface projecto{
     id: number;
@@ -6,4 +7,5 @@ export interface projecto{
     start_date: Date;
     end_date: Date;
     status: string;
+    tasks: Task[];
   }

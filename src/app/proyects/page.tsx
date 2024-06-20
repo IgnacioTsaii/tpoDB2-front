@@ -3,8 +3,10 @@ import React, { useState, MouseEvent } from "react";
 import { projecto } from "@luca/interface/projectos";
 import FormProject from "@luca/components/formularios/formProject";
 import FormTask from "@luca/components/formularios/formTask";
+import CommentForm from "@luca/components/formularios/fomComments";
 import { Task } from "@luca/interface/task";
 import { BiCheckSquare } from "react-icons/bi";
+import { Comment } from "@luca/interface/comments";
 
 const projects: projecto[] = [
   {
@@ -172,7 +174,8 @@ const ProjectList: React.FC = () => {
   const [selectedProject, setSelectedProject] = useState<projecto | null>(null);
   const [showAddProjectForm, setShowAddProjectForm] = useState(false);
   const [showAddTaskForm, setShowAddTaskForm] = useState(false);
-  const [showTasks, setShowTasks] = useState(false); // Estado para controlar la visibilidad de las tareas
+  const [showTasks, setShowTasks] = useState(false);
+  const [openCommentFormId, setOpenCommentFormId] = useState<number | null>(null);
 
   const handleOpenAddProjectForm = () => {
     setShowAddProjectForm(true);
@@ -183,7 +186,7 @@ const ProjectList: React.FC = () => {
   };
 
   const handleAddProject = () => {
-    setShowAddProjectForm(true); // Mostrar formulario para agregar proyecto
+    setShowAddProjectForm(true);
   };
 
   const handleEdit = (project: projecto) => {
@@ -192,7 +195,7 @@ const ProjectList: React.FC = () => {
 
   const handleViewDetails = (project: projecto) => {
     setSelectedProject(project);
-    setShowTasks(false); // Al ver detalles, ocultar las tareas
+    setShowTasks(false);
   };
 
   const handleDelete = (project: projecto) => {
@@ -231,7 +234,11 @@ const ProjectList: React.FC = () => {
   };
 
   const handleToggleTasks = () => {
-    setShowTasks(!showTasks); // Alternar visibilidad de las tareas
+    setShowTasks(!showTasks);
+  };
+
+  const handleToggleCommentForm = (activityId: number) => {
+    setOpenCommentFormId(openCommentFormId === activityId ? null : activityId);
   };
 
   return (
@@ -344,18 +351,26 @@ const ProjectList: React.FC = () => {
                     <p>Actividades: </p>
                     <ul className="list-decimal">
                       {task.activities.map(activity => (
-                        <li key={activity.id} className="flex items-center">
+                        <li key={activity.id} className="flex items-center mb-2">
                           <span>{activity.description}</span>
-                          {!activity.completed && (
-                            <button
-                              className="ml-2 bg-red-500 hover:bg-red-700 text-white font-bold rounded"
-                              onClick={() => handleMarkTaskDone(task, activity.id)}
-                            >
-                              <BiCheckSquare />
-                            </button>
-                          )}
-                          {activity.completed && (
-                            <span className="ml-2 text-gray-500">Hecho</span>
+                          <button
+                            className={`ml-2 font-bold rounded ${activity.completed ? "bg-green-500 hover:bg-green-700 text-white" : "bg-red-500 hover:bg-red-700 text-white"}`}
+                            onClick={() => handleMarkTaskDone(task, activity.id)}
+                          >
+                            {activity.completed ? "Hecho" : "No Hecho"}
+                          </button>
+                          <button
+                            className="ml-2 bg-blue-500 hover:bg-blue-700 text-white font-bold py-1 px-2 rounded"
+                            onClick={() => handleToggleCommentForm(activity.id)}
+                          >
+                            Comentar
+                          </button>
+                          {openCommentFormId === activity.id && (
+                            <div className="ml-4">
+                              <CommentForm onSubmit={function (comment: Comment): void {
+                                throw new Error("Function not implemented.");
+                              } } {...{ activityId: activity.id }} />
+                            </div>
                           )}
                         </li>
                       ))}
@@ -373,7 +388,6 @@ const ProjectList: React.FC = () => {
           </button>
         </div>
       )}
-
     </div>
   );
 };

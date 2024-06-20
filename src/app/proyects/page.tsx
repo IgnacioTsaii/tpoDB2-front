@@ -3,7 +3,6 @@ import React, { useState, MouseEvent } from "react";
 import { projecto } from "@luca/interface/projectos";
 import FormProject from "@luca/components/formularios/formProject";
 import FormTask from "@luca/components/formularios/formTask";
-import { Activity } from "@luca/interface/activities";
 import { Task } from "@luca/interface/task";
 import { BiCheckSquare } from "react-icons/bi";
 

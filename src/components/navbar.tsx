@@ -85,7 +85,7 @@ export default function Navbar() {
                   href="/dashboard"
                   className="px-3 py-2 rounded-md text-md font-medium hover:text-gray-700 hover:bg-gray-300"
                 >
-                  Gestionador para el Admin
+                  Gestion de empleados
                 </Link>
                 <Link
                   href="/proyects"
@@ -93,12 +93,7 @@ export default function Navbar() {
                 >
                   Proyects
                 </Link>
-                <Link
-                  href="#"
-                  className="px-3 py-2 rounded-md text-md font-medium hover:text-gray-700 hover:bg-gray-300"
-                >
-                  Contact{" "}
-                </Link>
+
               </div>
             </div>
           </div>
@@ -120,19 +115,13 @@ export default function Navbar() {
               href="./dashboard"
               className="block px-3 py-2 rounded-md text-base font-medium hover:bg-gray-700"
             >
-              Gestionador para el Admin
+              Gestion de empleados
             </a>
             <a
               href="./proyects"
               className="block px-3 py-2 rounded-md text-base font-medium hover:bg-gray-700"
             >
               Proyects
-            </a>
-            <a
-              href="#"
-              className="block px-3 py-2 rounded-md text-base font-medium hover:bg-gray-700"
-            >
-              Contact
             </a>
           </div>
           <div className="px-2 pt-2 pb-3 text-center space-y-1 sm:px-3 flex flex-col justify-center">

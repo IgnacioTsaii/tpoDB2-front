@@ -14,7 +14,7 @@ export default function Employee() {
             <h3 className="text-lg font-bold mb-4">Registro de Empleados</h3>
             <p className="mb-4">Registra nuevos usuarios o empleados.</p>
             <button
-              className="bg-indigo-600 hover:bg-indigo-500 text-white font-bold py-2 px-4 rounded w-full"
+              className="bg-green-600 hover:bg-green-500 text-white font-bold py-2 px-4 rounded w-full"
               onClick={() => setShowComponent("register")}
             >
               Formulario de Registro

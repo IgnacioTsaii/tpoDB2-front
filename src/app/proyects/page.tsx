@@ -341,8 +341,8 @@ const ProjectList: React.FC = () => {
                 {selectedProject.tasks.map((task: Task) => (
                   <div key={task.id} className="mt-4">
                     <h3 className="text-lg font-bold">{task.name}</h3>
-                    <p>{task.description}</p>
-                    <ul className="list-disc list-inside">
+                    <p>Actividades: </p>
+                    <ul className="list-decimal">
                       {task.activities.map(activity => (
                         <li key={activity.id} className="flex items-center">
                           <span>{activity.description}</span>

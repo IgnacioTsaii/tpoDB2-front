@@ -3,13 +3,12 @@ import { AiOutlineDelete } from 'react-icons/ai';
 
 interface UserRowProps {
     user: {
-        id: string;
+        user_id: string;
         email: string;
-        password: string;
-        nombre: string;
-        apellido: string;
+        name: string;
+        last_name: string;
         skillLevel: string;
-        weeklyHours: number;
+        weeklyHours: string;
     };
     openDeleteModal: (userId: string) => void;
     openEditModal: (user: 
@@ -33,8 +32,11 @@ const UserRow: React.FC<UserRowProps> = ({ user, openDeleteModal,openEditModal }
                 {user.email}
             </td>
             <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
-                {user.nombre}
+                {user.name}
             </td>
+            <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                {user.last_name}
+                </td>
             <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
                 {user.skillLevel}
             </td>

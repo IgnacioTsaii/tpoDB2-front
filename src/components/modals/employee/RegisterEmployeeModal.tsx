@@ -6,8 +6,9 @@ interface RegisterEmployeeModalProps {
     closeModal: () => void;
     formData: {
         email: string;
-        nombre: string;
-        apellido: string;
+        password: string;
+        name: string;
+        last_name: string;
         skillLevel: string;
         weeklyHours: number;
     };
@@ -66,7 +67,7 @@ const RegisterEmployeeModal: React.FC<RegisterEmployeeModalProps> = ({
                             id="nombre"
                             name="nombre"
                             type="text"
-                            value={formData.nombre}
+                            value={formData.name}
                             onChange={handleChange}
                             placeholder="Nombre"
                         />
@@ -84,12 +85,26 @@ const RegisterEmployeeModal: React.FC<RegisterEmployeeModalProps> = ({
                             id='apellido'
                             name='apellido'
                             type='text'
-                            value={formData.apellido}
+                            value={formData.last_name}
                             onChange={handleChange}
                             placeholder='Apellido'
                         />
                     </div>
 
+                    <div className="mb-4">
+                        <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="nombre">
+                            Apellido
+                        </label>
+                        <input
+                            className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                            id="last_name"
+                            name="apellido"
+                            type="text"
+                            value={formData.last_name}
+                            onChange={handleChange}
+                            placeholder="apellido"
+                        />
+                    </div>
                     <div className="mb-4">
                         <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="skillLevel">
                             Skill Level

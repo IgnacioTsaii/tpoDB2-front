@@ -6,15 +6,13 @@ import EditEmployeeModal from '../modals/employee/EditEmployeeModal';
 import DeleteUserModal from '../modals/employee/DeleteUserModal';
 
 interface UserTableProps {
-    users: {
-        id: string;
-        password: string;
-        nombre: string;
-        apellido: string;
-        skillLevel: string;
-        weeklyHours: number;
+    users: {user_id: string;
         email: string;
-    }[];
+        password: string;
+        name: string;
+        last_name: string;
+        skillLevel: string;
+        weeklyHours: number;}[];
     skills: string[];
 }
 
@@ -29,8 +27,8 @@ const UserTable: React.FC<UserTableProps> = ({ users, skills }) => {
 
     const [formData, setFormData] = useState({
         email: '',
-        nombre: '',
-        apellido: '',
+        name: '',
+        last_name: '',
         skillLevel: '',
         weeklyHours: 0, // Inicializar como string para que coincida con el tipo en el modal de edición
         password: '', // Agregar campo para la contraseña
@@ -70,19 +68,19 @@ const UserTable: React.FC<UserTableProps> = ({ users, skills }) => {
     // O TIENE UN USUARIO VACIO O TIENE UNO PARA EDITAR
     const [userToEdit, setUserToEdit] = useState<
     | {
-        id: string;
+        user_id: string;
+        email: string;
         password: string;
-        nombre: string;
-        apellido: string;
+        name: string;
+        last_name: string;
         skillLevel: string;
         weeklyHours: number;
-        email: string;
     }>(
         {
-            id: '',
+            user_id: '',
             password: '',
-            nombre: '',
-            apellido: '',
+            name: '',
+            last_name: '',
             skillLevel: '',
             weeklyHours: 0,
             email: '',
@@ -90,18 +88,18 @@ const UserTable: React.FC<UserTableProps> = ({ users, skills }) => {
     );
     //  cuando se abre el modal de edición, se establece el usuario a editar y se abre el modal
     const openEditModal = (user: {
-        id: string;
+        user_id: string;
         password: string;
-        nombre: string;
-        apellido: string;
+        name: string;
+        last_name: string;
         skillLevel: string;
         weeklyHours: number;
         email: string;
     }) => {
         setFormData({
             email: user.email,
-            nombre: user.nombre,
-            apellido: user.apellido,
+            name: user.name,
+            last_name: user.last_name,
             password: user.password,
             skillLevel: user.skillLevel,
             weeklyHours: user.weeklyHours, // Convertir a string para que coincida con el tipo en el modal
@@ -137,18 +135,18 @@ const UserTable: React.FC<UserTableProps> = ({ users, skills }) => {
     // cuando se cierra el modal de edición, se restablece el usuario a editar y se cierra el modal
     const closeEditModal = () => {setIsEditModalOpen(false)
         setUserToEdit({
-            id: '',
+            user_id: '',
             password: '',
-            nombre: '',
-            apellido: '',
+            name: '',
+            last_name: '',
             skillLevel: '',
             weeklyHours: 0,
             email: '',
         });
         setFormData({
             email: '',
-            nombre: '',
-            apellido: '',
+            name: '',
+            last_name: '',
             skillLevel: '',
             weeklyHours: 0,
             password: '',
@@ -224,7 +222,7 @@ const UserTable: React.FC<UserTableProps> = ({ users, skills }) => {
                                 scope="col"
                                 className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
                             >
-                                Nombre
+                                name
                             </th>
                             <th
                                 scope="col"
@@ -248,12 +246,7 @@ const UserTable: React.FC<UserTableProps> = ({ users, skills }) => {
                     </thead>
                     <tbody className="bg-white divide-y divide-gray-200">
                         {users.map((user) => (
-                            <UserRow
-                                key={user.id}
-                                user={user}
-                                openEditModal={openEditModal}
-                                openDeleteModal={openDeleteModal}
-                            />
+                            <UserRow openEditModal={openEditModal} key={user.user_id} user={user} openDeleteModal={openDeleteModal} />
                         ))}
                     </tbody>
                 </table>

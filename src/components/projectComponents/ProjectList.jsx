@@ -1,8 +1,7 @@
 import React from "react";
 import Link from "next/link";
-// import EmployeeProjectDetails from "./EmployeeProjectDetails";
 
-export default function ProjectList({ projects, userRole, handleDelete }) {
+export default function ProjectList({ projects = [], userRole, handleDelete }) {
   return (
     <div className="container mx-auto px-4 py-8">
       <div className="flex justify-between items-center mb-6">

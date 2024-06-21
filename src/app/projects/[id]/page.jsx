@@ -1,8 +1,8 @@
 'use client'
 import React, { useState } from "react";
-import Link from "next/link";
 import Loader from '@/components/Loader';
-import ProgressBar from '@/components/projectComponents/ProgressBar';
+import CircularProgressWithLabel from '@/components/progress/CircularProgressWithLabel';
+import TaskList from '@/components/taskComponents/TaskList';
 
 // projecto completo 
 
@@ -20,7 +20,7 @@ export default function ProjectsDetailsPage({ params }) {
     start_date: "2024-06-01",
     end_date: "2024-07-15",
 });
-  const initialUsers = [
+  const users = [
     {
       user_id: 1,
       username: "admin_user",
@@ -104,50 +104,41 @@ export default function ProjectsDetailsPage({ params }) {
 
   return (
     <div className="container mx-auto px-4 py-8">
-      <h1 className="text-3xl font-bold mb-4">{project.name}</h1>
-      <p className="mb-4">{project.description}</p>
-      <p className="mb-4">
-        <strong>Start Date:</strong>{" "}
-        {project.start_date}
-      </p>
-      <p className="mb-4">
-        <strong>End Date:</strong>{" "}
-        {project.end_date}
-      </p>
-      <div className="mb-4">
-        <strong>Status:</strong>
-        <ProgressBar progress={project.status} />
+      <div className="flex justify-between items-center mb-6">
+        <h1 className="text-3xl font-bold">{project.name}</h1>
       </div>
-
-      <h2 className="text-2xl font-bold mt-6">Tasks</h2>
-      <ul>
-        {tasks.map((task) => (
-          <li key={task.id} className="mb-4 p-4 border rounded shadow-md">
-            <p className="text-xl font-bold">{task.name}</p>
-            <div className="flex mt-2">
-              <Link href={`/projects/${project_id}/tasks/${task.id}`}
-                className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded mr-2">
-                  ver mas 
-                
-              </Link>
-              <button
-                className="bg-yellow-500 hover:bg-yellow-700 text-white font-bold py-2 px-4 rounded mr-2"
-                onClick={() =>
-                  router.push(`/projects/${project_id}/tasks/${task.id}/edit`)
-                }
-              >
-                Edit
-              </button>
-              <button
-                className="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded"
-                onClick={() => handleDeleteTask(task.id)}
-              >
-                Delete
-              </button>
-            </div>
-          </li>
-        ))}
-      </ul>
+      <div className="flex">
+        <div className="w-3/4">
+          <p className="mb-4">{project.description}</p>
+          <p className="mb-4">
+            <strong>Start Date:</strong> {project.start_date}
+          </p>
+          <p className="mb-4">
+            <strong>End Date:</strong> {project.end_date}
+          </p>
+          <p className="mb-4">
+            <strong>Status:</strong>{" "}
+            <CircularProgressWithLabel value={project.status} />
+          </p>
+          <p className="mb-4">
+            <strong>Weekly Hours:</strong> {project.weeklyHours}
+          </p>
+        </div>
+        <div className="w-1/4 pl-8">
+          <h2 className="text-2xl font-bold mb-4">Usuarios</h2>
+          <ul>
+            {users.map((user) => (
+              <li key={user.id} className="mb-2">
+                {user.name} {user.last_name}
+              </li>
+            ))}
+          </ul>
+        </div>
+      </div>
+      <div>
+        <h2 className="text-2xl font-bold mb-4">Tareas</h2>
+        <TaskList tasks={tasks}/>
+      </div>
     </div>
   );
 }

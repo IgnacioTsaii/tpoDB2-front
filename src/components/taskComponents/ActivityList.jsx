@@ -1,15 +1,15 @@
-import React from "react";
+import React from 'react';
+import ActivityCard from '@/components/ActivityCard';
 
-
-export default function ActivityList({ list }) {
+export default function ActivityList({ list, taskName }) {
     return (
         <div>
-        {list.map((activity) => (
-            <div key={activity.id} className="mt-2">
-            <p className="text-sm">{activity.name}</p>
-            <p className="text-sm">{activity.description}</p>
-            </div>
-        ))}
+            <h2 className="text-2xl font-bold mt-6">Actividades</h2>
+            <ul>
+                {list.map((activity) => (
+                    <ActivityCard key={activity.id} activity={activity} taskName={taskName} />
+                ))}
+            </ul>
         </div>
     );
-    }
+}

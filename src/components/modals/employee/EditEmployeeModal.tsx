@@ -5,11 +5,11 @@ interface EditEmployeeModalProps {
     isOpen: boolean;
     closeModal: () => void;
     usuario: {
-        id: string;
+        user_id: string;
         email: string;
         password: string;
-        nombre: string;
-        apellido: string;
+        name: string;
+        last_name: string;
         skillLevel: string;
         weeklyHours: number;
     };
@@ -71,7 +71,7 @@ const EditEmployeeModal: React.FC<EditEmployeeModalProps> = ({
                             id="nombre"
                             name="nombre"
                             type="text"
-                            value={usuario.nombre}
+                            value={usuario.name}
                             onChange={handleChange}
                             placeholder="Nombre"
                         />
@@ -85,7 +85,7 @@ const EditEmployeeModal: React.FC<EditEmployeeModalProps> = ({
                             id="apellido"
                             name="apellido"
                             type="text"
-                            value={usuario.apellido}
+                            value={usuario.last_name}
                             onChange={handleChange}
                             placeholder="Apellido"
                         />

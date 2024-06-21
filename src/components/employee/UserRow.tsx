@@ -1,31 +1,33 @@
-import React from 'react';
-import { AiOutlineDelete } from 'react-icons/ai';
+import React from "react";
+import { AiOutlineDelete } from "react-icons/ai";
 
 interface UserRowProps {
     user: {
         user_id: string;
         email: string;
         name: string;
+        password: string;
         last_name: string;
         skillLevel: string;
-        weeklyHours: string;
+        weeklyHours: number;
     };
     openDeleteModal: (userId: string) => void;
-    openEditModal: (user: 
-    {   
-        id: string;
+    openEditModal: (user: {
+        user_id: string;
+        email: string;
         password: string;
-        nombre: string;
-        apellido: string;
+        name: string;
+        last_name: string;
         skillLevel: string;
         weeklyHours: number;
-        email: string
-    }
-    ) => void;
-    
+    }) => void;
 }
 
-const UserRow: React.FC<UserRowProps> = ({ user, openDeleteModal,openEditModal }) => {
+const UserRow: React.FC<UserRowProps> = ({
+    user,
+    openDeleteModal,
+    openEditModal,
+}) => {
     return (
         <tr>
             <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
@@ -34,9 +36,6 @@ const UserRow: React.FC<UserRowProps> = ({ user, openDeleteModal,openEditModal }
             <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
                 {user.name}
             </td>
-            <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
-                {user.last_name}
-                </td>
             <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
                 {user.skillLevel}
             </td>
@@ -49,14 +48,14 @@ const UserRow: React.FC<UserRowProps> = ({ user, openDeleteModal,openEditModal }
                     className="text-indigo-600 hover:text-indigo-900"
                     type="button"
                     role="button"
-                    tabIndex={0}
-                >Edit</button>
+                    tabIndex={0}>
+                    Edit
+                </button>
             </td>
             <td className="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
                 <button
-                    onClick={() => openDeleteModal(user.id)}
-                    className="text-red-600 hover:text-red-900"
-                >
+                    onClick={() => openDeleteModal(user.user_id)}
+                    className="text-red-600 hover:text-red-900">
                     <AiOutlineDelete size={20} />
                 </button>
             </td>

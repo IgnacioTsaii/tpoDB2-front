@@ -91,7 +91,7 @@ export default function Navbar() {
                   href="/projects"
                   className="px-3 py-2 rounded-md text-md font-medium hover:text-gray-700 hover:bg-gray-300"
                 >
-                  Projects
+                  Proyectos
                 </Link>
 
               </div>

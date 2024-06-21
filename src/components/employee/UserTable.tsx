@@ -6,7 +6,12 @@ import RegisterEmployeeModal from '@/components/modals/RegisterEmployeeModal';
 import DeleteUserModal from '@/components/modals/DeleteUserModal';
 
 interface UserTableProps {
-    users: formRegister[];
+    users: {user_id: string;
+        email: string;
+        name: string;
+        last_name: string;
+        skillLevel: string;
+        weeklyHours: string;}[];
     skills: string[];
 }
 
@@ -15,7 +20,8 @@ const UserTable: React.FC<UserTableProps> = ({ users, skills }) => {
     const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
     const [formData, setFormData] = useState({
         email: '',
-        nombre: '',
+        name: '',
+        last_name: '',
         skillLevel: '',
         weeklyHours: '',
     });
@@ -126,7 +132,7 @@ const UserTable: React.FC<UserTableProps> = ({ users, skills }) => {
                     </thead>
                     <tbody className="bg-white divide-y divide-gray-200">
                         {users.map((user) => (
-                            <UserRow key={user.email} user={user} openDeleteModal={openDeleteModal} />
+                            <UserRow key={user.user_id} user={user} openDeleteModal={openDeleteModal} />
                         ))}
                     </tbody>
                 </table>

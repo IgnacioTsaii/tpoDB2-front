@@ -3,7 +3,14 @@ import { formRegister } from '@/interface/empleados';
 import { AiOutlineDelete } from 'react-icons/ai';
 
 interface UserRowProps {
-    user: formRegister;
+    user: {
+        user_id: string;
+        email: string;
+        name: string;
+        last_name: string;
+        skillLevel: string;
+        weeklyHours: string;
+    };
     openDeleteModal: (userId: string) => void;
 }
 
@@ -14,8 +21,11 @@ const UserRow: React.FC<UserRowProps> = ({ user, openDeleteModal }) => {
                 {user.email}
             </td>
             <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
-                {user.nombre}
+                {user.name}
             </td>
+            <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                {user.last_name}
+                </td>
             <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
                 {user.skillLevel}
             </td>

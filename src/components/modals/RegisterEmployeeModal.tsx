@@ -6,7 +6,8 @@ interface RegisterEmployeeModalProps {
     closeModal: () => void;
     formData: {
         email: string;
-        nombre: string;
+        name: string;
+        last_name: string;
         skillLevel: string;
         weeklyHours: string;
     };
@@ -65,9 +66,23 @@ const RegisterEmployeeModal: React.FC<RegisterEmployeeModalProps> = ({
                             id="nombre"
                             name="nombre"
                             type="text"
-                            value={formData.nombre}
+                            value={formData.name}
                             onChange={handleChange}
                             placeholder="Nombre"
+                        />
+                    </div>
+                    <div className="mb-4">
+                        <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="nombre">
+                            Apellido
+                        </label>
+                        <input
+                            className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                            id="last_name"
+                            name="apellido"
+                            type="text"
+                            value={formData.last_name}
+                            onChange={handleChange}
+                            placeholder="apellido"
                         />
                     </div>
                     <div className="mb-4">

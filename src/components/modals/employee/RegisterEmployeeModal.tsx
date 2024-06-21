@@ -5,8 +5,8 @@ interface RegisterEmployeeModalProps {
     isOpen: boolean;
     closeModal: () => void;
     formData: {
+        userPassword: string | number | readonly string[] | undefined;
         email: string;
-        password: string;
         name: string;
         last_name: string;
         skillLevel: string;
@@ -64,10 +64,9 @@ const RegisterEmployeeModal: React.FC<RegisterEmployeeModalProps> = ({
                         </label>
                         <input
                             className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-                            id="nombre"
-                            name="nombre"
+                            id="name"
+                            name="name"
                             type="text"
-                            value={formData.name}
                             onChange={handleChange}
                             placeholder="Nombre"
                         />
@@ -82,10 +81,9 @@ const RegisterEmployeeModal: React.FC<RegisterEmployeeModalProps> = ({
                         </label>
                         <input
                             className='shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline'
-                            id='apellido'
-                            name='apellido'
+                            id='last_name'
+                            name='last_name'
                             type='text'
-                            value={formData.last_name}
                             onChange={handleChange}
                             placeholder='Apellido'
                         />
@@ -93,16 +91,15 @@ const RegisterEmployeeModal: React.FC<RegisterEmployeeModalProps> = ({
 
                     <div className="mb-4">
                         <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="nombre">
-                            Apellido
+                            Contraseña
                         </label>
                         <input
                             className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-                            id="last_name"
-                            name="apellido"
-                            type="text"
-                            value={formData.last_name}
+                            id="userPassword"
+                            name="userPassword"
+                            type="password"
                             onChange={handleChange}
-                            placeholder="apellido"
+                            placeholder="password"
                         />
                     </div>
                     <div className="mb-4">
@@ -113,15 +110,36 @@ const RegisterEmployeeModal: React.FC<RegisterEmployeeModalProps> = ({
                             className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
                             id="skillLevel"
                             name="skillLevel"
-                            value={formData.skillLevel}
                             onChange={handleChange}
                         >
-                            <option value="" disabled>Select Skill Level</option>
+                            <option value="" >Select Skill Level</option>
+                            
                             {skills.map(skill => (
+                                
                                 <option key={skill} value={skill}>
                                     {skill}
                                 </option>
                             ))}
+                        </select>
+                    </div>
+                    <div className="mb-4">
+                        <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="role">
+                            Role
+                        </label>
+                        <select
+                            className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                            id="role"
+                            name="role"
+                            onChange={handleChange}
+                        >
+                            <option value="" >Select Role</option>
+                            
+                            <option value="employee">
+                                Employee
+                            </option>
+                            <option value="admin">
+                                Admin
+                            </option>
                         </select>
                     </div>
                     <div className="mb-4">
@@ -133,7 +151,6 @@ const RegisterEmployeeModal: React.FC<RegisterEmployeeModalProps> = ({
                             id="weeklyHours"
                             name="weeklyHours"
                             type="text"
-                            value={formData.weeklyHours}
                             onChange={handleChange}
                             placeholder="Weekly Hours"
                         />

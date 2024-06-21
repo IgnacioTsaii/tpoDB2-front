@@ -1,18 +1,22 @@
 import React, { useState } from 'react';
+import User from '@/interface/user';
+
+// icono de más
 import { AiOutlinePlus } from 'react-icons/ai';
+
+// componente de fila de usuario
 import UserRow from './UserRow';
+
+// modales
 import RegisterEmployeeModal from '../modals/employee/RegisterEmployeeModal';
 import EditEmployeeModal from '../modals/employee/EditEmployeeModal';
 import DeleteUserModal from '../modals/employee/DeleteUserModal';
 
+// importo accion para crear empleado
+import postEmployee from '@/actions/employees/postEmployee';
+
 interface UserTableProps {
-    users: {user_id: string;
-        email: string;
-        password: string;
-        name: string;
-        last_name: string;
-        skillLevel: string;
-        weeklyHours: number;}[];
+    users: User[];
     skills: string[];
 }
 
@@ -31,7 +35,8 @@ const UserTable: React.FC<UserTableProps> = ({ users, skills }) => {
         last_name: '',
         skillLevel: '',
         weeklyHours: 0, // Inicializar como string para que coincida con el tipo en el modal de edición
-        password: '', // Agregar campo para la contraseña
+        userPassword: '', // Agregar campo para la contraseña
+        role:""
     });
 
 
@@ -43,13 +48,7 @@ const UserTable: React.FC<UserTableProps> = ({ users, skills }) => {
 
     const handleRegister = async () => {
         try {
-            const response = await fetch('/api/register', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-                body: JSON.stringify(formData),
-            });
+            const response = await postEmployee(formData);
             if (response.ok) {
                 setSuccessMessage('User registered successfully');
                 setTimeout(() => setSuccessMessage(''), 3000);
@@ -70,39 +69,34 @@ const UserTable: React.FC<UserTableProps> = ({ users, skills }) => {
     | {
         user_id: string;
         email: string;
-        password: string;
+        userPassword: string;
         name: string;
         last_name: string;
         skillLevel: string;
+        role:string
         weeklyHours: number;
     }>(
         {
             user_id: '',
-            password: '',
+            userPassword: '',
             name: '',
             last_name: '',
             skillLevel: '',
             weeklyHours: 0,
             email: '',
+            role:''
         }
     );
     //  cuando se abre el modal de edición, se establece el usuario a editar y se abre el modal
-    const openEditModal = (user: {
-        user_id: string;
-        password: string;
-        name: string;
-        last_name: string;
-        skillLevel: string;
-        weeklyHours: number;
-        email: string;
-    }) => {
+    const openEditModal = (user: User) => {
         setFormData({
             email: user.email,
             name: user.name,
             last_name: user.last_name,
-            password: user.password,
+            userPassword: user.userPassword,
             skillLevel: user.skillLevel,
             weeklyHours: user.weeklyHours, // Convertir a string para que coincida con el tipo en el modal
+            role:user.role
         });
         setUserToEdit(user);
         setIsEditModalOpen(true);
@@ -136,12 +130,13 @@ const UserTable: React.FC<UserTableProps> = ({ users, skills }) => {
     const closeEditModal = () => {setIsEditModalOpen(false)
         setUserToEdit({
             user_id: '',
-            password: '',
+            userPassword: '',
             name: '',
             last_name: '',
             skillLevel: '',
             weeklyHours: 0,
             email: '',
+            role:''
         });
         setFormData({
             email: '',
@@ -149,7 +144,8 @@ const UserTable: React.FC<UserTableProps> = ({ users, skills }) => {
             last_name: '',
             skillLevel: '',
             weeklyHours: 0,
-            password: '',
+            userPassword: '',
+            role:""
         });
     };
     

@@ -7,7 +7,7 @@ interface EditEmployeeModalProps {
     usuario: {
         user_id: string;
         email: string;
-        password: string;
+        userPassword: string;
         name: string;
         last_name: string;
         skillLevel: string;
@@ -132,7 +132,7 @@ const EditEmployeeModal: React.FC<EditEmployeeModalProps> = ({
                             id="password"
                             name="password"
                             type="password"
-                            value={usuario.password}
+                            value={usuario.userPassword}
                             onChange={handleChange}
                             placeholder="Password"
                         />

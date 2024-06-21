@@ -1,26 +1,11 @@
 import React from "react";
 import { AiOutlineDelete } from "react-icons/ai";
+import User from "@/interface/User";
 
 interface UserRowProps {
-    user: {
-        user_id: string;
-        email: string;
-        name: string;
-        password: string;
-        last_name: string;
-        skillLevel: string;
-        weeklyHours: number;
-    };
+    user: User;
     openDeleteModal: (userId: string) => void;
-    openEditModal: (user: {
-        user_id: string;
-        email: string;
-        password: string;
-        name: string;
-        last_name: string;
-        skillLevel: string;
-        weeklyHours: number;
-    }) => void;
+    openEditModal: (user: User) => void;
 }
 
 const UserRow: React.FC<UserRowProps> = ({

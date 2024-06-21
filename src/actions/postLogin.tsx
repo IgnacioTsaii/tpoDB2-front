@@ -1,9 +1,14 @@
 'use server'
 
-export default async function postEmployee(formData: any) {
+export default async function postLogin() {
     
+    const formData = {
+        email: 'hb@example.com',
+        userPassword: '1234'
+    }
+
     try {
-        const response = await fetch('/api/register', {
+        const response = await fetch('http://localhost:8081/auth/authenticate', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',

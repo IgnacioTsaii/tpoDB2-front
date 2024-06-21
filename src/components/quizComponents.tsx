@@ -1,7 +1,7 @@
 'use client';
 // src/components/QuizComponent.tsx
 import React, { useState } from 'react';
-import { Project } from '@luca/interface/projects';
+import { Project } from '@/interface/projects';
 
 interface QuizComponentProps {
     project?: Project; // Opcional, para edición de proyectos existentes

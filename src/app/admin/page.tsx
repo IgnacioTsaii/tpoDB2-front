@@ -1,9 +1,9 @@
 "use client";
 import { useState, MouseEvent } from "react";
 import Link from "next/link";
-import FormProject from "@luca/components/formularios/formProject";
-import UpdateProject from "@luca/components/formularios/updateProject";
-import { projecto } from "@luca/interface/projectos";
+import FormProject from "@/components/formularios/formProject";
+import UpdateProject from "@/components/formularios/updateProject";
+import { projecto } from "@/interface/projectos";
 
 const AdminPage = () => {
   const [showFormProject, setShowFormProject] = useState(false);

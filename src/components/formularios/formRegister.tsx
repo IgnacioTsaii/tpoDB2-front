@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { formRegister } from "@luca/interface/empleados";
+import { formRegister } from "@/interface/empleados";
 
 const RegisterForm: React.FC = () => {
   const [formData, setFormData] = useState<formRegister>({

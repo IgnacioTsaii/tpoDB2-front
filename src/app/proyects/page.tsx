@@ -1,12 +1,12 @@
 "use client";
 import React, { useState, MouseEvent } from "react";
-import { projecto } from "@luca/interface/projectos";
-import FormProject from "@luca/components/formularios/formProject";
-import FormTask from "@luca/components/formularios/formTask";
-import CommentForm from "@luca/components/formularios/fomComments";
-import { Task } from "@luca/interface/task";
+import { projecto } from "@/interface/projectos";
+import FormProject from "@/components/formularios/formProject";
+import FormTask from "@/components/formularios/formTask";
+import CommentForm from "@/components/formularios/fomComments";
+import { Task } from "@/interface/task";
 import { BiCheckSquare } from "react-icons/bi";
-import { Comment } from "@luca/interface/comments";
+import { Comment } from "@/interface/comments";
 
 const projects: projecto[] = [
   {

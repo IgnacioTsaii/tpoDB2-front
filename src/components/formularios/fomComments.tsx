@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Comment } from '@luca/interface/comments';
+import { Comment } from '@/interface/comments';
 
 interface CommentFormProps {
   onSubmit: (comment: Comment) => void;

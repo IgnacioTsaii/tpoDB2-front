@@ -1,7 +1,7 @@
 import React from "react";
 import { useState } from "react";
 import Link from "next/link";
-import Loader from '@luca/components/Loader';
+import Loader from '@/components/Loader';
 
 
 

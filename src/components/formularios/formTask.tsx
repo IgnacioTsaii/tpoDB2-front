@@ -1,6 +1,6 @@
 import React, { useState } from "react";
-import { Task } from "@luca/interface/task";
-import { Activity } from "@luca/interface/activities";
+import { Task } from "@/interface/task";
+import { Activity } from "@/interface/activities";
 
 interface FormTaskProps {
   onSubmit: (task: Task) => void;

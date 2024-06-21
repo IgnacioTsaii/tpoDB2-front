@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { projecto } from "@luca/interface/projectos";
+import { projecto } from "@/interface/projectos";
 
 const FormProject: React.FC = () => {
   const [project, setProject] = useState<projecto>({

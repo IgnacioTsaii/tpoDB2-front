@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { projecto } from "@luca/interface/projectos";
+import { projecto } from "@/interface/projectos";
 
 interface UpdateProjectProps {
   projectData: projecto;

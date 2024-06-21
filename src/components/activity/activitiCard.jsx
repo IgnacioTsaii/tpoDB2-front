@@ -1,5 +1,5 @@
 import React from 'react';
-import CircularProgressWithLabel from '@/components/CircularProgressWithLabel';
+import CircularProgressWithLabel from '@/components/progress/CircularProgressWithLabel';
 
 export default function ActivityCard({ activity, taskName }) {
     return (

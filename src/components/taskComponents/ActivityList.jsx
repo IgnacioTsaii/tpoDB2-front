@@ -1,5 +1,5 @@
 import React from 'react';
-import ActivityCard from '@/components/ActivityCard';
+import ActivityCard from '@/components/activity/activitiCard';
 
 export default function ActivityList({ list, taskName }) {
     return (

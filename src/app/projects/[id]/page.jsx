@@ -11,7 +11,7 @@ import TaskList from '@/components/taskComponents/TaskList';
 // user del projecto 
 
 export default function ProjectsDetailsPage({ params }) {
-  const { id: project_id } = params; // Renombramos id a project_id para ser consistente
+  const  project_id  = params.id; // Renombramos id a project_id para ser consistente
   const [project, setProject] = useState({
     id: 1,
     name: "Proyecto 1",
@@ -19,6 +19,7 @@ export default function ProjectsDetailsPage({ params }) {
     status: 75,
     start_date: "2024-06-01",
     end_date: "2024-07-15",
+    weekly_hours: 40,
 });
   const users = [
     {
@@ -116,12 +117,14 @@ export default function ProjectsDetailsPage({ params }) {
           <p className="mb-4">
             <strong>End Date:</strong> {project.end_date}
           </p>
+          <div className="mb-4 flex items-center"> {/* Añadido flex y items-center para alinear verticalmente */}
+            <strong>Status:</strong> 
+            <span className="ml-2">
+              <CircularProgressWithLabel value={project.status} />
+            </span>
+          </div>
           <p className="mb-4">
-            <strong>Status:</strong>{" "}
-            <CircularProgressWithLabel value={project.status} />
-          </p>
-          <p className="mb-4">
-            <strong>Weekly Hours:</strong> {project.weeklyHours}
+            <strong>Weekly Hours:</strong> {project.weekly_hours}
           </p>
         </div>
         <div className="w-1/4 pl-8">

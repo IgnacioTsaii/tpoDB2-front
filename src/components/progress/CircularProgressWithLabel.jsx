@@ -1,3 +1,4 @@
+'use client'
 import * as React from 'react';
 import PropTypes from 'prop-types';
 import CircularProgress from '@mui/material/CircularProgress';
@@ -37,17 +38,23 @@ CircularProgressWithLabel.propTypes = {
   value: PropTypes.number.isRequired,
 };
 
-export default function CircularWithValueLabel() {
-  const [progress, setProgress] = React.useState(10);
+export default function CircularWithValueLabel({ value }) {
+  const [progress, setProgress] = React.useState(value);
 
-  React.useEffect(() => {
-    const timer = setInterval(() => {
-      setProgress((prevProgress) => (prevProgress >= 100 ? 0 : prevProgress + 10));
-    }, 800);
-    return () => {
-      clearInterval(timer);
-    };
-  }, []);
+  // React.useEffect(() => {
+  //   setProgress(value); // Set initial progress value
+
+  //   const timer = setInterval(() => {
+  //     setProgress((prevProgress) => {
+  //       const nextProgress = prevProgress + 5;
+  //       return nextProgress >= 100 ? 0 : nextProgress;
+  //     });
+  //   }, 800);
+
+  //   return () => {
+  //     clearInterval(timer); // Clean up timer on unmount
+  //   };
+  // }, [value]); // Run effect whenever value changes
 
   return <CircularProgressWithLabel value={progress} />;
 }

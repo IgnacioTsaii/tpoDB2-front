@@ -1,13 +1,21 @@
 'use client'
 import React, { useEffect, useState } from 'react';
-import CircularProgressWithLabel from '@/components/CircularProgressWithLabel';
-import ActivityList from '@/components/ActivityList';
+import CircularProgressWithLabel from '@/components/progress/CircularProgressWithLabel';
+import ActivityList from '@/components/taskComponents/ActivityList';
 import Loader from '@/components/Loader';
+import FormTask from '@/components/formularios/formTask';
+import CommentList from '@/components/comment/CommentList'
 
 export default function TaskPage({ params }) {
-    const { id: task_id } = params;
+    const task_id = params.id;
     const [task, setTask] = useState(null);
     const [activities, setActivities] = useState([]);
+    const [comments, setCommets] = useState([])
+
+
+    useEffect(() => {
+            
+        },[task_id]);
 
     if (!task) return <Loader />;
 
@@ -18,9 +26,9 @@ export default function TaskPage({ params }) {
             <p className="mb-4">
                 <strong>Nivel de Habilidad:</strong> {task.skill_level}
             </p>
-            <p className="mb-4">
+            <div className="mb-4">
                 <CircularProgressWithLabel value={task.status} />
-            </p>
+            </div>
             <p className="mb-4">
                 <strong>Fecha de Inicio:</strong> {new Date(task.start_date).toLocaleDateString()}
             </p>
@@ -28,6 +36,14 @@ export default function TaskPage({ params }) {
                 <strong>Fecha de Finalización:</strong> {new Date(task.end_date).toLocaleDateString()}
             </p>
             <ActivityList list={activities} taskName={task.name} />
+
+            {/* form para crear comentario */}
+            <div>
+                <FormTask/>
+                {/* Lista de comentarios de la tarea */}
+                <CommentList list={comments}  />
+
+            </div>
         </div>
     );
 }

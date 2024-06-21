@@ -1,8 +1,7 @@
 import React, { useState } from "react";
-import { projecto } from "@/interface/projectos";
 
-const FormProject: React.FC = () => {
-  const [project, setProject] = useState<projecto>({
+const FormProject = () => {
+  const [project, setProject] = useState({
     id: 0, // Considera cómo manejarás el ID
     name: "",
     description: "",
@@ -12,9 +11,7 @@ const FormProject: React.FC = () => {
   });
 
   const handleChange = (
-    e: React.ChangeEvent<
-      HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement
-    >
+    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>
   ) => {
     const { name, value } = e.target;
     setProject((prevState) => ({
@@ -110,7 +107,7 @@ const FormProject: React.FC = () => {
         type="submit"
         className="w-full bg-indigo-600 text-white font-semibold py-2 px-4 rounded-lg hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-opacity-50 transition duration-150 ease-in-out"
       >
-        Guardar Proyecto 
+        Guardar Proyecto
       </button>
     </form>
   );

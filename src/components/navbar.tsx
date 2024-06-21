@@ -88,10 +88,10 @@ export default function Navbar() {
                   Gestion de empleados
                 </Link>
                 <Link
-                  href="/proyects"
+                  href="/projects"
                   className="px-3 py-2 rounded-md text-md font-medium hover:text-gray-700 hover:bg-gray-300"
                 >
-                  Proyects
+                  Projects
                 </Link>
 
               </div>

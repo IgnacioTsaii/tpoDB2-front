@@ -2,13 +2,26 @@ import React from "react";
 import { useState } from "react";
 import Link from "next/link";
 import Loader from '@/components/Loader';
+import ProgressBar from '@/components/ProgressBar';
 
 
 
-export default function Page({ params }) {
-  const { project_id } = params;
+export default function ProjectsPage({ params }) {
+  const { id: project_id } = params; // Renombramos id a project_id para ser consistente
   const [project, setProject] = useState(null);
   const [tasks, setTasks] = useState([]);
+
+  useEffect(() => {
+      //call to server action
+  },[project_id]);
+  
+  const handleDeleteTask = async (task_id) => {
+    // Implementar la lógica para eliminar la tarea
+  }
+
+
+
+  if (!project) return <Loader />;
 
   if (!project) return <Loader />;
 
@@ -24,9 +37,10 @@ export default function Page({ params }) {
         <strong>End Date:</strong>{" "}
         {new Date(project.end_date).toLocaleDateString()}
       </p>
-      <p className="mb-4">
-        <strong>Status:</strong> {project.status}
-      </p>
+      <div className="mb-4">
+        <strong>Status:</strong>
+        <ProgressBar progress={project.status} />
+      </div>
 
       <h2 className="text-2xl font-bold mt-6">Tasks</h2>
       <ul>

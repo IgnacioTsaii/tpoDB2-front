@@ -1,23 +1,74 @@
 import React, { useState } from 'react';
 import { formRegister } from '@/interface/empleados';
 import { AiOutlinePlus } from 'react-icons/ai';
-import Modal from 'react-modal';
+import UserRow from './UserRow';
+import RegisterEmployeeModal from '@/components/modals/RegisterEmployeeModal';
+import DeleteUserModal from '@/components/modals/DeleteUserModal';
 
 interface UserTableProps {
     users: formRegister[];
+    skills: string[];
 }
 
-
-
-const UserTable: React.FC<UserTableProps> = ({ users }) => {
+const UserTable: React.FC<UserTableProps> = ({ users, skills }) => {
     const [isModalOpen, setIsModalOpen] = useState(false);
+    const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
+    const [formData, setFormData] = useState({
+        email: '',
+        nombre: '',
+        skillLevel: '',
+        weeklyHours: '',
+    });
+    const [userToDelete, setUserToDelete] = useState<null | string>(null);
+    const [successMessage, setSuccessMessage] = useState('');
 
     const openModal = () => setIsModalOpen(true);
     const closeModal = () => setIsModalOpen(false);
 
-    const handleRegister = () => {
-        // handle user registration logic
-        closeModal();
+    const openDeleteModal = (userId: string) => {
+        setUserToDelete(userId);
+        setIsDeleteModalOpen(true);
+    };
+    const closeDeleteModal = () => setIsDeleteModalOpen(false);
+
+    const handleRegister = async () => {
+        try {
+            const response = await fetch('/api/register', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(formData),
+            });
+            if (response.ok) {
+                setSuccessMessage('User registered successfully');
+                setTimeout(() => setSuccessMessage(''), 3000);
+                closeModal();
+            } else {
+                console.error('Failed to register user');
+            }
+        } catch (error) {
+            console.error('Error:', error);
+        }
+    };
+
+    const handleDelete = async () => {
+        if (!userToDelete) return;
+
+        try {
+            const response = await fetch(`/api/delete/${userToDelete}`, {
+                method: 'DELETE',
+            });
+            if (response.ok) {
+                setSuccessMessage('User deleted successfully');
+                setTimeout(() => setSuccessMessage(''), 3000);
+                closeDeleteModal();
+            } else {
+                console.error('Failed to delete user');
+            }
+        } catch (error) {
+            console.error('Error:', error);
+        }
     };
 
     return (
@@ -36,6 +87,11 @@ const UserTable: React.FC<UserTableProps> = ({ users }) => {
                 A list of all the users in your account including their name,
                 title, email and role.
             </p>
+            {successMessage && (
+                <div className="bg-green-100 text-green-700 px-4 py-2 rounded mb-4">
+                    {successMessage}
+                </div>
+            )}
             <div className="shadow overflow-hidden border-b border-gray-200 sm:rounded-lg">
                 <table className="min-w-full divide-y divide-gray-200">
                     <thead className="bg-gray-50">
@@ -63,109 +119,31 @@ const UserTable: React.FC<UserTableProps> = ({ users }) => {
                             <th scope="col" className="relative px-6 py-3">
                                 <span className="sr-only">Edit</span>
                             </th>
+                            <th scope="col" className="relative px-6 py-3">
+                                <span className="sr-only">Delete</span>
+                            </th>
                         </tr>
                     </thead>
                     <tbody className="bg-white divide-y divide-gray-200">
                         {users.map((user) => (
-                            <tr key={user.email}>
-                                <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
-                                    {user.email}
-                                </td>
-                                <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
-                                    {user.nombre}
-                                </td>
-                                <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
-                                    {user.skillLevel}
-                                </td>
-                                <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
-                                    {user.weeklyHours}
-                                </td>
-                                <td className="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
-                                    <a
-                                        href="#"
-                                        className="text-indigo-600 hover:text-indigo-900">
-                                        Edit
-                                    </a>
-                                </td>
-                            </tr>
+                            <UserRow key={user.email} user={user} openDeleteModal={openDeleteModal} />
                         ))}
                     </tbody>
                 </table>
             </div>
-
-            <Modal
+            <RegisterEmployeeModal
                 isOpen={isModalOpen}
-                onRequestClose={closeModal}
-                contentLabel="Register New User"
-                className="fixed inset-0 flex items-center justify-center"
-                overlayClassName="fixed inset-0 bg-gray-600 bg-opacity-50"
-            >
-                <div className="bg-white rounded-lg p-6 w-full max-w-md">
-                    <h2 className="text-xl font-bold mb-4">Register New User</h2>
-                    <form>
-                        <div className="mb-4">
-                            <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="email">
-                                Email
-                            </label>
-                            <input
-                                className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-                                id="email"
-                                type="email"
-                                placeholder="Email"
-                            />
-                        </div>
-                        <div className="mb-4">
-                            <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="nombre">
-                                Nombre
-                            </label>
-                            <input
-                                className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-                                id="nombre"
-                                type="text"
-                                placeholder="Nombre"
-                            />
-                        </div>
-                        <div className="mb-4">
-                            <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="skillLevel">
-                                Skill Level
-                            </label>
-                            <input
-                                className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-                                id="skillLevel"
-                                type="text"
-                                placeholder="Skill Level"
-                            />
-                        </div>
-                        <div className="mb-4">
-                            <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="weeklyHours">
-                                Weekly Hours
-                            </label>
-                            <input
-                                className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-                                id="weeklyHours"
-                                type="text"
-                                placeholder="Weekly Hours"
-                            />
-                        </div>
-                        <div className="flex items-center justify-between">
-                            <button
-                                className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
-                                type="button"
-                                onClick={handleRegister}
-                            >
-                                Register
-                            </button>
-                            <button
-                                className="inline-block align-baseline font-bold text-sm text-blue-500 hover:text-blue-800"
-                                type="button"
-                                onClick={closeModal}
-                            >
-                                Cancel
-                            </button>
-                        </div>
-                    </form>
-                </div>
-            </Modal>
+                closeModal={closeModal}
+                formData={formData}
+                setFormData={setFormData}
+                handleRegister={handleRegister}
+                skills={skills}
+            />
+            <DeleteUserModal
+                isOpen={isDeleteModalOpen}
+                closeModal={closeDeleteModal}
+                handleDelete={handleDelete}
+            />
         </div>
     );
 };

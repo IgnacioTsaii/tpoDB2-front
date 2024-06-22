@@ -46,6 +46,7 @@ const LoginPage: React.FC = () => {
                     router.push("/gestionapp/projects");
                 } catch (error) {
                     console.error("Error:", error);
+                    setError("An unexpected error occurred. Please try again.");
                 }
             }
         }

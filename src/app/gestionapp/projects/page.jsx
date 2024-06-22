@@ -2,10 +2,13 @@
 import React, {useEffect, useState} from "react";
 import ProjectList from "@/components/projectComponents/projectList"
 import decodingToken from "@/actions/utils/decodingToken";
+import getallProjects from "@/actions/projects/getAllProjects";
+
 
 
 export default function ProjectsPage() {
   const [isAdmin, setIsAdmin] = useState(true);
+  const [projects, setProjects] = useState([]);
   
 
   useEffect(() => {
@@ -20,7 +23,18 @@ export default function ProjectsPage() {
     }
     response();
 
-    
+    // si el usuario es admin, se le permite ver toda la lista de los proyectos
+    // si el usuario es un usuario normal, se le permite ver solo los proyectos en los que está asignado
+    const response2 = async() => {
+      if(isAdmin){
+        const projects = await getallProjects();
+        setProjects(projects);
+      }
+    }
+    response2();
+
+
+
   }, []);
   const initialProjects = [
     {
@@ -78,7 +92,7 @@ const handlerDelete = async (e) => {
   return (
     <div>
       {/* listado de projectos */}
-      <ProjectList projects={initialProjects} handleDelete={handlerDelete} isAdmin={isAdmin}/>
+      <ProjectList projects={projects} handleDelete={handlerDelete} isAdmin={isAdmin}/>
     </div>
   );
 };

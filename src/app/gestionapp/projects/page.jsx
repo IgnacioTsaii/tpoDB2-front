@@ -1,10 +1,26 @@
 'use client'
-import React, {useState} from "react";
+import React, {useEffect, useState} from "react";
 import ProjectList from "@/components/projectComponents/projectList"
+import decodingToken from "@/actions/decodingToken";
 
 
 export default function ProjectsPage() {
   const [isAdmin, setIsAdmin] = useState(true);
+  
+
+  useEffect(() => {
+    const response=async() => {
+      const decodedToken = await decodingToken();
+      console.log(decodedToken);
+      if(decodedToken.userType === 'Admin'){
+        setIsAdmin(true);
+      }else{
+        setIsAdmin(false);
+      }
+    }
+    response();
+
+  }, []);
   const initialProjects = [
     {
       id: 1,

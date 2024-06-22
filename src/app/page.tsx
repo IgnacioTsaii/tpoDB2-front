@@ -2,7 +2,6 @@
 import React, { useState } from "react";
 import postLogin from "@/actions/postLogin";
 import { useRouter } from "next/navigation";
-import { useAuth } from "@/contexts/AuthContext";
 import { jwtDecode } from "jwt-decode";
 
 interface LoginForm {
@@ -18,7 +17,6 @@ const LoginPage: React.FC = () => {
     const [error, setError] = useState<string>("");
     const [isEmailValid, setIsEmailValid] = useState<boolean>(false);
 
-    const { login } = useAuth();
 
     const router = useRouter();
 
@@ -39,21 +37,25 @@ const LoginPage: React.FC = () => {
         } else if (!isEmailValid) {
             setError("Please enter a valid email address.");
         } else {
+          try {
             const response = await postLogin(loginForm);
-            console.log("response", response);
-            if (response.error) {
-                setError(response.error);
-            } else {
+            
                 setError("");
-                const token = response.access_token;
-                let decoded = jwtDecode(token); // decode the token
-                decoded = JSON.parse(JSON.stringify(decoded));
-                const keepingObject = { role: decoded.role, email: decoded.sub };
-                login(keepingObject);
+                // const token = response.access_token;
+                // let decoded = jwtDecode(token); // decode the token
+                // decoded = JSON.parse(JSON.stringify(decoded));
+                // console.log(decoded);
+                // const userType = decoded.role;
+                // const email = decoded.sub;
+    
+                // login(token,userType, email);
 
                 alert("Logged in successfully");
                 router.push("/gestionapp/projects");
-            }
+            
+          } catch (error) {
+            console.error("Error:", error);
+          }
         }
     };
 

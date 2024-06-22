@@ -5,8 +5,8 @@ import ActivityList from '@/components/taskComponents/ActivityList';
 import Loader from '@/components/Loader';
 import FormComment from '@/components/formularios/formComment';
 import CommentList from '@/components/comment/CommentList'
-import EditActivityModal from '@/components/activity/EditActivityModal';
-import CreateActivityModal from '@/components/activity/CreateActityModal';
+import EditActivityModal from '@/components/modals/activity/EditActivityModal';
+import CreateActivityModal from '@/components/modals/activity/CreateActityModal';
 
 export default function TaskPage({ params }) {
     const task_id = params.id;
@@ -161,6 +161,7 @@ export default function TaskPage({ params }) {
                     isOpen={isCreateModalOpen}
                     onClose={handleCloseCreateModal}
                     onSave={handleCreateActivity}
+                    task_id={task_id}
                 />
             )}
         </div>

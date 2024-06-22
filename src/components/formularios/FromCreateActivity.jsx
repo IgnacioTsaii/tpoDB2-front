@@ -1,9 +1,9 @@
 import React, { useState } from 'react';
 
-export default function FormCreateActivity ({ onClose, onSave }) {
+export default function FormCreateActivity ({ onClose, onSave,task_id }) {
     const [formData, setFormData] = useState({
-        task_id: '',
-        user_id: '',
+        task_id: task_id,
+        user_id: '', //
         description: '',
         progress_percentage: '',
         time_worked: ''
@@ -21,32 +21,6 @@ export default function FormCreateActivity ({ onClose, onSave }) {
 
     return (
         <form onSubmit={handleSubmit}>
-            <div className="mb-4">
-                <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="task_id">
-                    ID de la Tarea
-                </label>
-                <input
-                    id="task_id"
-                    name="task_id"
-                    type="text"
-                    value={formData.task_id}
-                    onChange={handleChange}
-                    className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-                />
-            </div>
-            <div className="mb-4">
-                <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="user_id">
-                    ID del Usuario
-                </label>
-                <input
-                    id="user_id"
-                    name="user_id"
-                    type="text"
-                    value={formData.user_id}
-                    onChange={handleChange}
-                    className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-                />
-            </div>
             <div className="mb-4">
                 <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="description">
                     Descripción

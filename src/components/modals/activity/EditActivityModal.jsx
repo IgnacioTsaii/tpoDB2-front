@@ -1,5 +1,5 @@
 import React from 'react';
-import FormEditActivity from '../formularios/FormEditActivity';
+import FormEditActivity from '../../formularios/FormEditActivity';
 
 export default function EditActivityModal({ activity, isOpen, onClose, onSave }) {
     if (!isOpen) return null;

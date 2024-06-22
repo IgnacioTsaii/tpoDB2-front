@@ -1,5 +1,4 @@
 'use server'
-
 export default async function getskillLevels() {
     try {
         const response = await fetch('http://localhost:8081/util/skill-level', {

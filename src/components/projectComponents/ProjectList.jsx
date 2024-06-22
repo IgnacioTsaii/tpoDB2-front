@@ -1,12 +1,12 @@
 import React from "react";
 import Link from "next/link";
 
-export default function ProjectList({ projects = [], userRole, handleDelete }) {
+export default function ProjectList({ projects, isAdmin, handleDelete }) {
   return (
     <div className="container mx-auto px-4 py-8">
       <div className="flex justify-between items-center mb-6">
         <h1 className="text-2xl font-bold">Proyectos</h1>
-        {userRole === "admin" && (
+        {isAdmin && (
           <Link
             className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded mx-1"
             href={`/projects/create`}
@@ -32,17 +32,17 @@ export default function ProjectList({ projects = [], userRole, handleDelete }) {
                 <td className="py-2 px-4 text-center">{project.description}</td>
                 <td className="py-2 px-4 text-center">{project.status}</td>
                 <td className="py-2 px-4 text-center">
-                  {userRole === "admin" ? (
-                    <>
+                  {isAdmin ? (
+                    <div className="flex justify-center space-x-2">
                       <Link
                         href={`/projects/${project.id}/edit`}
-                        className="bg-yellow-500 hover:bg-yellow-700 text-white font-bold py-1 px-2 rounded mr-2"
+                        className="bg-yellow-500 hover:bg-yellow-700 text-white font-bold py-1 px-2 rounded"
                       >
                         Editar
                       </Link>
                       <Link
                         href={`/projects/${project.id}`}
-                        className="bg-green-500 hover:bg-green-700 text-white font-bold py-1 px-2 rounded mr-2"
+                        className="bg-green-500 hover:bg-green-700 text-white font-bold py-1 px-2 rounded"
                       >
                         Ver Más
                       </Link>
@@ -52,11 +52,11 @@ export default function ProjectList({ projects = [], userRole, handleDelete }) {
                       >
                         Eliminar
                       </button>
-                    </>
+                    </div>
                   ) : (
                     <Link
                       href={`/projects/${project.id}`}
-                      className="bg-green-500 hover:bg-green-700 text-white font-bold py-1 px-2 rounded mr-2"
+                      className="bg-green-500 hover:bg-green-700 text-white font-bold py-1 px-2 rounded"
                     >
                       Ver Más
                     </Link>

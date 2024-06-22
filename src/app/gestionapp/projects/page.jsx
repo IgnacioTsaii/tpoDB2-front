@@ -9,7 +9,7 @@ export default function ProjectsPage() {
   
 
   useEffect(() => {
-    const response=async() => {
+    const response= async() => {
       const decodedToken = await decodingToken();
       console.log(decodedToken);
       if(decodedToken.userType === 'Admin'){
@@ -20,6 +20,7 @@ export default function ProjectsPage() {
     }
     response();
 
+    
   }, []);
   const initialProjects = [
     {

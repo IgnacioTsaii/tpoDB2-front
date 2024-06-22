@@ -2,24 +2,25 @@
 
 import { useState, useEffect } from "react";
 import Link from "next/link";
+import decodingToken from "@/actions/utils/decodingToken";
 
 export default function Navbar() {
   const [isOpen, setIsOpen] = useState(false);
   const [isScrolled, setIsScrolled] = useState(false);
+  const [isAdmin, setIsAdmin] = useState(false);
 
   useEffect(() => {
-    const handleScroll = () => {
-      const show = window.scrollY > 50;
-      if (show !== isScrolled) {
-        setIsScrolled(show);
+    const fetchUserRole = async () => {
+      const decodedToken = await decodingToken();
+      console.log(decodedToken);
+      if (decodedToken && decodedToken.userType === "Admin") {
+        setIsAdmin(true);
+      } else {
+        setIsAdmin(false);
       }
     };
-
-    document.addEventListener("scroll", handleScroll);
-    return () => {
-      document.removeEventListener("scroll", handleScroll);
-    };
-  }, [isScrolled]);
+    fetchUserRole();
+  }, []);
 
   return (
     <nav
@@ -75,52 +76,52 @@ export default function Navbar() {
           </div>
           <div className="flex-1 flex items-center justify-center sm:items-stretch sm:justify-start">
             <div className="flex-shrink-0 flex items-center">
-              <a href="/gestionapp/projects">
-
-              <h1 className="rounded-md text-lg text-green-400 font-roboto hover:bg-gray-700">
-                04 Database Group
-              </h1>
-              </a>
+              <Link href="/gestionapp/projects">
+                <h1 className="rounded-md text-lg text-green-400 font-roboto hover:bg-gray-700">
+                  04 Database Group
+                </h1>
+              </Link>
             </div>
             <div className="hidden md:block">
               <div className="ml-10 flex items-baseline space-x-4">
-                <Link
-                  href="/gestionapp/empleado"
-                  className="px-3 py-2 rounded-md text-md font-medium hover:text-gray-700 hover:bg-gray-300"
-                >
-                  Gestion de empleados
-                </Link>
+                {isAdmin && (
+                  <Link
+                    href="/gestionapp/empleado"
+                    className="px-3 py-2 rounded-md text-md font-medium hover:text-gray-700 hover:bg-gray-300"
+                  >
+                    Gestion de empleados
+                  </Link>
+                )}
                 <Link
                   href="/gestionapp/projects"
                   className="px-3 py-2 rounded-md text-md font-medium hover:text-gray-700 hover:bg-gray-300"
                 >
                   Proyectos
                 </Link>
-
               </div>
             </div>
           </div>
-          
         </div>
       </div>
 
       {isOpen && (
         <div className="md:hidden" id="mobile-menu">
           <div className="px-2 pt-2 pb-3 text-center space-y-1 sm:px-3 flex flex-col items-center">
-            <a
-              href="/empleados"
+            {isAdmin && (
+              <Link
+                href="/gestionapp/empleado"
+                className="block px-3 py-2 rounded-md text-base font-medium hover:bg-gray-700"
+              >
+                Gestion de empleados
+              </Link>
+            )}
+            <Link
+              href="/gestionapp/projects"
               className="block px-3 py-2 rounded-md text-base font-medium hover:bg-gray-700"
             >
-              Gestion de empleados
-            </a>
-            <a
-              href="/proyects"
-              className="block px-3 py-2 rounded-md text-base font-medium hover:bg-gray-700"
-            >
-              Proyects
-            </a>
+              Proyectos
+            </Link>
           </div>
-          
         </div>
       )}
     </nav>

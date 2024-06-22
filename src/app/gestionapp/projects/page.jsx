@@ -1,7 +1,7 @@
 'use client'
 import React, {useEffect, useState} from "react";
 import ProjectList from "@/components/projectComponents/projectList"
-import decodingToken from "@/actions/decodingToken";
+import decodingToken from "@/actions/utils/decodingToken";
 
 
 export default function ProjectsPage() {

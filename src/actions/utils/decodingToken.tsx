@@ -17,8 +17,9 @@ export default async function decodingToken() {
         console.log(decoded);
         const userType = decoded.role;
         const email = decoded.sub;
+        const userId = decoded.userId;
 
-        return { userType, email };
+        return { userType, email, userId};
     } catch (error: any) {
         console.error("Error decoding token:", error);
         return { error: error.message };

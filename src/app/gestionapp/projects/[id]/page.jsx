@@ -1,19 +1,24 @@
-'use client'
+"use client";
 import React, { useState } from "react";
-import Loader from '@/components/Loader';
-import CircularProgressWithLabel from '@/components/progress/CircularProgressWithLabel';
-import TaskList from '@/components/taskComponents/TaskList';
+import Loader from "@/components/Loader";
+import CircularProgressWithLabel from "@/components/progress/CircularProgressWithLabel";
+import TaskList from "@/components/taskComponents/TaskList";
+import FormCreateTask from "@/components/formularios/FormCreateTask"
+import ModalCreateTask from "@/components/modals/task/ModalCreateTask";
+import EditTaskModal from "@/components/modals/task/EditTaskModal";
 
-// projecto completo 
 
-//tareas completas del projecto 
+// projecto completo
 
-// user del projecto 
+//tareas completas del projecto
+
+// user del projecto
 
 export default function ProjectsDetailsPage({ params }) {
   const [isAdmin, setIsAdmin] = useState(true);
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const  project_id  = params.id; // Renombramos id a project_id para ser consistente
+  // const [isModalEditOpen, setIsModalEditOpen] = useState(false);
+  const project_id = params.id; // Renombramos id a project_id para ser consistente
   const [project, setProject] = useState({
     id: 1,
     name: "Proyecto 1",
@@ -22,7 +27,7 @@ export default function ProjectsDetailsPage({ params }) {
     start_date: "2024-06-01",
     end_date: "2024-07-15",
     weekly_hours: 40,
-});
+  });
   const users = [
     {
       user_id: 1,
@@ -55,7 +60,7 @@ export default function ProjectsDetailsPage({ params }) {
       skill_level: "DEVOPS_SENIOR",
     },
   ];
-  
+
   const tasks = [
     {
       task_id: 1,
@@ -91,36 +96,30 @@ export default function ProjectsDetailsPage({ params }) {
       end_date: "2024-07-20",
     },
   ];
+  const handleOpenModal = () => {
+    setIsModalOpen(true);
+  };
 
-  
+  const handleCloseModal = () => {
+    setIsModalOpen(false);
+  };
 
-    const handleOpenModal = () => {
-        setIsModalOpen(true);
-    };
-
-    const handleCloseModal = () => {
-        setIsModalOpen(false);
-    };
-
-
-    const handleCreateTask = (formData) => {
-        // Lógica para enviar los datos del formulario para crear una nueva tarea
-        console.log(formData);
-        setIsModalOpen(false); // Cerrar el modal después de enviar el formulario
-    };
-
-    const handleSaveTask = (formData) => {
-        
-    }
+  const handleCreateTask = (formData) => {
+    // Lógica para enviar los datos del formulario para crear una nueva tarea
+    console.log(formData);
+    setIsModalOpen(false); // Cerrar el modal después de enviar el formulario
+  };
+  const handleEditTask = (formData) => {
+    // Lógica para editar una tarea existente
+    console.log(formData);
+    setIsModalEditOpen(false); // Cerrar el modal después de enviar el formulario
+  };
 
   const handleDeleteTask = async (task_id) => {
     // Implementar la lógica para eliminar la tarea
-  }
-
-
+  };
 
   if (!project) return <Loader />;
-
 
   return (
     <div className="container mx-auto px-4 py-8">
@@ -136,8 +135,10 @@ export default function ProjectsDetailsPage({ params }) {
           <p className="mb-4">
             <strong>End Date:</strong> {project.end_date}
           </p>
-          <div className="mb-4 flex items-center"> {/* Añadido flex y items-center para alinear verticalmente */}
-            <strong>Status:</strong> 
+          <div className="mb-4 flex items-center">
+            {" "}
+            {/* Añadido flex y items-center para alinear verticalmente */}
+            <strong>Status:</strong>
             <span className="ml-2">
               <CircularProgressWithLabel value={project.status} />
             </span>
@@ -158,66 +159,32 @@ export default function ProjectsDetailsPage({ params }) {
         </div>
       </div>
       <div>
-      <h2 className="text-2xl font-bold mb-4">Tareas</h2>
-      {isAdmin && (
-                <button
-                    onClick={handleOpenModal}
-                    className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
-                >
-                    Crear tarea
-                </button>
-            )}
-
-            {/* Modal para crear tarea */}
-            {isModalOpen && (
-                <div className="fixed inset-0 bg-gray-600 bg-opacity-50 flex items-center justify-center">
-                    <div className="bg-white p-6 rounded-lg shadow-md">
-                        <h2 className="text-xl font-bold mb-4">Crear Nueva Tarea</h2>
-                        <form onSubmit={handleCreateTask}>
-                            <div className="mb-4">
-                                <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="name">
-                                    Nombre de la tarea
-                                </label>
-                                <input
-                                    id="name"
-                                    name="name"
-                                    type="text"
-                                    className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-                                    // Aquí conectar el value y el onChange con el estado adecuado
-                                />
-                            </div>
-                            <div className="mb-4">
-                                <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="description">
-                                    Descripción
-                                </label>
-                                <textarea
-                                    id="description"
-                                    name="description"
-                                    className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-                                    
-                                />
-                            </div>
-                            <div className="flex justify-end">
-                                <button
-                                    type="button"
-                                    onClick={handleCloseModal}
-                                    className="bg-gray-300 hover:bg-gray-400 text-gray-800 font-bold py-2 px-4 rounded mr-2"
-                                >
-                                    Cancelar
-                                </button>
-                                <button
-                                    type="submit"
-                                    className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
-                                >
-                                    Crear
-                                </button>
-                            </div>
-                        </form>
-                    </div>
-                </div>
-            )}
-      <TaskList tasks={tasks} isAdmin={isAdmin} handleCloseEditModal={handleCloseModal} handleOpenModal={handleOpenModal} handleEdit={handleSaveTask}/>
-    </div>
+        <h2 className="text-2xl font-bold mb-4">Tareas</h2>
+        {isAdmin && (
+          <div className="p-8">
+            <button
+              className="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded"
+              onClick={handleOpenModal}
+            >
+              Crear Tarea
+            </button>
+            <ModalCreateTask isOpen={isModalOpen} onClose={handleCloseModal}>
+              <FormCreateTask
+                onSubmit={handleCreateTask}
+                onClose={handleCloseModal}
+                project_id={project.id}
+              />
+            </ModalCreateTask>
+          </div>
+        )}
+        <TaskList
+          tasks={tasks}
+          isAdmin={isAdmin}
+          handleDelete={handleDeleteTask}
+          handleEdit={handleEditTask}
+          handleOpenEditModal={() => setIsModalEditOpen(true)}
+        />
+      </div>
     </div>
   );
 }

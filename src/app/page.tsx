@@ -43,7 +43,7 @@ const LoginPage: React.FC = () => {
       } else {
         setError("");
         alert("Logged in successfully");
-        router.push("/gestionapp/dashboard");
+        router.push("/gestionapp/projects");
       }
     }
   };

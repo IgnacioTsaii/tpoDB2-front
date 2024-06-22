@@ -75,20 +75,23 @@ export default function Navbar() {
           </div>
           <div className="flex-1 flex items-center justify-center sm:items-stretch sm:justify-start">
             <div className="flex-shrink-0 flex items-center">
+              <a href="/gestionapp/projects">
+
               <h1 className="rounded-md text-lg text-green-400 font-roboto hover:bg-gray-700">
                 04 Database Group
               </h1>
+              </a>
             </div>
             <div className="hidden md:block">
               <div className="ml-10 flex items-baseline space-x-4">
                 <Link
-                  href="/dashboard"
+                  href="/gestionapp/empleado"
                   className="px-3 py-2 rounded-md text-md font-medium hover:text-gray-700 hover:bg-gray-300"
                 >
                   Gestion de empleados
                 </Link>
                 <Link
-                  href="/projects"
+                  href="/gestionapp/projects"
                   className="px-3 py-2 rounded-md text-md font-medium hover:text-gray-700 hover:bg-gray-300"
                 >
                   Proyectos
@@ -97,14 +100,7 @@ export default function Navbar() {
               </div>
             </div>
           </div>
-          <div className="hidden md:flex items-center justify-end mr-2">
-            <button
-              type="submit"
-              className="group relative mt-1 flex justify-center py-2 px-4 mr-5 border border-transparent text-md font-medium rounded-md text-white bg-green-600 hover:bg-green-500 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
-            >
-              <Link href={"/"}>login</Link>
-            </button>
-          </div>
+          
         </div>
       </div>
 
@@ -112,26 +108,19 @@ export default function Navbar() {
         <div className="md:hidden" id="mobile-menu">
           <div className="px-2 pt-2 pb-3 text-center space-y-1 sm:px-3 flex flex-col items-center">
             <a
-              href="./dashboard"
+              href="/empleados"
               className="block px-3 py-2 rounded-md text-base font-medium hover:bg-gray-700"
             >
               Gestion de empleados
             </a>
             <a
-              href="./proyects"
+              href="/proyects"
               className="block px-3 py-2 rounded-md text-base font-medium hover:bg-gray-700"
             >
               Proyects
             </a>
           </div>
-          <div className="px-2 pt-2 pb-3 text-center space-y-1 sm:px-3 flex flex-col justify-center">
-            <button
-              type="submit"
-              className="group relative mt-1 flex justify-center py-2 px-4 border border-transparent text-md font-medium rounded-md text-white bg-green-700 hover:bg-green-500 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
-            >
-              <Link href={"/login"}>Login</Link>
-            </button>
-          </div>
+          
         </div>
       )}
     </nav>

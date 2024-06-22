@@ -9,7 +9,7 @@ export default function ProjectList({ projects, isAdmin, handleDelete }) {
         {isAdmin && (
           <Link
             className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded mx-1"
-            href={`/projects/create`}
+            href={`/gestionapp/projects/create`}
           >
             Agregar Proyecto
           </Link>
@@ -35,13 +35,13 @@ export default function ProjectList({ projects, isAdmin, handleDelete }) {
                   {isAdmin ? (
                     <div className="flex justify-center space-x-2">
                       <Link
-                        href={`/projects/${project.id}/edit`}
+                        href={`/gestionapp/projects/${project.id}/edit`}
                         className="bg-yellow-500 hover:bg-yellow-700 text-white font-bold py-1 px-2 rounded"
                       >
                         Editar
                       </Link>
                       <Link
-                        href={`/projects/${project.id}`}
+                        href={`/gestionapp/projects/${project.id}`}
                         className="bg-green-500 hover:bg-green-700 text-white font-bold py-1 px-2 rounded"
                       >
                         Ver Más
@@ -55,7 +55,7 @@ export default function ProjectList({ projects, isAdmin, handleDelete }) {
                     </div>
                   ) : (
                     <Link
-                      href={`/projects/${project.id}`}
+                      href={`/gestionapp/projects/${project.id}`}
                       className="bg-green-500 hover:bg-green-700 text-white font-bold py-1 px-2 rounded"
                     >
                       Ver Más

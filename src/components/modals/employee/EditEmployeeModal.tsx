@@ -1,18 +1,11 @@
 import React from 'react';
 import Modal from 'react-modal';
+import User from '@/interface/user';
 
 interface EditEmployeeModalProps {
     isOpen: boolean;
     closeModal: () => void;
-    usuario: {
-        user_id: string;
-        email: string;
-        userPassword: string;
-        name: string;
-        last_name: string;
-        skillLevel: string;
-        weeklyHours: number;
-    };
+    usuario: User;
     setFormData: (formData: any) => void;
     handleAction: () => void;
     actionName: string;

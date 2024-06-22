@@ -14,6 +14,7 @@ import DeleteUserModal from '../modals/employee/DeleteUserModal';
 
 // importo accion para crear empleado
 import postEmployee from '@/actions/employees/postEmployee';
+import deleteUser from '@/actions/employees/deleteUser';
 
 interface UserTableProps {
     users: User[];
@@ -31,8 +32,9 @@ const UserTable: React.FC<UserTableProps> = ({ users, skills }) => {
 
     const [formData, setFormData] = useState({
         email: '',
-        name: '',
-        last_name: '',
+        firstname: '',
+        lastname: '',
+        username:'',
         skillLevel: '',
         weeklyHours: 0, // Inicializar como string para que coincida con el tipo en el modal de edición
         userPassword: '', // Agregar campo para la contraseña
@@ -50,14 +52,14 @@ const UserTable: React.FC<UserTableProps> = ({ users, skills }) => {
         try {
             const response = await postEmployee(formData);
             if (response.ok) {
-                setSuccessMessage('User registered successfully');
-                setTimeout(() => setSuccessMessage(''), 3000);
+                alert('User registered successfully');
                 closeRegisterModal();
+                window.location.reload();
             } else {
-                console.error('Failed to register user');
+                alert(`Registration failed: ${response.message}`);
             }
-        } catch (error) {
-            console.error('Error:', error);
+        } catch (error: any) {
+            alert(`Error: ${error.message}`);
         }
     };
     
@@ -71,6 +73,7 @@ const UserTable: React.FC<UserTableProps> = ({ users, skills }) => {
         email: string;
         userPassword: string;
         name: string;
+        username:string;
         last_name: string;
         skillLevel: string;
         role:string
@@ -80,6 +83,7 @@ const UserTable: React.FC<UserTableProps> = ({ users, skills }) => {
             user_id: '',
             userPassword: '',
             name: '',
+            username:'',
             last_name: '',
             skillLevel: '',
             weeklyHours: 0,
@@ -91,8 +95,9 @@ const UserTable: React.FC<UserTableProps> = ({ users, skills }) => {
     const openEditModal = (user: User) => {
         setFormData({
             email: user.email,
-            name: user.name,
-            last_name: user.last_name,
+            firstname: user.name,
+            username:user.username,
+            lastname: user.last_name,
             userPassword: user.userPassword,
             skillLevel: user.skillLevel,
             weeklyHours: user.weeklyHours, // Convertir a string para que coincida con el tipo en el modal
@@ -106,24 +111,6 @@ const UserTable: React.FC<UserTableProps> = ({ users, skills }) => {
     const handleEdit = async () => {
         if (!userToEdit) return;
         
-        try {
-            const response = await fetch(`/api/edit/${userToEdit.email}`, {
-                method: 'PUT',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-                body: JSON.stringify(formData),
-            });
-            if (response.ok) {
-                setSuccessMessage('User updated successfully');
-                setTimeout(() => setSuccessMessage(''), 3000);
-                closeEditModal();
-            } else {
-                console.error('Failed to edit user');
-            }
-        } catch (error) {
-            console.error('Error:', error);
-        }
     };
     
     // cuando se cierra el modal de edición, se restablece el usuario a editar y se cierra el modal
@@ -132,6 +119,7 @@ const UserTable: React.FC<UserTableProps> = ({ users, skills }) => {
             user_id: '',
             userPassword: '',
             name: '',
+            username:'',
             last_name: '',
             skillLevel: '',
             weeklyHours: 0,
@@ -140,8 +128,9 @@ const UserTable: React.FC<UserTableProps> = ({ users, skills }) => {
         });
         setFormData({
             email: '',
-            name: '',
-            last_name: '',
+            firstname: '',
+            username:'',
+            lastname: '',
             skillLevel: '',
             weeklyHours: 0,
             userPassword: '',
@@ -166,21 +155,20 @@ const UserTable: React.FC<UserTableProps> = ({ users, skills }) => {
     
     const handleDelete = async () => {
         if (!userToDelete) return;
-        
         try {
-            const response = await fetch(`/api/delete/${userToDelete}`, {
-                method: 'DELETE',
-            });
+            const response = await deleteUser(userToDelete);
             if (response.ok) {
-                setSuccessMessage('User deleted successfully');
-                setTimeout(() => setSuccessMessage(''), 3000);
+                alert('User deleted successfully');
                 closeDeleteModal();
-            } else {
-                console.error('Failed to delete user');
+                window.location.reload();
+            }else{
+                alert(`Deletion failed: ${response.message}`);
             }
-        } catch (error) {
-            console.error('Error:', error);
         }
+        catch (error: any) {
+            alert(`Error: ${error.message}`);
+        }
+        
     };
 
     return (

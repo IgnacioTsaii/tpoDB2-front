@@ -1,6 +1,6 @@
 import React from "react";
 import { AiOutlineDelete } from "react-icons/ai";
-import User from "@/interface/User";
+import User from "@/interface/user";
 
 interface UserRowProps {
     user: User;

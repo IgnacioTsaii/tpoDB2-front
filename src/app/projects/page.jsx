@@ -1,10 +1,10 @@
 'use client'
-import Navbar from "@/components/navbar"
+import React, {useState} from "react";
 import ProjectList from "@/components/projectComponents/projectList"
-import Footer from "@/components/Footer"
 
 
-export default function page() {
+export default function ProjectsPage() {
+  const [isAdmin, setIsAdmin] = useState(true);
   const initialProjects = [
     {
       id: 1,
@@ -61,7 +61,7 @@ const handlerDelete = async (e) => {
   return (
     <div>
       {/* listado de projectos */}
-      <ProjectList projects={initialProjects} handleDelete={handlerDelete}/>
+      <ProjectList projects={initialProjects} handleDelete={handlerDelete} isAdmin={isAdmin}/>
     </div>
   );
 };

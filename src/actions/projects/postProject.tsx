@@ -1,9 +1,9 @@
 "use server";
 
-const postEmployee = async (formData:any) => {
-    
+const postProject = async (formData:any) => {
+    console.log("FormData:", formData);
     try {
-        const response = await fetch("http://localhost:8081/auth/register", {
+        const response = await fetch("http://localhost:8081/projects/add", {
             method: "POST",
             headers: {
                 "Content-Type": "application/json",
@@ -29,4 +29,4 @@ const postEmployee = async (formData:any) => {
     }
 };
 
-export default postEmployee;
+export default postProject;

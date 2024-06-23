@@ -4,13 +4,16 @@ import ProjectList from "@/components/projectComponents/projectList";
 import FormEditProject from "@/components/formularios/FormEditProject";
 import decodingToken from "@/actions/utils/decodingToken";
 import Loader from "@/components/Loader";
+import getallProjects from "@/actions/projects/getallProjects";
+
 
 
 export default function ProjectsPage() {
   const [isAdmin, setIsAdmin] = useState(true);
-  const [initialProjects, setInitialProjects] = useState([]);
   const [selectedProject, setSelectedProject] = useState(null);
   const [showEditModal, setShowEditModal] = useState(false);
+  const [projects, setProjects] = useState([]);
+  
 
   useEffect(() => {
     const fetchData = async () => {
@@ -24,57 +27,19 @@ export default function ProjectsPage() {
     };
     fetchData();
 
-    // Simular carga de proyectos desde una fuente de datos (API, localStorage, etc.)
-    const fetchedProjects = [
-      {
-        id: 1,
-        name: "Proyecto 1",
-        description: "Descripción del proyecto 1",
-        startDate: "2023-01-01",
-        endDate: "2023-06-01",
-        status: 75,
-        weeklyHours: 40,
-      },
-      {
-        id: 2,
-        name: "Proyecto 2",
-        description: "Descripción del proyecto 2",
-        startDate: "2023-02-01",
-        endDate: "2023-07-01",
-        status: 50,
-        weeklyHours: 30,
-      },
-      {
-        id: 3,
-        name: "Proyecto 3",
-        description: "Descripción del proyecto 3",
-        startDate: "2023-03-01",
-        endDate: "2023-08-01",
-        status: 25,
-        weeklyHours: 20,
-      },
-      {
-        id: 4,
-        name: "Proyecto 4",
-        description: "Descripción del proyecto 4",
-        startDate: "2023-04-01",
-        endDate: "2023-09-01",
-        status: 90,
-        weeklyHours: 25,
-      },
-      {
-        id: 5,
-        name: "Proyecto 5",
-        description: "Descripción del proyecto 5",
-        start_date: "2023-05-01",
-        end_date: "2023-10-01",
-        status: 60,
-        weekly_hours: 35,
-      },
-    ];
+    // si el usuario es admin, se le permite ver toda la lista de los proyectos
+    // si el usuario es un usuario normal, se le permite ver solo los proyectos en los que está asignado
+    const response2 = async() => {
+      if(isAdmin){
+        const projects = await getallProjects();
+        setProjects(projects);
+      }
+    }
+    response2();
 
-    setInitialProjects(fetchedProjects);
-  }, []);
+
+
+  }, [isAdmin]);
 
   const handleEditClick = (project) => {
     setSelectedProject(project);

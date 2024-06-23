@@ -130,12 +130,6 @@ export default function ProjectList({
                         >
                           Eliminar
                         </button>
-                        <button
-                          className="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded"
-                          onClick={handleOpenUserModal}
-                        >
-                          Agregar Usuario
-                        </button>
                       </div>
                     ) : (
                       <Link
@@ -165,12 +159,7 @@ export default function ProjectList({
         onConfirm={confirmDelete}
         projectName={projectToDelete ? projectToDelete.name : ""}
       />
-      <AssignUserModal
-        isOpen={isUserModalOpen}
-        onClose={handleCloseUserModal}
-        onAssign={handleAssignUser}
-        users={users} // Pasar la lista de usuarios al modal
-      />
+      
     </div>
   );
 }

@@ -3,13 +3,13 @@ import React, { useState } from "react";
 
 export default function FormEditTask ({ task, onClose, onSave }) {
     const [formData, setFormData] = useState({
-        id: task.task_id,
+        id: task.taskId,
         name: task.name,
         description: task.description,
-        project: task.project_id,
-        skill_level: task.skill_level,
-        startDate: task.start_date,
-        endDate: task.end_date,
+        project: task.projectId,
+        skillLevel: task.skillLevel,
+        startDate: task.startDate, // Ajuste del formato
+        endDate: task.endDate,
         status: task.status,
     });
 

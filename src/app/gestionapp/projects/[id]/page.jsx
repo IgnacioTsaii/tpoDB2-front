@@ -3,10 +3,9 @@ import React, { useState } from "react";
 import Loader from "@/components/Loader";
 import CircularProgressWithLabel from "@/components/progress/CircularProgressWithLabel";
 import TaskList from "@/components/taskComponents/TaskList";
-import FormCreateTask from "@/components/formularios/FormCreateTask"
+import FormCreateTask from "@/components/formularios/FormCreateTask";
 import ModalCreateTask from "@/components/modals/task/ModalCreateTask";
-import EditTaskModal from "@/components/modals/task/EditTaskModal";
-
+import AssignUserModal from "@/components/modals/proyects/AssignUserModal";
 
 // projecto completo
 
@@ -71,8 +70,8 @@ export default function ProjectsDetailsPage({ params }) {
       description: "Desarrollar endpoints para la API REST del proyecto",
       skillLevel: "BACKEND_SENIOR",
       status: 80,
-      startDate: "2024-07-01",
-      endDate: "2024-07-15",
+      startDate: "2024-06-01",
+      endDate: "2024-07-01",
     },
     {
       task_id: 2,
@@ -82,8 +81,8 @@ export default function ProjectsDetailsPage({ params }) {
       description: "Crear maquetas y prototipos para la interfaz de usuario",
       skillLevel: "FRONTEND_MID",
       status: 60,
-      startDate: "2024-06-25",
-      endDate: "2024-07-10",
+      startDate: "01-06-2024",
+      endDate: "01-07-2024",
     },
     {
       task_id: 3,
@@ -93,8 +92,8 @@ export default function ProjectsDetailsPage({ params }) {
       description: "Configurar y desplegar el servidor de producción",
       skillLevel: "DEVOPS_SENIOR",
       status: 90,
-      startDate: "2024-07-05",
-      endDate: "2024-07-20",
+      startDate: "01-06-2024",
+      endDate: "01-07-2024",
     },
   ];
   const handleOpenModal = () => {
@@ -106,13 +105,17 @@ export default function ProjectsDetailsPage({ params }) {
   };
 
   const handleOpenUserModal = () => {
-    setIsModalOpen(true);
-  }
+    setIsModalUserOpen(true);
+  };
 
   const handleCloseUserModal = () => {
-    setIsModalOpen(false);
-  } 
+    setIsModalUserOpen(false);
+  };
 
+  const handleAssignUser = (userId) => {
+    // Implementar lógica para asignar usuario a la tarea
+    console.log("Asignar usuario ID:", userId);
+  };
   const handleCreateTask = (formData) => {
     // Lógica para enviar los datos del formulario para crear una nueva tarea
     console.log(formData);
@@ -157,19 +160,15 @@ export default function ProjectsDetailsPage({ params }) {
           </p>
         </div>
         <div className="w-1/4 pl-8">
-        <div>
-          <h2 className="text-2xl font-bold mb-4">Usuarios</h2>
-          { isAdmin && (
+          <div>
+            <h2 className="text-2xl font-bold mb-4">Usuarios</h2>
             <button
               className="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded"
               onClick={handleOpenUserModal}
             >
               Agregar Usuario
             </button>
-          )
-        }
-        </div>
-
+          </div>
           <ul>
             {users.map((user) => (
               <li key={user.id} className="mb-2">
@@ -203,7 +202,13 @@ export default function ProjectsDetailsPage({ params }) {
           isAdmin={isAdmin}
           handleDelete={handleDeleteTask}
           handleEdit={handleEditTask}
-          handleOpenEditModal={() => setIsModalEditOpen(true)}
+        />
+        <AssignUserModal
+          isOpen={isModalUserOpen}
+          onClose={handleCloseUserModal}
+          onAssign={handleAssignUser}
+          users={users}
+          projectId={project.id} // Pasar la lista de usuarios al modal
         />
       </div>
     </div>

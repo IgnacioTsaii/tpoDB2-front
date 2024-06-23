@@ -79,23 +79,24 @@ export default function ProjectsDetailsPage({ params }) {
     setIsModalUserOpen(false);
   };
 
-  const handleAssignUser = (userId) => {
+  const handleAssignUser = async (userId) => {
     // Implementar lógica para asignar usuario a la tarea
     console.log("Asignar usuario ID:", userId);
   };
-  const handleCreateTask = (formData) => {
+  const handleCreateTask = async (formData) => {
     // Lógica para enviar los datos del formulario para crear una nueva tarea
     console.log(formData);
     setIsModalOpen(false); // Cerrar el modal después de enviar el formulario
   };
-  const handleEditTask = (formData) => {
+  const handleEditTask = async (formData) => {
     // Lógica para editar una tarea existente
     console.log(formData);
     setIsModalEditOpen(false); // Cerrar el modal después de enviar el formulario
   };
 
   const handleDeleteTask = async (task_id) => {
-    // Implementar la lógica para eliminar la tarea
+    // Lógica para eliminar una tarea
+    console.log("Eliminar tarea ID:", task_id);
   };
 
   if (loading) return <Loader />;
@@ -139,7 +140,7 @@ export default function ProjectsDetailsPage({ params }) {
           <ul>
             {users.map((user) => (
               <li key={user.id} className="mb-2">
-                {user.name} {user.last_name}
+                {user.firstname} {user.lastnames}
               </li>
             ))}
           </ul>

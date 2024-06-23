@@ -17,6 +17,7 @@ import EditTaskModal from "@/components/modals/task/EditTaskModal";
 export default function ProjectsDetailsPage({ params }) {
   const [isAdmin, setIsAdmin] = useState(true);
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [isModalUserOpen, setIsModalUserOpen] = useState(false);
   // const [isModalEditOpen, setIsModalEditOpen] = useState(false);
   const project_id = params.id; // Renombramos id a project_id para ser consistente
   const [project, setProject] = useState({
@@ -24,9 +25,9 @@ export default function ProjectsDetailsPage({ params }) {
     name: "Proyecto 1",
     description: "Descripción del proyecto 1",
     status: 75,
-    start_date: "2024-06-01",
-    end_date: "2024-07-15",
-    weekly_hours: 40,
+    startDate: "2024-06-01",
+    endDate: "2024-07-15",
+    weeklyHours: 40,
   });
   const users = [
     {
@@ -36,8 +37,8 @@ export default function ProjectsDetailsPage({ params }) {
       name: "Admin",
       last_name: "User",
       email: "admin@example.com",
-      weekly_hours: 40,
-      skill_level: "FULLSTACK_SENIOR",
+      weeklyHours: 40,
+      skillLevel: "FULLSTACK_SENIOR",
     },
     {
       user_id: 2,
@@ -46,8 +47,8 @@ export default function ProjectsDetailsPage({ params }) {
       name: "John",
       last_name: "Doe",
       email: "john.doe@example.com",
-      weekly_hours: 30,
-      skill_level: "BACKEND_MID",
+      weeklyHours: 30,
+      skillLevel: "BACKEND_MID",
     },
     {
       user_id: 3,
@@ -56,8 +57,8 @@ export default function ProjectsDetailsPage({ params }) {
       name: "Jane",
       last_name: "Smith",
       email: "jane.smith@example.com",
-      weekly_hours: 35,
-      skill_level: "DEVOPS_SENIOR",
+      weeklyHours: 35,
+      skillLevel: "DEVOPS_SENIOR",
     },
   ];
 
@@ -68,10 +69,10 @@ export default function ProjectsDetailsPage({ params }) {
       user_id: 1,
       name: "Implementar API REST",
       description: "Desarrollar endpoints para la API REST del proyecto",
-      skill_level: "BACKEND_SENIOR",
+      skillLevel: "BACKEND_SENIOR",
       status: 80,
-      start_date: "2024-07-01",
-      end_date: "2024-07-15",
+      startDate: "2024-07-01",
+      endDate: "2024-07-15",
     },
     {
       task_id: 2,
@@ -79,10 +80,10 @@ export default function ProjectsDetailsPage({ params }) {
       user_id: 2,
       name: "Diseñar Interfaz de Usuario",
       description: "Crear maquetas y prototipos para la interfaz de usuario",
-      skill_level: "FRONTEND_MID",
+      skillLevel: "FRONTEND_MID",
       status: 60,
-      start_date: "2024-06-25",
-      end_date: "2024-07-10",
+      startDate: "2024-06-25",
+      endDate: "2024-07-10",
     },
     {
       task_id: 3,
@@ -90,10 +91,10 @@ export default function ProjectsDetailsPage({ params }) {
       user_id: 3,
       name: "Configurar Servidor de Producción",
       description: "Configurar y desplegar el servidor de producción",
-      skill_level: "DEVOPS_SENIOR",
+      skillLevel: "DEVOPS_SENIOR",
       status: 90,
-      start_date: "2024-07-05",
-      end_date: "2024-07-20",
+      startDate: "2024-07-05",
+      endDate: "2024-07-20",
     },
   ];
   const handleOpenModal = () => {
@@ -103,6 +104,14 @@ export default function ProjectsDetailsPage({ params }) {
   const handleCloseModal = () => {
     setIsModalOpen(false);
   };
+
+  const handleOpenUserModal = () => {
+    setIsModalOpen(true);
+  }
+
+  const handleCloseUserModal = () => {
+    setIsModalOpen(false);
+  } 
 
   const handleCreateTask = (formData) => {
     // Lógica para enviar los datos del formulario para crear una nueva tarea
@@ -130,10 +139,10 @@ export default function ProjectsDetailsPage({ params }) {
         <div className="w-3/4">
           <p className="mb-4">{project.description}</p>
           <p className="mb-4">
-            <strong>Start Date:</strong> {project.start_date}
+            <strong>Start Date:</strong> {project.startDate}
           </p>
           <p className="mb-4">
-            <strong>End Date:</strong> {project.end_date}
+            <strong>End Date:</strong> {project.endDate}
           </p>
           <div className="mb-4 flex items-center">
             {" "}
@@ -144,11 +153,23 @@ export default function ProjectsDetailsPage({ params }) {
             </span>
           </div>
           <p className="mb-4">
-            <strong>Weekly Hours:</strong> {project.weekly_hours}
+            <strong>Weekly Hours:</strong> {project.weeklyHours}
           </p>
         </div>
         <div className="w-1/4 pl-8">
+        <div>
           <h2 className="text-2xl font-bold mb-4">Usuarios</h2>
+          { isAdmin && (
+            <button
+              className="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded"
+              onClick={handleOpenUserModal}
+            >
+              Agregar Usuario
+            </button>
+          )
+        }
+        </div>
+
           <ul>
             {users.map((user) => (
               <li key={user.id} className="mb-2">

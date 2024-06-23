@@ -6,6 +6,7 @@ import decodingToken from "@/actions/utils/decodingToken";
 import Loader from "@/components/Loader";
 import getallProjects from "@/actions/projects/getallProjects";
 import deleteProject from "@/actions/projects/deleteProject";
+import putProject from "@/actions/projects/putProject";
 
 export default function ProjectsPage() {
     const [isAdmin, setIsAdmin] = useState(true);
@@ -36,7 +37,7 @@ export default function ProjectsPage() {
         };
 
         response2();
-        
+
     }, [isAdmin]);
 
     const handleEditClick = (project) => {
@@ -66,17 +67,21 @@ export default function ProjectsPage() {
         setShowEditModal(false);
     };
 
-    const handleUpdateProject = (updatedProject) => {
+    const handleUpdateProject = async (updatedProject) => {
         // Aquí puedes enviar los datos actualizados a tu servidor o actualizar el estado local, según sea necesario
         console.log("Datos actualizados:", updatedProject);
-
-        // Ejemplo de actualización del estado local:
-        const updatedProjects = initialProjects.map((p) =>
-            p.id === updatedProject.id ? updatedProject : p
-        );
-        setInitialProjects(updatedProjects);
-
-        setShowEditModal(false); // Cerrar modal después de la edición
+        try {
+            const response = await putProject(updatedProject);
+            console.log(response);
+            if (response.ok) {
+                alert("Project updated successfully");
+                window.location.reload();
+            } else {
+                alert(`Update failed: ${response.message}`);
+            }
+        } catch (error) {
+            alert(`Error: ${error.message}`);
+        }
     };
 
     if (!projects.length) return <Loader />;

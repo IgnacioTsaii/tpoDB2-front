@@ -9,7 +9,7 @@ export default async function deleteUser(user_id: string) {
             cache: "no-store",
             headers: {
                 "Content-Type": "application/json",
-              }
+            }
         });
 
         let data = await response.json();

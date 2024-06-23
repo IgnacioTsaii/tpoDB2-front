@@ -11,6 +11,9 @@ import getUsersByProjectId from "@/actions/users/getUsersByProjectId";
 import decodingToken from "@/actions/utils/decodingToken";
 import getTasksByProjectId from "@/actions/tasks/getTasksByProjectId";
 import getUserAll from "@/actions/users/getUserAll";
+import PostTask from "@/actions/tasks/PostTask"
+import SaveTask from "@/actions/tasks/SaveTask"
+
 
 // projecto completo
 
@@ -84,15 +87,46 @@ export default function ProjectsDetailsPage({ params }) {
     console.log("Asignar usuario ID:", userId);
   };
   const handleCreateTask = async (formData) => {
-    // Lógica para enviar los datos del formulario para crear una nueva tarea
-    console.log(formData);
-    setIsModalOpen(false); // Cerrar el modal después de enviar el formulario
-  };
-  const handleEditTask = async (formData) => {
-    // Lógica para editar una tarea existente
-    console.log(formData);
-    setIsModalEditOpen(false); // Cerrar el modal después de enviar el formulario
-  };
+    try {
+        const response = await PostTask(formData);
+        setIsModalOpen(false);
+
+        if (response && response.task_id) {
+            alert("¡Tarea creada con éxito!"); // Mensaje de éxito
+            setTimeout(() => {
+                window.location.reload();
+            }, 1000); // Refrescar la página después de 1 segundo
+        } else {
+            throw new Error("Error al crear la tarea"); // Manejo de error si la respuesta no es válida
+        }
+    } catch (error) {
+        console.error("Error al crear la tarea:", error);
+        alert("Hubo un error al crear la tarea. Por favor, intenta nuevamente."); // Alerta de error
+    }
+};
+
+const handleEditTask = async (formData) => {
+  try {
+      // console.log("Actualizar tarea:", formData);
+      const response = await SaveTask(formData);
+      // console.log("Respuesta de actualizar tarea:", response);
+      
+      // Comprueba si la respuesta es válida
+      if (response) {
+          alert("¡Tarea actualizada con éxito!"); 
+          // Refrescar la página 
+          setTimeout(() => {
+              window.location.reload();
+          }, 1000);
+      } else {
+          throw new Error("Error al actualizar la tarea"); 
+      }
+      
+  } catch (error) {
+      console.error("Error al actualizar la tarea:", error);
+      alert("Hubo un error al actualizar la tarea. Por favor, intenta nuevamente."); 
+  }
+};
 
   const handleDeleteTask = async (task_id) => {
     // Lógica para eliminar una tarea
@@ -160,7 +194,7 @@ export default function ProjectsDetailsPage({ params }) {
               <FormCreateTask
                 onSubmit={handleCreateTask}
                 onClose={handleCloseModal}
-                project_id={project.id}
+                project_id={project.projectId}
               />
             </ModalCreateTask>
           </div>
@@ -176,7 +210,7 @@ export default function ProjectsDetailsPage({ params }) {
           onClose={handleCloseUserModal}
           onAssign={handleAssignUser}
           users={usersAll}
-          projectId={project.id} // Pasar la lista de usuarios al modal
+          projectId={project.id} 
         />
       </div>
     </div>

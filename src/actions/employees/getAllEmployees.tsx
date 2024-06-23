@@ -12,7 +12,7 @@ export default async function getAllEmployees() {
 
         // console.log("Full Response:", response);
         const data = await response.json();
-        console.log("Parsed JSON Data:", data);
+        // console.log("Parsed JSON Data:", data);
         // console.log("Parsed JSON Data:", data);
         return data;
     } catch (error) {

@@ -1,15 +1,15 @@
 import React, { useState, useEffect } from "react";
 import getskillLevels from "@/actions/utils/getSkillLevels"; // Asegúrate de actualizar la ruta
 
-export default function FormCreateTask({ onSubmit, project_id, onClose }) {
+export default function FormCreateTask({ onSubmit, project_id , onClose }) {
   const [formData, setFormData] = useState({
     name: "",
     description: "",
-    skill_level: "",
+    project: project_id,
+    skillLevel: "",
     startDate: "",
     endDate: "",
     status: "",
-    project: project_id,
   });
 
   const [skillLevels, setSkillLevels] = useState([]);

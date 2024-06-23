@@ -11,14 +11,14 @@ export default async function getTasksByProjectId(Id) {
             // "Authorization": "Bearer " + token,
         },
     });
-        console.log("Response:", response);
+        // console.log("Response:", response);
     let data = await response.json();
 
     if (!response.ok) {
       throw new Error(data.message || "Something went wrong");
     } else {
       data.ok = true;
-      console.log("Data:", data);
+      // console.log("Data:", data);
     }
     // agregar un .ok a data para verificar si la respuesta es correcta
     return data;

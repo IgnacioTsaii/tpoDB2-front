@@ -7,8 +7,8 @@ export default function FormProject() {
     id: 0, // Considera cómo manejarás el ID
     name: "",
     description: "",
-    start_date: new Date(),
-    end_date: new Date(),
+    startDate: new Date(),
+    endDate: new Date(),
     status: "",
     weeklyHours: 0,
   });
@@ -18,7 +18,7 @@ export default function FormProject() {
     setProject((prevState) => ({
       ...prevState,
       [name]:
-        name === "start_date" || name === "end_date"
+        name === "startDate" || name === "endDate"
           ? new Date(value)
           : name === "status" || name === "weeklyHours"
           ? parseInt(value)
@@ -26,23 +26,21 @@ export default function FormProject() {
     }));
   };
 
-  const handleSubmit = (e) => {
+  const router = useRouter();
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    postProject(project)
-      .then((data) => {
-        console.log("Data:", data);
-        if (data.ok) {
-          alert("Proyecto guardado correctamente");
-          router.push("/gestionapp/projects");
-          
-        } else {
-          alert("Error al guardar el proyecto");
-        }
-      })
-      .catch((error) => {
-        console.error("Error:", error);
-        alert("Error al guardar el proyecto");
-      });
+    try {
+      const response = await postProject(project);
+      if (response.ok) {
+        alert("Proyecto creado exitosamente");
+        // Redirigir a la página de proyectos
+        router.push("/gestionapp/projects");
+      } else {
+        alert(`Error: ${response.message}`);
+      }
+    } catch (error) {
+      alert(`Error: ${error.message}`);
+    }
     
   };
 
@@ -84,30 +82,30 @@ export default function FormProject() {
       </div>
       <div className="flex flex-col space-y-1">
         <label
-          htmlFor="start_date"
+          htmlFor="startDate"
           className="text-sm font-medium text-gray-700"
         >
           Fecha de Inicio
         </label>
         <input
           type="date"
-          name="start_date"
-          value={project.start_date.toISOString().split("T")[0]}
+          name="startDate"
+          value={project.startDate.toISOString().split("T")[0]}
           onChange={handleChange}
           className="mt-1 block w-full rounded-lg border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 transition duration-150 ease-in-out sm:text-sm"
         />
       </div>
       <div className="flex flex-col space-y-1">
         <label
-          htmlFor="end_date"
+          htmlFor="endDate"
           className="text-sm font-medium text-gray-700"
         >
           Fecha de Fin
         </label>
         <input
           type="date"
-          name="end_date"
-          value={project.end_date.toISOString().split("T")[0]}
+          name="endDate"
+          value={project.endDate.toISOString().split("T")[0]}
           onChange={handleChange}
           className="mt-1 block w-full rounded-lg border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 transition duration-150 ease-in-out sm:text-sm"
         />

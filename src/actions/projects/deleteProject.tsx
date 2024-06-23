@@ -4,16 +4,16 @@ export default async function deleteUser(user_id: string) {
     const id = parseInt(user_id);
     console.log("user_id:", user_id);
     try {
-        const response = await fetch(`http://localhost:8081/project/${id}`, {
+        const response = await fetch(`http://localhost:8081/projects/delete/${id}`, {
             method: "DELETE",
             cache: "no-store",
             headers: {
                 "Content-Type": "application/json",
-              },
+              }
         });
 
-        console.log("Response:", response);
         let data = await response.json();
+        console.log("Response:", response);
         
         if (!response.ok) {
             throw new Error(data.message || 'Something went wrong');

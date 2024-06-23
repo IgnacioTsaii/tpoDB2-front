@@ -13,41 +13,7 @@ export default function ProjectList({
   const [projectToDelete, setProjectToDelete] = useState(null);
   const [users, setUsers] = useState([]);
   const [isUserModalOpen, setIsUserModalOpen] = useState(false);
-  useEffect(() => {
-    setUsers([
-      {
-        user_id: 1,
-        username: "admin_user",
-        role: "Admin",
-        name: "Admin",
-        last_name: "User",
-        email: "admin@example.com",
-        weeklyHours: 40,
-        skillLevel: "FULLSTACK_SENIOR",
-      },
-      {
-        user_id: 2,
-        username: "developer1",
-        role: "Employee",
-        name: "John",
-        last_name: "Doe",
-        email: "john.doe@example.com",
-        weeklyHours: 30,
-        skillLevel: "BACKEND_MID",
-      },
-      {
-        user_id: 3,
-        username: "devops_specialist",
-        role: "Employee",
-        name: "Jane",
-        last_name: "Smith",
-        email: "jane.smith@example.com",
-        weeklyHours: 35,
-        skillLevel: "DEVOPS_SENIOR",
-      },
-    ]);
-  }, []);
-
+  
   const openModal = (projectId) => {
     setProjectToDelete(projectId);
     setIsModalOpen(true);
@@ -64,6 +30,7 @@ export default function ProjectList({
       closeModal();
     }
   };
+  
   const handleOpenUserModal = () => {
     setIsUserModalOpen(true);
   };

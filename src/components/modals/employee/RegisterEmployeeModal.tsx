@@ -5,6 +5,7 @@ interface RegisterEmployeeModalProps {
     isOpen: boolean;
     closeModal: () => void;
     formData: {
+        userId: string;
         userPassword: string | number | readonly string[] | undefined;
         email: string;
         firstname: string;

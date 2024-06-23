@@ -16,7 +16,7 @@ export default function Employee() {
         const usersResponse=async()=>{
             try {
                 const response = await getAllEmployees();
-                console.log("Users:", response);
+                // console.log("Users:", response);
                 setUsersResponse(response);
             } catch (error) {
                 console.error("Error:", error);
@@ -28,7 +28,7 @@ export default function Employee() {
         const skillLevel=async()=>{
             try {
                 const response = await getskillLevels();
-                console.log("Skill Levels:", response);
+                // console.log("Skill Levels:", response);
                 setSkillLevel(response);
             } catch (error) {
                 console.error("Error:", error);

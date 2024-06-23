@@ -15,6 +15,7 @@ import DeleteUserModal from '../modals/employee/DeleteUserModal';
 // importo accion para crear empleado
 import postEmployee from '@/actions/employees/postEmployee';
 import deleteUser from '@/actions/employees/deleteUser';
+import putUser from '@/actions/employees/putUser';
 
 interface UserTableProps {
     users: User[];
@@ -31,6 +32,7 @@ const UserTable: React.FC<UserTableProps> = ({ users, skills }) => {
 
 
     const [formData, setFormData] = useState({
+        userId: '', // Agregar campo para el id
         email: '',
         firstname: '',
         lastname: '',
@@ -67,70 +69,49 @@ const UserTable: React.FC<UserTableProps> = ({ users, skills }) => {
     // editar usuario MODAL -------------------------------------
     
     // O TIENE UN USUARIO VACIO O TIENE UNO PARA EDITAR
-    const [userToEdit, setUserToEdit] = useState<
-    | {
-        user_id: string;
-        email: string;
-        userPassword: string;
-        name: string;
-        username:string;
-        last_name: string;
-        skillLevel: string;
-        role:string
-        weeklyHours: number;
-    }>(
-        {
-            user_id: '',
-            userPassword: '',
-            name: '',
-            username:'',
-            last_name: '',
-            skillLevel: '',
-            weeklyHours: 0,
-            email: '',
-            role:''
-        }
-    );
-    //  cuando se abre el modal de edición, se establece el usuario a editar y se abre el modal
+    const [userToEdit, setUserToEdit] = useState<User | null>(null);
+
     const openEditModal = (user: User) => {
         setFormData({
+            userId: user.id,
             email: user.email,
-            firstname: user.name,
-            username:user.username,
-            lastname: user.last_name,
+            firstname: user.firstname,
+            username: user.username,
+            lastname: user.lastname,
             userPassword: user.userPassword,
             skillLevel: user.skillLevel,
-            weeklyHours: user.weeklyHours, // Convertir a string para que coincida con el tipo en el modal
-            role:user.role
+            weeklyHours: user.weeklyHours, 
+            role: user.role
         });
         setUserToEdit(user);
         setIsEditModalOpen(true);
     };
-    
-    // 
+
     const handleEdit = async () => {
-        if (!userToEdit) return;
-        
+        console.log("FormData:", formData);
+        try {
+            const response = await putUser(formData);
+            if (response.ok) {
+                alert('User updated successfully');
+                closeEditModal();
+                window.location.reload();
+            } else {
+                alert(`Update failed: ${response.message}`);
+            }
+        } catch (error: any) {
+            alert(`Error: ${error.message}`);
+        }
     };
-    
-    // cuando se cierra el modal de edición, se restablece el usuario a editar y se cierra el modal
-    const closeEditModal = () => {setIsEditModalOpen(false)
-        setUserToEdit({
-            user_id: '',
-            userPassword: '',
-            name: '',
-            username:'',
-            last_name: '',
-            skillLevel: '',
-            weeklyHours: 0,
-            email: '',
-            role:''
-        });
+
+    const closeEditModal = () => {
+        setIsEditModalOpen(false);
+        setUserToEdit(null);
         setFormData({
+            userId: '',
             email: '',
             firstname: '',
-            username:'',
             lastname: '',
+            username:'',
             skillLevel: '',
             weeklyHours: 0,
             userPassword: '',
@@ -141,18 +122,15 @@ const UserTable: React.FC<UserTableProps> = ({ users, skills }) => {
     
     // eliminar usuario MODAL-------------------------------------
     
-    // tiene un usuario a eliminar o es nulo
     const [userToDelete, setUserToDelete] = useState<null | string>(null);
-    
-    // cuando se abre el modal de eliminación, se establece el usuario a eliminar y se abre el modal
+
     const openDeleteModal = (userId: string) => {
         setUserToDelete(userId);
         setIsDeleteModalOpen(true);
     };
     
     const closeDeleteModal = () => setIsDeleteModalOpen(false);
-    
-    
+
     const handleDelete = async () => {
         if (!userToDelete) return;
         try {
@@ -161,14 +139,12 @@ const UserTable: React.FC<UserTableProps> = ({ users, skills }) => {
                 alert('User deleted successfully');
                 closeDeleteModal();
                 window.location.reload();
-            }else{
+            } else {
                 alert(`Deletion failed: ${response.message}`);
             }
-        }
-        catch (error: any) {
+        } catch (error: any) {
             alert(`Error: ${error.message}`);
         }
-        
     };
 
     return (
@@ -230,7 +206,7 @@ const UserTable: React.FC<UserTableProps> = ({ users, skills }) => {
                     </thead>
                     <tbody className="bg-white divide-y divide-gray-200">
                         {users.map((user) => (
-                            <UserRow openEditModal={openEditModal} key={user.user_id} user={user} openDeleteModal={openDeleteModal} />
+                            <UserRow openEditModal={openEditModal} key={user.id} user={user} openDeleteModal={openDeleteModal} />
                         ))}
                     </tbody>
                 </table>
@@ -247,7 +223,7 @@ const UserTable: React.FC<UserTableProps> = ({ users, skills }) => {
             <EditEmployeeModal
                 isOpen={isEditModalOpen}
                 closeModal={closeEditModal}
-                usuario={userToEdit}
+                usuario={formData}
                 setFormData={setFormData}
                 handleAction={handleEdit}
                 actionName="Edit"

@@ -67,12 +67,12 @@ export default function ProjectsPage() {
     setShowEditModal(false); // Cerrar modal después de la edición
   };
 
-  if (!initialProjects.length) return <Loader />;
+  if (!projects.length) return <Loader />;
 
   return (
     <div>
       <ProjectList
-        projects={initialProjects}
+        projects={projects}
         handleEdit={handleEditClick}
         handleDelete={handleDelete}
         isAdmin={isAdmin}

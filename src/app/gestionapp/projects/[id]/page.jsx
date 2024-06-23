@@ -11,6 +11,9 @@ import getUsersByProjectId from "@/actions/users/getUsersByProjectId";
 import decodingToken from "@/actions/utils/decodingToken";
 import getTasksByProjectId from "@/actions/tasks/getTasksByProjectId";
 import getUserAll from "@/actions/users/getUserAll";
+import PostTask from "@/actions/tasks/PostTask"
+import SaveTask from "@/actions/tasks/SaveTask"
+import deleteTask from "@/actions/tasks/deleteTask"
 
 // projecto completo
 
@@ -134,10 +137,24 @@ const handleEditTask = async (formData) => {
   }
 };
 
-  const handleDeleteTask = async (task_id) => {
-    // Lógica para eliminar una tarea
-    console.log("Eliminar tarea ID:", task_id);
-  };
+const handleDeleteTask = async (task_id) => {
+  // Lógica para eliminar una tarea
+  console.log("Eliminar tarea ID:", task_id);
+  try {
+      // Llamar a la función para eliminar la tarea
+      await deleteTask(task_id);
+      
+      // Mostrar alerta de éxito
+      alert("Tarea eliminada correctamente.");
+      
+      // Refrescar la página
+      window.location.reload();
+  } catch (error) {
+      // Capturar y manejar el error
+      console.error("Error al eliminar tarea:", error);
+      alert("Error al eliminar tarea. Por favor, intenta nuevamente.");
+  }
+};
 
   if (loading) return <Loader />;
 

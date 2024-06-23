@@ -1,11 +1,16 @@
 "use client";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import Loader from "@/components/Loader";
 import CircularProgressWithLabel from "@/components/progress/CircularProgressWithLabel";
 import TaskList from "@/components/taskComponents/TaskList";
 import FormCreateTask from "@/components/formularios/FormCreateTask";
 import ModalCreateTask from "@/components/modals/task/ModalCreateTask";
 import AssignUserModal from "@/components/modals/proyects/AssignUserModal";
+import getProjectById from "@/actions/projects/getProjectById";
+import getUsersByProjectId from "@/actions/users/getUsersByProjectId";
+import decodingToken from "@/actions/utils/decodingToken";
+import getTasksByProjectId from "@/actions/tasks/getTasksByProjectId";
+import getUserAll from "@/actions/users/getUserAll";
 
 // projecto completo
 
@@ -14,88 +19,50 @@ import AssignUserModal from "@/components/modals/proyects/AssignUserModal";
 // user del projecto
 
 export default function ProjectsDetailsPage({ params }) {
-  const [isAdmin, setIsAdmin] = useState(true);
+  const [isAdmin, setIsAdmin] = useState(false);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [isModalUserOpen, setIsModalUserOpen] = useState(false);
   // const [isModalEditOpen, setIsModalEditOpen] = useState(false);
   const project_id = params.id; // Renombramos id a project_id para ser consistente
-  const [project, setProject] = useState({
-    id: 1,
-    name: "Proyecto 1",
-    description: "Descripción del proyecto 1",
-    status: 75,
-    startDate: "2024-06-01",
-    endDate: "2024-07-15",
-    weeklyHours: 40,
-  });
-  const users = [
-    {
-      user_id: 1,
-      username: "admin_user",
-      role: "Admin",
-      name: "Admin",
-      last_name: "User",
-      email: "admin@example.com",
-      weeklyHours: 40,
-      skillLevel: "FULLSTACK_SENIOR",
-    },
-    {
-      user_id: 2,
-      username: "developer1",
-      role: "Employee",
-      name: "John",
-      last_name: "Doe",
-      email: "john.doe@example.com",
-      weeklyHours: 30,
-      skillLevel: "BACKEND_MID",
-    },
-    {
-      user_id: 3,
-      username: "devops_specialist",
-      role: "Employee",
-      name: "Jane",
-      last_name: "Smith",
-      email: "jane.smith@example.com",
-      weeklyHours: 35,
-      skillLevel: "DEVOPS_SENIOR",
-    },
-  ];
 
-  const tasks = [
-    {
-      task_id: 1,
-      project_id: 1,
-      user_id: 1,
-      name: "Implementar API REST",
-      description: "Desarrollar endpoints para la API REST del proyecto",
-      skillLevel: "BACKEND_SENIOR",
-      status: 80,
-      startDate: "2024-06-01",
-      endDate: "2024-07-01",
-    },
-    {
-      task_id: 2,
-      project_id: 1,
-      user_id: 2,
-      name: "Diseñar Interfaz de Usuario",
-      description: "Crear maquetas y prototipos para la interfaz de usuario",
-      skillLevel: "FRONTEND_MID",
-      status: 60,
-      startDate: "01-06-2024",
-      endDate: "01-07-2024",
-    },
-    {
-      task_id: 3,
-      project_id: 2,
-      user_id: 3,
-      name: "Configurar Servidor de Producción",
-      description: "Configurar y desplegar el servidor de producción",
-      skillLevel: "DEVOPS_SENIOR",
-      status: 90,
-      startDate: "01-06-2024",
-      endDate: "01-07-2024",
-    },
-  ];
+  const [project, setProject] = useState(null);
+  const [loading, setLoading] = useState(true);
+  const [users, setUsers] = useState([]);
+  const [tasks, setTasks] = useState([]);
+  const [usersAll, setUsersAll] = useState([]);
+
+  useEffect(() => {
+    const fetchProject = async () => {
+      try {
+        const decodedToken = await decodingToken();
+        console.log(decodedToken);
+        if (decodedToken.userType === "Admin") {
+          setIsAdmin(true);
+        } else {
+          setIsAdmin(false);
+        }
+        const projectData = await getProjectById(project_id);
+        setProject(projectData);
+        // users por projecto
+        const usersData = await getUsersByProjectId(project_id);
+        setUsers(usersData);
+        // tareas del projecto
+        const tasksData = await getTasksByProjectId(project_id);
+        setTasks(tasksData);
+        // todos los usuarios
+        const usersAllData = await getUserAll();
+        setUsersAll(usersAllData);
+      } catch (error) {
+        console.error("Error:", error);
+        // Implementar la lógica para manejar el error
+        alert()
+      } finally {
+        setLoading(false);
+      }
+    };
+    fetchProject();
+  }, [project_id]);
+
   const handleOpenModal = () => {
     setIsModalOpen(true);
   };
@@ -131,7 +98,7 @@ export default function ProjectsDetailsPage({ params }) {
     // Implementar la lógica para eliminar la tarea
   };
 
-  if (!project) return <Loader />;
+  if (loading) return <Loader />;
 
   return (
     <div className="container mx-auto px-4 py-8">
@@ -207,7 +174,7 @@ export default function ProjectsDetailsPage({ params }) {
           isOpen={isModalUserOpen}
           onClose={handleCloseUserModal}
           onAssign={handleAssignUser}
-          users={users}
+          users={usersAll}
           projectId={project.id} // Pasar la lista de usuarios al modal
         />
       </div>

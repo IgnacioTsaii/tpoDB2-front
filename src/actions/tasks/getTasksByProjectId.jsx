@@ -1,19 +1,17 @@
 'use server';
-export default async function getProjectById(Id) {
-  try {
-    
-    const projectId = parseInt(Id);
-    const response = await fetch(
-      `http://localhost:8081/projects/${projectId}`,
-      {
+
+export default async function getTasksByProjectId(Id) {
+    try{
+        const projectId = parseInt(Id);
+        const response = await fetch(`http://localhost:8081/task/project/${Id}`,{
         method: "GET",
+        cache: "no-store",
         headers: {
-          "Content-Type": "application/json",
-          // 'Authorization': 'Bearer ' + localStorage.getItem('token')
+            "Content-Type": "application/json",
+            // "Authorization": "Bearer " + token,
         },
-      }
-    );
-    console.log("Response:", response);
+    });
+        console.log("Response:", response);
     let data = await response.json();
 
     if (!response.ok) {
@@ -29,4 +27,4 @@ export default async function getProjectById(Id) {
     // You might want to handle the error here, depending on your use case
     throw error;
   }
-}
+    }

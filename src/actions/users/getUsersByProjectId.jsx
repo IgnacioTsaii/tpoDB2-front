@@ -1,12 +1,11 @@
+
 'use server';
-export default async function getProjectById(Id) {
+export default async function getUsersByProjectId(projectId) {
   try {
-    
-    const projectId = parseInt(Id);
     const response = await fetch(
-      `http://localhost:8081/projects/${projectId}`,
-      {
+      `http://localhost:8081/users/project/${projectId}`,{
         method: "GET",
+        cache: "no-store",
         headers: {
           "Content-Type": "application/json",
           // 'Authorization': 'Bearer ' + localStorage.getItem('token')
@@ -22,11 +21,9 @@ export default async function getProjectById(Id) {
       data.ok = true;
       console.log("Data:", data);
     }
-    // agregar un .ok a data para verificar si la respuesta es correcta
     return data;
   } catch (error) {
     console.error("Error:", error);
-    // You might want to handle the error here, depending on your use case
     throw error;
   }
 }

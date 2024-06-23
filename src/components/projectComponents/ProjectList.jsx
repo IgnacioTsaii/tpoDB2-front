@@ -1,7 +1,7 @@
 import React from "react";
 import Link from "next/link";
 
-export default function ProjectList({ projects, isAdmin, handleDelete }) {
+export default function ProjectList({ projects, isAdmin, handleEdit, handleDelete }) {
   return (
     <div className="container mx-auto px-4 py-8">
       <div className="flex justify-between items-center mb-6">
@@ -34,12 +34,12 @@ export default function ProjectList({ projects, isAdmin, handleDelete }) {
                 <td className="py-2 px-4 text-center">
                   {isAdmin ? (
                     <div className="flex justify-center space-x-2">
-                      <Link
-                        href={`/gestionapp/projects/${project.id}/edit`}
+                      <button
+                        onClick={() => handleEdit(project)}
                         className="bg-yellow-500 hover:bg-yellow-700 text-white font-bold py-1 px-2 rounded"
                       >
                         Editar
-                      </Link>
+                      </button>
                       <Link
                         href={`/gestionapp/projects/${project.id}`}
                         className="bg-green-500 hover:bg-green-700 text-white font-bold py-1 px-2 rounded"

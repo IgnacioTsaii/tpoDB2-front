@@ -19,7 +19,7 @@ const UserRow: React.FC<UserRowProps> = ({
                 {user.email}
             </td>
             <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
-                {user.name}
+                {user.firstname}
             </td>
             <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
                 {user.skillLevel}
@@ -39,7 +39,7 @@ const UserRow: React.FC<UserRowProps> = ({
             </td>
             <td className="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
                 <button
-                    onClick={() => openDeleteModal(user.user_id)}
+                    onClick={() => openDeleteModal(user.id)}
                     className="text-red-600 hover:text-red-900">
                     <AiOutlineDelete size={20} />
                 </button>

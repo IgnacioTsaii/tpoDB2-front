@@ -11,9 +11,6 @@ import getUsersByProjectId from "@/actions/users/getUsersByProjectId";
 import decodingToken from "@/actions/utils/decodingToken";
 import getTasksByProjectId from "@/actions/tasks/getTasksByProjectId";
 import getUserAll from "@/actions/users/getUserAll";
-import PostTask from "@/actions/tasks/PostTask"
-import SaveTask from "@/actions/tasks/SaveTask"
-
 
 // projecto completo
 
@@ -82,9 +79,18 @@ export default function ProjectsDetailsPage({ params }) {
     setIsModalUserOpen(false);
   };
 
-  const handleAssignUser = async (userId) => {
+  const handleAssignUser = async (userId, projectId) => {
     // Implementar lógica para asignar usuario a la tarea
-    console.log("Asignar usuario ID:", userId);
+    console.log("Asignar usuario ID:", userId,projectId);
+    try {
+      await postAssignEmployee(userId, projectId);
+      alert("Usuario asignado correctamente.");
+      window.location.reload();
+    } catch (error) {
+      console.error("Error:", error);
+      // Implementar la lógica para manejar el error
+      alert("Error al asignar usuario.");
+    }
   };
   const handleCreateTask = async (formData) => {
     try {
@@ -210,7 +216,7 @@ const handleEditTask = async (formData) => {
           onClose={handleCloseUserModal}
           onAssign={handleAssignUser}
           users={usersAll}
-          projectId={project.id} 
+          projectId={project.id} // Pasar la lista de usuarios al modal
         />
       </div>
     </div>

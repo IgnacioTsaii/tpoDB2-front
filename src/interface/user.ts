@@ -1,10 +1,10 @@
 export default interface User {
-    user_id: string;
+    id: string;
     username:string;
     email: string;
     userPassword: string;
-    name: string;
-    last_name: string;
+    firstname: string;
+    lastname: string;
     skillLevel: string;
     role:string
     weeklyHours: number;

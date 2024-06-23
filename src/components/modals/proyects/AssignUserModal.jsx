@@ -1,21 +1,19 @@
 import React, { useState } from 'react';
 
-export default function AssignUserModal({ isOpen, onClose, onAssign, users = [],projectId }) {
-  const [selectedUser, setSelectedUser] = useState({
-    userId: "",
-    projectId: projectId,
-  }
-
-
-  );
+export default function AssignUserModal({ isOpen, onClose, onAssign, users = [], projectId }) {
+  const [selectedUser, setSelectedUser] = useState('');
 
   const handleAssign = () => {
     if (selectedUser) {
-      onAssign(selectedUser);
+      onAssign(selectedUser, projectId);
       onClose();
     } else {
       alert('Por favor, seleccione un usuario.');
     }
+  };
+
+  const handleSelectUser = (e) => {
+    setSelectedUser(e.target.value);
   };
 
   return (
@@ -26,14 +24,14 @@ export default function AssignUserModal({ isOpen, onClose, onAssign, users = [],
         <div className="mb-4">
           <label className="block text-gray-700 mb-2">Seleccione un Usuario</label>
           <select
+            className="w-full bg-white border border-gray-300 rounded px-3 py-2 outline-none"
             value={selectedUser}
-            onChange={(e) => setSelectedUser(e.target.value)}
-            className="mt-1 block w-full rounded-lg border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500"
+            onChange={handleSelectUser}
           >
-            <option value="">Seleccione</option>
+            <option value="">Seleccione un Usuario</option>
             {users.map((user) => (
-              <option key={user.user_id} value={user.user_id}>
-                {user.firstname} {user.lastname}
+              <option key={user.id} value={user.id}>
+                {user.firstname} {user.lastnames}
               </option>
             ))}
           </select>

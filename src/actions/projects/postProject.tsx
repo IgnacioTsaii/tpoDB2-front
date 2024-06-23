@@ -1,6 +1,7 @@
 "use server";
 
 const postProject = async (formData:any) => {
+    console.log("FormData:", formData);
     try {
         const response = await fetch("http://localhost:8081/projects/add", {
             method: "POST",

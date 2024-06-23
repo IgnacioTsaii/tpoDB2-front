@@ -1,4 +1,6 @@
 import React, { useState } from "react";
+import postProject from "@/actions/projects/postProject";
+import {useRouter} from "next/navigation";
 
 export default function FormProject() {
   const [project, setProject] = useState({
@@ -28,10 +30,27 @@ export default function FormProject() {
     }));
   };
 
+  const router = useRouter();
+  
   const handleSubmit = (e: React.FormEvent) => {
+
     e.preventDefault();
-    console.log(project);
-    // Aquí manejarías el envío del formulario, por ejemplo, actualizando un estado global o enviando los datos a un servidor
+    postProject(project)
+      .then((data) => {
+        console.log("Data:", data);
+        if (data.ok) {
+          alert("Proyecto guardado correctamente");
+          router.push("/gestionapp/projects");
+          
+        } else {
+          alert("Error al guardar el proyecto");
+        }
+      })
+      .catch((error) => {
+        console.error("Error:", error);
+        alert("Error al guardar el proyecto");
+      });
+    
   };
 
   return (

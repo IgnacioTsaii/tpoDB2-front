@@ -1,6 +1,7 @@
 "use server";
 
 const postEmployee = async (formData:any) => {
+    
     try {
         const response = await fetch("http://localhost:8081/auth/register", {
             method: "POST",

@@ -10,13 +10,19 @@ export default async function DeleteTask(task_id) {
                 // "Authorization": `Bearer ${token}`,
             },
         });
-
         if (!response.ok) {
-            throw new Error('Error al eliminar la tarea');
+            throw new Error("Error al eliminar la tarea");
         }
-        const data = await response.json();
-        console.log('Tarea eliminada correctamente:', data);
-        return data;  // Devuelve los datos de la respuesta
+
+        // Si la respuesta del servidor no tiene contenido JSON válido, manejarla de todas formas
+        const responseData = await response.text(); // Leer como texto en lugar de JSON
+
+        if (responseData === "Task deleted") {
+            // Manejar lógica adicional si es necesario
+            console.log("Tarea eliminada correctamente");
+        } else {
+            throw new Error("Error al eliminar la tarea");
+        }
     } catch (error) {
         console.error('Error al eliminar la tarea:', error);
         throw error;  // Lanza el error para manejarlo en el contexto superior

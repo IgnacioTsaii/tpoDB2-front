@@ -14,7 +14,6 @@ const postAssignEmployee = async (userId:any,projectId:any) => {
             body: JSON.stringify(formData),
         });
         
-        console.log("Response:", response);
         let data = await response.json();
         
         if (!response.ok) {

@@ -6,6 +6,7 @@ import TaskList from "@/components/taskComponents/TaskList";
 import FormCreateTask from "@/components/formularios/FormCreateTask";
 import ModalCreateTask from "@/components/modals/task/ModalCreateTask";
 import AssignUserModal from "@/components/modals/proyects/AssignUserModal";
+
 import getProjectById from "@/actions/projects/getProjectById";
 import getUsersByProjectId from "@/actions/users/getUsersByProjectId";
 import decodingToken from "@/actions/utils/decodingToken";
@@ -14,6 +15,7 @@ import getUserAll from "@/actions/users/getUserAll";
 import PostTask from "@/actions/tasks/PostTask"
 import SaveTask from "@/actions/tasks/SaveTask"
 import deleteTask from "@/actions/tasks/deleteTask"
+import postAssignEmployee from "@/actions/projects/postAssignEmployee";
 
 // projecto completo
 
@@ -95,6 +97,7 @@ export default function ProjectsDetailsPage({ params }) {
       alert("Error al asignar usuario.");
     }
   };
+
   const handleCreateTask = async (formData) => {
     try {
         const response = await PostTask(formData);
@@ -233,7 +236,7 @@ const handleDeleteTask = async (task_id) => {
           onClose={handleCloseUserModal}
           onAssign={handleAssignUser}
           users={usersAll}
-          projectId={project.id} // Pasar la lista de usuarios al modal
+          projectId={project_id} // Pasar la lista de usuarios al modal
         />
       </div>
     </div>

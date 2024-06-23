@@ -11,11 +11,7 @@ export default function FormProject() {
     weeklyHours: 0,
   });
 
-  const handleChange = (
-    e: React.ChangeEvent<
-      HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement
-    >
-  ) => {
+  const handleChange = (e) => {
     const { name, value } = e.target;
     setProject((prevState) => ({
       ...prevState,
@@ -28,7 +24,7 @@ export default function FormProject() {
     }));
   };
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = (e) => {
     e.preventDefault();
     console.log(project);
     // Aquí manejarías el envío del formulario, por ejemplo, actualizando un estado global o enviando los datos a un servidor
@@ -110,6 +106,8 @@ export default function FormProject() {
         <input
           type="number"
           name="status"
+          max={100}
+          min={0}
           value={project.status}
           onChange={handleChange}
           className="mt-1 block w-full rounded-lg border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 transition duration-150 ease-in-out sm:text-sm"
@@ -126,6 +124,7 @@ export default function FormProject() {
         <input
           type="number"
           name="weeklyHours"
+          min={0}
           value={project.weeklyHours}
           onChange={handleChange}
           className="mt-1 block w-full rounded-lg border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 transition duration-150 ease-in-out sm:text-sm"

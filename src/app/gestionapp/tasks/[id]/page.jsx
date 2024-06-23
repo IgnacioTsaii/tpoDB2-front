@@ -52,7 +52,7 @@ export default function TaskPage({ params }) {
                     email: "john.doe@example.com",
                     weekly_hours: 30,
                     skill_level: "BACKEND_MID",
-                  },
+                },
             comment: 'Comentario 1',
             timestamp: '2021-09-01 12:00:00',
         },

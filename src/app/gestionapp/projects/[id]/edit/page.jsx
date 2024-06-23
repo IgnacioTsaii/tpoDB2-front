@@ -1,12 +1,15 @@
 'use client';
-import FormProject from "@/components/formularios/formProject";
-import React from "react";
+import Loader from "@/components/Loader";
+import FormEditProject from "@/components/formularios/formProject";
+import React, { useState } from "react";
 
-export default function page(params) {
+export default function EditProjectPage(params) {
+    const [project, setProject] = useState()
+
     
     return (
         <div>
-            <FormProject/>
+            <FormEditProject/>
         </div>
     );
 };

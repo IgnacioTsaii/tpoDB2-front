@@ -1,6 +1,5 @@
 import React from 'react';
 import Modal from 'react-modal';
-import User from '@/interface/user';
 
 interface EditEmployeeModalProps {
     isOpen: boolean;

@@ -1,8 +1,10 @@
 'use server';
-export default async function getUserAll() {
+
+export default async function getTasksById(id) {
     try{
+        let task_id = parseInt(id);
         const response = await fetch(
-            `http://localhost:8081/users/`,{
+            `http://localhost:8081/task/${task_id}`,{
               method: "GET",
               cache: "no-store",
               headers: {
@@ -25,4 +27,4 @@ export default async function getUserAll() {
         console.error("Error:", e);
         throw e;
     }
-};
+}

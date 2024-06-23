@@ -12,14 +12,14 @@ export default async function getUsersByProjectId(projectId) {
         },
       }
     );
-    console.log("Response:", response);
+    // console.log("Response:", response);
     let data = await response.json();
 
     if (!response.ok) {
       throw new Error(data.message || "Something went wrong");
     } else {
       data.ok = true;
-      console.log("Data:", data);
+      // console.log("Data:", data);
     }
     return data;
   } catch (error) {

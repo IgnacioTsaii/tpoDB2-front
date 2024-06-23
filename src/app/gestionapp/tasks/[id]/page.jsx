@@ -7,79 +7,39 @@ import FormComment from '@/components/formularios/formComment';
 import CommentList from '@/components/comment/CommentList'
 import EditActivityModal from '@/components/modals/activity/EditActivityModal';
 import CreateActivityModal from '@/components/modals/activity/CreateActityModal';
+import getTaskById from '@/actions/tasks/getTaskById'
+import getActitiesByTask from '@/actions/activities/getActitiesByTask'
+import getCommentsByTask from '@/actions/comments/getCommentsByTask'
 
 export default function TaskPage({ params }) {
     const task_id = params.id;
     
 
-    const [task, setTask] = useState(
-        {
-            task_id: 1,
-            name: 'Tarea 1',
-            description: 'Descripción de la tarea 1',
-            skill_level: 'Intermedio',
-            status: 50,
-            start_date: '2021-09-01',
-            end_date: '2021-09-10',
-        }
-    );
-    const [activities, setActivities] = useState([
-        {
-            id: 1,
-            description: 'Actividad 1',
-            time_worked: 5,
-            progress_percentage: 50,
-            timestamp: '2021-09-01 12:00:00',
-        },
-        {
-            id: 2,
-            description: 'Actividad 2',
-            time_worked: 10,
-            progress_percentage: 100,
-            timestamp: '2021-09-02 12:00:00',
-        },
-    ]);
-    const [comments, setCommets] = useState([
-        {
-            id: 1,
-            users:
-                {
-                    user_id: 2,
-                    username: "developer1",
-                    role: "Employee",
-                    name: "John",
-                    last_name: "Doe",
-                    email: "john.doe@example.com",
-                    weekly_hours: 30,
-                    skill_level: "BACKEND_MID",
-                },
-            comment: 'Comentario 1',
-            timestamp: '2021-09-01 12:00:00',
-        },
-        {
-            id: 2,
-            users:
-                {
-                    user_id: 3,
-                    username: "devops_specialist",
-                    role: "Employee",
-                    name: "Jane",
-                    last_name: "Smith",
-                    email: "jane.smith@example.com",
-                    weekly_hours: 35,
-                    skill_level: "DEVOPS_SENIOR",
-                    },
-            comment: 'Comentario 2',
-            timestamp: '2021-09-02 12:00:00',
-            }
-    ]);
+    const [task, setTask] = useState(null);
+    const [activities, setActivities] = useState([]);
+    const [comments, setCommets] = useState([]);
 
     const [isEditModalOpen, setIsEditModalOpen] = useState(false);
     const [isCreateModalOpen, setIsCreateModalOpen] = useState(false);
     const [currentActivity, setCurrentActivity] = useState(null);
 
     useEffect(() => {
-        // Aquí puedes agregar la lógica para obtener los datos de la tarea y las actividades desde una API
+        const fetchTask = async () => {
+            try {
+                //tarea por id 
+                const taskData = await getTaskById(task_id);
+                setTask(taskData);
+                //actividades por tarea
+                const activitiesData = await getActitiesByTask(task_id);
+                setActivities(activitiesData);
+                //comentarios por tarea
+                const commentsData = await getCommentsByTask(task_id);
+                setCommets(commentsData);
+            } catch (error) {
+                console.error(error);
+            }
+        };
+        fetchTask();
     }, [task_id]);
 
     const handleOpenEditModal = (activity) => {

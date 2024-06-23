@@ -159,6 +159,7 @@ const handleDeleteTask = async (task_id) => {
   }
 };
 
+
   if (loading) return <Loader />;
 
   return (

@@ -19,6 +19,7 @@ import decodingToken from "@/actions/utils/decodingToken";
 import putAssignTask from "@/actions/tasks/putAssignTask";
 import PostActiviy from "@/actions/activities/postActivity";
 import PutActiviy from "@/actions/activities/putActivity";
+import postComment from "@/actions/comments/postComment";
 
 export default function TaskPage({ params }) {
     const task_id = params.id;
@@ -27,6 +28,7 @@ export default function TaskPage({ params }) {
     const [task, setTask] = useState(null);
     const [activities, setActivities] = useState([]);
     const [comments, setComments] = useState([]);
+    const [userId,setUserId] = useState("")
 
     const [isEditModalOpen, setIsEditModalOpen] = useState(false);
     const [isCreateModalOpen, setIsCreateModalOpen] = useState(false);
@@ -43,6 +45,7 @@ export default function TaskPage({ params }) {
                 } else {
                     setIsAdmin(false);
                 }
+                setUserId(decodedToken.userId)
                 // Tarea por id
                 const taskData = await getTaskById(task_id);
                 setTask(taskData);
@@ -102,6 +105,15 @@ export default function TaskPage({ params }) {
 
     const handleSubmitComment = async (data) => {
         console.log(data);
+        try {
+            const response = await postComment(data);
+            alert("Comentario creado correctamente: " + response.message);
+            window.location.reload();
+        } catch (error) {
+            console.error("Error al crear comentario:", error);
+            alert("Error al crear comentario: " + error.message);
+        }
+        
     };
 
     const assignTask = async (userId, task_id) => {
@@ -197,6 +209,7 @@ export default function TaskPage({ params }) {
                 <FormComment
                     onSubmit={handleSubmitComment}
                     taskId={task.task_id}
+                    userId={userId}
                 />
                 <CommentList list={comments} />
             </div>

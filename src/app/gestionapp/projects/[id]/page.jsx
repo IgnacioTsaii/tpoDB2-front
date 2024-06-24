@@ -157,6 +157,17 @@ const handleDeleteTask = async (task_id) => {
   }
 };
 
+// TODO
+const handleGenerateProjectReportPdf = async () => {
+  // Lógica para generar el reporte del proyecto
+}
+
+// TODO
+const handleGenerateProjectReportExcel = async () => {
+  // Lógica para generar el reporte del proyecto excel 
+
+}
+
 
   if (loading) return <Loader />;
 
@@ -175,8 +186,6 @@ const handleDeleteTask = async (task_id) => {
             <strong>End Date:</strong> {project.endDate}
           </p>
           <div className="mb-4 flex items-center">
-            {" "}
-            {/* Añadido flex y items-center para alinear verticalmente */}
             <strong>Status:</strong>
             <span className="ml-2">
               <CircularProgressWithLabel value={project.status} />
@@ -187,22 +196,37 @@ const handleDeleteTask = async (task_id) => {
           </p>
         </div>
         <div className="w-1/4 pl-8">
-          <div>
+          <div className="mb-4">
             <h2 className="text-2xl font-bold mb-4">Usuarios</h2>
             <button
-              className="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded"
+              className="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded mb-2"
               onClick={handleOpenUserModal}
             >
               Agregar Usuario
             </button>
+            <ul>
+              {users.map((user) => (
+                <li key={user.id} className="mb-2">
+                  {user.firstname} {user.lastnames}
+                </li>
+              ))}
+            </ul>
           </div>
-          <ul>
-            {users.map((user) => (
-              <li key={user.id} className="mb-2">
-                {user.firstname} {user.lastnames}
-              </li>
-            ))}
-          </ul>
+          <div>
+            <h2 className="text-2xl font-bold mb-4">Reportes</h2>
+            <button
+              className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded mb-2"
+              onClick={handleGenerateProjectReportPdf}
+            >
+              Reporte PDF
+            </button>
+            <button
+              className="bg-yellow-500 hover:bg-yellow-700 text-white font-bold py-2 px-4 rounded"
+              onClick={handleGenerateProjectReportExcel}
+            >
+              Reporte Excel
+            </button>
+          </div>
         </div>
       </div>
       <div>
@@ -240,4 +264,5 @@ const handleDeleteTask = async (task_id) => {
       </div>
     </div>
   );
+  
 }

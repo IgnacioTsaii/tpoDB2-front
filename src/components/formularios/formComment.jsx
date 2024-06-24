@@ -1,9 +1,9 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 
-const CommentForm = ({ onSubmit, taskId }) => {
+const CommentForm = ({ onSubmit, taskId, userId}) => {
   const [formData, setFormData] = useState({
     taskId: taskId,
-    userId: '',
+    userId: userId,
     comment: '',
   });
 
@@ -18,8 +18,6 @@ const CommentForm = ({ onSubmit, taskId }) => {
   const handleSubmit = (event) => {
     event.preventDefault();
     onSubmit(formData);
-    // Puedes añadir lógica adicional después de enviar el formulario si es necesario
-    // Por ejemplo, limpiar el formulario o mostrar un mensaje de éxito.
   };
 
   return (

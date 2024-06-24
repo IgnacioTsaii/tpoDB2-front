@@ -33,21 +33,6 @@ export default function TaskList({ tasks, isAdmin, handleEdit, handleDelete }) {
           <div className="flex justify-end mt-4 space-x-2">
             {isAdmin && (
               <>
-                {task.user ? (
-                  <button
-                    onClick={() => reassignTask(task.task_id)}
-                    className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-1 px-2 rounded"
-                  >
-                    Reasignar
-                  </button>
-                ) : (
-                  <button
-                    onClick={() => assignTask(task.task_id)}
-                    className="bg-green-500 hover:bg-green-700 text-white font-bold py-1 px-2 rounded"
-                  >
-                    Asignar
-                  </button>
-                )}
                 <button
                   onClick={() => openEditModal(task)}
                   className="bg-yellow-500 hover:bg-yellow-700 text-white font-bold py-1 px-2 rounded"

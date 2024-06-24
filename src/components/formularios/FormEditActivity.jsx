@@ -1,7 +1,18 @@
 import React, { useState } from "react";
 
-export default function FormEditActivity({ activity, onClose, onSave }) {
-  const [formData, setFormData] = useState(activity);
+export default function FormEditActivity({ activity, onClose, onSave, UserID }) {
+  const [formData, setFormData] = useState({
+    description: activity.description,
+    time_worked: activity.time_worked,
+    progress_percentage: activity.progress_percentage,
+    user_id:UserID,
+    timestamp: activity.timestamp,
+    task_id: activity.task_id,
+    }
+  );
+
+  
+
 
   const handleChange = (e) => {
     const { name, value } = e.target;

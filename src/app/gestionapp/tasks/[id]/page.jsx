@@ -201,6 +201,7 @@ export default function TaskPage({ params }) {
         task_Id={task_id}
         onEdit={handleOpenEditModal}
         onCreate={handleOpenCreateModal}
+        userId={userId}
       />
 
       <div>
@@ -218,6 +219,7 @@ export default function TaskPage({ params }) {
           isOpen={isEditModalOpen}
           onClose={handleCloseEditModal}
           onSave={handleSaveActivity}
+          UserID={userId}
         />
       )}
       {isCreateModalOpen && (
@@ -226,7 +228,7 @@ export default function TaskPage({ params }) {
           onClose={handleCloseCreateModal}
           onSave={handleCreateActivity}
           task_id={task_id}
-          user_id={task.user ? task.user.user_id : null}
+          user_id={userId}
         />
       )}
       {isAssignModalOpen && (

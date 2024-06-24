@@ -1,8 +1,8 @@
 'use server';
 
-export default async function deleteReverseActivities(task_id:any) {
+export default async function deleteReverseActivities(task_id:any, userId:any) {
     try {
-        const response = await fetch(`http://localhost:8081/activity/delete/task/${task_id}`, {
+        const response = await fetch(`http://localhost:8081/activity/delete/task/${task_id}/${userId}`, {
             method: "DELETE",
             cache: "no-store",
             headers: {
@@ -10,13 +10,14 @@ export default async function deleteReverseActivities(task_id:any) {
                 // "Authorization": `Bearer ${token}`,
             },
         });
+        // console.log(response);
+        var data = await response.json();
 
         if (!response.ok) {
-            throw new Error("Error al eliminar la tarea");
+            throw new Error(data.error || 'Something went wrong');
         }
-
-        // Leer el cuerpo de la respuesta como texto
-        const responseData = await response.text();
+        
+        const responseData = data.message;
 
         if (responseData === "Activity deleted successfully") {
             console.log("Tarea eliminada correctamente");
@@ -24,7 +25,7 @@ export default async function deleteReverseActivities(task_id:any) {
             throw new Error("Error al eliminar la tarea");
         }
     } catch (error) {
-        console.error('Error al eliminar la tarea:', error);
+        console.error(error);
         throw error;  // Lanza el error para manejarlo en el contexto superior
     }
 }

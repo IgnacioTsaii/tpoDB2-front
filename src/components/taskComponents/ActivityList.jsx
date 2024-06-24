@@ -4,12 +4,12 @@ import deleteReverseActivities from '@/actions/activities/deleteReverseActivitie
 
 
 
-export default function ActivityList({ list, task_Id, onEdit, onCreate }) {
+export default function ActivityList({ list, task_Id, onEdit, onCreate, userId }) {
         
     
-    const handleRevert = async(task_Id)=>{
+    const handleRevert = async(task_Id,userId)=>{
         try {
-            const response = await deleteReverseActivities(task_Id);
+            const response = await deleteReverseActivities(task_Id,userId);
             // console.log(response);
             alert("Actividad revertida correctamente");
             window.location.reload();
@@ -24,7 +24,7 @@ export default function ActivityList({ list, task_Id, onEdit, onCreate }) {
         <div>
             <h2 className="text-2xl font-bold mt-6">Actividades</h2>
             <button className="ml-2 bg-gray-300 hover:bg-gray-400 text-gray-800 font-bold py-1 px-2 rounded"
-                onClick={() => handleRevert(task_Id)}
+                onClick={() => handleRevert(task_Id,userId)}
             >
                 Revertir
             </button>

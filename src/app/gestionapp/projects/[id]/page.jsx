@@ -20,7 +20,6 @@ import getPdfReport from "@/actions/reports/getPdfReport";
 import ReportDownloadButton from "@/components/reports/ReportDownloadButton";
 import ReportDownloadButtonExcel from "@/components/reports/ReportDownloadButtonExcel";
 
-
 // projecto completo
 
 //tareas completas del projecto
@@ -165,18 +164,20 @@ export default function ProjectsDetailsPage({ params }) {
   // TODO
   const handleGenerateProjectReportPdf = async (projectId) => {
     try {
-        console.log("Generando reporte del proyecto PDF...");
-        
-        // Llama a la función para obtener el PDF del servidor
-        const response = await getPdfReport(projectId);
-        
-        // Manejo adicional después de descargar el PDF si es necesario
-        console.log("Reporte del proyecto PDF generado correctamente.");
+      console.log("Generando reporte del proyecto PDF...");
+
+      // Llama a la función para obtener el PDF del servidor
+      const response = await getPdfReport(projectId);
+
+      // Manejo adicional después de descargar el PDF si es necesario
+      console.log("Reporte del proyecto PDF generado correctamente.");
     } catch (error) {
-        console.error('Error al generar el reporte del proyecto PDF:', error);
-        alert('Error al generar el reporte del proyecto PDF. Inténtalo de nuevo más tarde.');
+      console.error("Error al generar el reporte del proyecto PDF:", error);
+      alert(
+        "Error al generar el reporte del proyecto PDF. Inténtalo de nuevo más tarde."
+      );
     }
-};
+  };
 
   // TODO
   const handleGenerateProjectReportExcel = async () => {
@@ -229,13 +230,19 @@ export default function ProjectsDetailsPage({ params }) {
       </div>
 
       {/* Reportes */}
+      {/* Reportes */}
       <div className="bg-white shadow-md rounded-md p-6">
-    <h2 className="text-2xl font-bold mb-4 text-gray-700">Reportes</h2>
-    <div className="space-y-4">
-        <ReportDownloadButton projectId={project_id} />
-        <ReportDownloadButtonExcel projectId={project_id} />
-    </div>
-</div>
+        <h2 className="text-2xl font-bold mb-4 text-gray-700 text-center">
+          Reportes
+        </h2>
+        <div className="flex items-center justify-between">
+          <ReportDownloadButton projectId={project_id} />
+          <div className="ml-4">
+            <ReportDownloadButtonExcel projectId={project_id} />
+          </div>
+        </div>
+      </div>
+
       {/* Tareas */}
       <div className="col-span-3 mt-8">
         <div className="text-2xl font-bold mb-4 text-gray-700 flex justify-between items-center">

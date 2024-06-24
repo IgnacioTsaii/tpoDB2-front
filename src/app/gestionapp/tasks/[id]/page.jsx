@@ -95,11 +95,11 @@ export default function TaskPage({ params }) {
   const handleCreateActivity = async (newActivity) => {
     try {
       const response = await PostActiviy(newActivity);
-      alert("Usuario asignado correctamente: " + response.message);
+      alert(response.message);
       window.location.reload();
     } catch (error) {
-      console.error("Error al asignar usuario:", error);
-      alert("Error al asignar usuario: " + error.message);
+      console.error(error);
+      alert( error.message);
     }
   };
 
@@ -119,7 +119,7 @@ export default function TaskPage({ params }) {
     console.log(userId, task_id);
     try {
       const response = await putAssignTask(userId, task_id);
-      alert("Actividad creada correctamente: " + response.message);
+      alert(response.message);
       window.location.reload();
     } catch (error) {
       console.error("Error al asignar usuario:", error);

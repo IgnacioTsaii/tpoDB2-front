@@ -42,7 +42,7 @@ export default function AssignUserModal({ isOpen, onClose, onAssign, projectId, 
               <option value="">Seleccione un Usuario</option>
               {users.map((user) => (
                 <option key={user.id} value={user.id}>
-                  {user.firstname} {user.lastnames}
+                  {user.firstname} {user.lastname} ({user.skillLevel})
                 </option>
               ))}
             </select>

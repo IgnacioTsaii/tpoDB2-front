@@ -1,5 +1,6 @@
 
 // En un archivo independiente, por ejemplo, actions/reports/getPdfReport.js
+'use server';
 
 export default async function getPdfReport(projectId) {
     try {

@@ -1,6 +1,9 @@
 
 'use server';
+import { cookies } from "next/headers";
 export default async function getUsersByProjectId(projectId) {
+  const cookieStore = cookies();
+    const token = cookieStore.get("access_token")?.value || "";
   try {
     const response = await fetch(
       `http://localhost:8081/users/project/${projectId}`,{
@@ -8,8 +11,8 @@ export default async function getUsersByProjectId(projectId) {
         cache: "no-store",
         headers: {
           "Content-Type": "application/json",
-          // 'Authorization': 'Bearer ' + localStorage.getItem('token')
-        },
+          "Authorization": `Bearer ${token}`,
+      },
       }
     );
     // console.log("Response:", response);

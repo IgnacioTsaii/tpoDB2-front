@@ -1,12 +1,16 @@
 "use server";
+import { cookies } from "next/headers";
 
 const putAssignTask = async (userId:any,taskId:any) => {
+    const cookieStore = cookies();
+    const token = cookieStore.get("access_token")?.value || "";
     console.log(userId,taskId)
     try {
         const response = await fetch(`http://localhost:8081/task/assign/${taskId}/${userId}`, {
             method: "PUT",
             headers: {
                 "Content-Type": "application/json",
+                "Authorization": `Bearer ${token}`,
             },
         });
         

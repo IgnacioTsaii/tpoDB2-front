@@ -1,6 +1,9 @@
 "use server";
+import { cookies } from "next/headers";
 
 const putProject = async (formData:any) => {
+    const cookieStore = cookies();
+    const token = cookieStore.get("access_token")?.value || "";
     console.log("FormData:", formData);
     
     try {
@@ -8,6 +11,7 @@ const putProject = async (formData:any) => {
             method: "PUT",
             headers: {
                 "Content-Type": "application/json",
+                "Authorization": `Bearer ${token}`,
             },
             body: JSON.stringify(formData),
         });

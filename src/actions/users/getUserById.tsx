@@ -1,6 +1,9 @@
 
 'use server';
+import { cookies } from "next/headers";
 export default async function getUserById(Id:any) {
+  const cookieStore = cookies();
+    const token = cookieStore.get("access_token")?.value || "";
   try {
     const response = await fetch(
       `http://localhost:8081/users/project/${Id}`,{
@@ -8,8 +11,8 @@ export default async function getUserById(Id:any) {
         cache: "no-store",
         headers: {
           "Content-Type": "application/json",
-          // 'Authorization': 'Bearer ' + localStorage.getItem('token')
-        },
+          "Authorization": `Bearer ${token}`,
+      },
       }
     );
     // console.log("Response:", response);

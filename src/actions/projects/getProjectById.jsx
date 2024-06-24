@@ -1,5 +1,9 @@
 'use server';
+import { cookies } from "next/headers";
+
 export default async function getProjectById(Id) {
+  const cookieStore = cookies();
+    const token = cookieStore.get("access_token")?.value || "";
   try {
     
     const projectId = parseInt(Id);
@@ -9,7 +13,10 @@ export default async function getProjectById(Id) {
         method: "GET",
         headers: {
           "Content-Type": "application/json",
-          // 'Authorization': 'Bearer ' + localStorage.getItem('token')
+          headers: {
+            "Content-Type": "application/json",
+            "Authorization": `Bearer ${token}`,
+        },
         },
       }
     );

@@ -1,13 +1,16 @@
 'use server';
+import { cookies } from "next/headers";
 
 export default async function getCommentsByTask(id) {
+    const cookieStore = cookies();
+    const token = cookieStore.get("access_token")?.value || "";
     try {
         let task_id = parseInt(id);
         const response = await fetch(`http://localhost:8081/comment/${task_id}`, {
             method: 'GET',
             headers: {
-                'Content-Type': 'application/json',
-                // Puedes agregar otros encabezados aquí si es necesario, como la autenticación
+                "Content-Type": "application/json",
+                "Authorization": `Bearer ${token}`,
             },
         });
 

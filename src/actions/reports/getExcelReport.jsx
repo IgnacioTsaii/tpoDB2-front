@@ -1,4 +1,6 @@
+
 // En un archivo independiente, por ejemplo, actions/reports/getPdfReport.js
+import { cookies } from "next/headers";
 
 export default async function getExcelReport(projectId) {
     try {

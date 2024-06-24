@@ -1,6 +1,9 @@
 "use server";
+import { cookies } from "next/headers";
 
 const postAssignProject = async (userId:any,projectId:any) => {
+    const cookieStore = cookies();
+    const token = cookieStore.get("access_token")?.value || "";
     const formData = {
         projectId: projectId,
         userId: userId
@@ -10,6 +13,7 @@ const postAssignProject = async (userId:any,projectId:any) => {
             method: "POST",
             headers: {
                 "Content-Type": "application/json",
+                "Authorization": `Bearer ${token}`,
             },
             body: JSON.stringify(formData),
         });

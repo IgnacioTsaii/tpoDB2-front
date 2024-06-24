@@ -1,6 +1,9 @@
 'use server';
+import { cookies } from "next/headers";
 
 export default async function getTasksById(id) {
+  const cookieStore = cookies();
+    const token = cookieStore.get("access_token")?.value || "";
     try{
         let task_id = parseInt(id);
         const response = await fetch(
@@ -9,8 +12,8 @@ export default async function getTasksById(id) {
               cache: "no-store",
               headers: {
                 "Content-Type": "application/json",
-                // 'Authorization': 'Bearer ' + localStorage.getItem('token')
-              },
+                "Authorization": `Bearer ${token}`,
+            },
             }
           );
           // console.log("Response:", response);

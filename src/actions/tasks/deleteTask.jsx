@@ -1,13 +1,16 @@
 'use server';
+import { cookies } from "next/headers";
 
 export default async function DeleteTask(task_id) {
+    const cookieStore = cookies();
+    const token = cookieStore.get("access_token")?.value || "";
     try {
         const response = await fetch(`http://localhost:8081/task/${task_id}`, {
             method: "DELETE",
             cache: "no-store",
             headers: {
                 "Content-Type": "application/json",
-                // "Authorization": `Bearer ${token}`,
+                "Authorization": `Bearer ${token}`,
             },
         });
         if (!response.ok) {

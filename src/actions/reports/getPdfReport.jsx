@@ -1,3 +1,4 @@
+
 // En un archivo independiente, por ejemplo, actions/reports/getPdfReport.js
 
 export default async function getPdfReport(projectId) {

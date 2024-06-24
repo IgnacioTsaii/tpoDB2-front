@@ -1,13 +1,17 @@
 "use server";
+import { cookies } from "next/headers";
 
 const putUser = async (formData:any) => {
     console.log("FormData:", formData);
+    const cookieStore = cookies();
+    const token = cookieStore.get("access_token")?.value || "";
     
     try {
         const response = await fetch(`http://localhost:8081/users/update`, {
             method: "PUT",
             headers: {
                 "Content-Type": "application/json",
+                "Authorization": `Bearer ${token}`,
             },
             body: JSON.stringify(formData),
         });

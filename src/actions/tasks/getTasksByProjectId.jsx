@@ -1,15 +1,18 @@
 'use server';
+import { cookies } from "next/headers";
 
 export default async function getTasksByProjectId(Id) {
+  const cookieStore = cookies();
+    const token = cookieStore.get("access_token")?.value || "";
     try{
         const projectId = parseInt(Id);
         const response = await fetch(`http://localhost:8081/task/project/${Id}`,{
         method: "GET",
         cache: "no-store",
         headers: {
-            "Content-Type": "application/json",
-            // "Authorization": "Bearer " + token,
-        },
+          "Content-Type": "application/json",
+          "Authorization": `Bearer ${token}`,
+      },
     });
         // console.log("Response:", response);
     let data = await response.json();

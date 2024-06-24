@@ -1,13 +1,17 @@
 'use server'
+import { cookies } from "next/headers";
 
 export default async function getAllEmployees() {
+    const cookieStore = cookies();
+    const token = cookieStore.get("access_token")?.value || "";
     try {
         const response = await fetch('http://localhost:8081/users/', {
             method: "GET",
             cache: "no-store",
             headers: {
                 "Content-Type": "application/json",
-              },
+                "Authorization": `Bearer ${token}`,
+            },
         });
 
         // console.log("Full Response:", response);

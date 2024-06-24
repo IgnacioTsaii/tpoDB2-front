@@ -1,5 +1,9 @@
 'use server'
+import { cookies } from "next/headers";
+
 export default async function deleteUser(user_id: string) {
+    const cookieStore = cookies();
+    const token = cookieStore.get("access_token")?.value || "";
     // convierto el id a int
     const id = parseInt(user_id);
     console.log("user_id:", user_id);
@@ -9,7 +13,8 @@ export default async function deleteUser(user_id: string) {
             cache: "no-store",
             headers: {
                 "Content-Type": "application/json",
-              },
+                "Authorization": `Bearer ${token}`,
+            },
         });
 
         console.log("Response:", response);

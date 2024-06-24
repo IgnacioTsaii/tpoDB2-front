@@ -1,13 +1,16 @@
 'use server';
+import { cookies } from "next/headers";
 
 export default async function deleteReverseActivities(task_id:any, userId:any) {
+    const cookieStore = cookies();
+    const token = cookieStore.get("access_token")?.value || "";
     try {
         const response = await fetch(`http://localhost:8081/activity/delete/task/${task_id}/${userId}`, {
             method: "DELETE",
             cache: "no-store",
             headers: {
                 "Content-Type": "application/json",
-                // "Authorization": `Bearer ${token}`,
+                "Authorization": `Bearer ${token}`,
             },
         });
         // console.log(response);

@@ -31,18 +31,6 @@ export default function ProjectList({
     }
   };
   
-  const handleOpenUserModal = () => {
-    setIsUserModalOpen(true);
-  };
-
-  const handleCloseUserModal = () => {
-    setIsUserModalOpen(false);
-  };
-
-  const handleAssignUser = (userId) => {
-    // Implementar lógica para asignar usuario a la tarea
-    console.log("Asignar usuario ID:", userId);
-  };
 
   return (
     <div className="container mx-auto px-4 py-8">
@@ -81,19 +69,19 @@ export default function ProjectList({
                       <div className="flex justify-center space-x-2">
                         <button
                           onClick={() => handleEdit(project)}
-                          className="bg-yellow-500 hover:bg-yellow-700 text-white font-bold py-1 px-2 rounded"
+                          className="bg-yellow-400 hover:bg-yellow-600 text-white font-bold py-1 px-2 rounded"
                         >
                           Editar
                         </button>
                         <Link
                           href={`/gestionapp/projects/${project.projectId}`}
-                          className="bg-green-500 hover:bg-green-700 text-white font-bold py-1 px-2 rounded"
+                          className="bg-green-400 hover:bg-green-600 text-white font-bold py-1 px-2 rounded"
                         >
                           Ver Más
                         </Link>
                         <button
                           onClick={() => openModal(project.projectId)}
-                          className="bg-red-500 hover:bg-red-700 text-white font-bold py-1 px-2 rounded"
+                          className="bg-red-400 hover:bg-red-600 text-white font-bold py-1 px-2 rounded"
                         >
                           Eliminar
                         </button>
@@ -101,7 +89,7 @@ export default function ProjectList({
                     ) : (
                       <Link
                         href={`/gestionapp/projects/${project.projectId}`}
-                        className="bg-green-500 hover:bg-green-700 text-white font-bold py-1 px-2 rounded"
+                        className="bg-green-400 hover:bg-green-600 text-white font-bold py-1 px-2 rounded"
                       >
                         Ver Más
                       </Link>

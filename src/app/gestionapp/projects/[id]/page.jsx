@@ -12,10 +12,14 @@ import getUsersByProjectId from "@/actions/users/getUsersByProjectId";
 import decodingToken from "@/actions/utils/decodingToken";
 import getTasksByProjectId from "@/actions/tasks/getTasksByProjectId";
 import getUserAll from "@/actions/users/getUserAll";
-import PostTask from "@/actions/tasks/PostTask"
-import SaveTask from "@/actions/tasks/SaveTask"
-import deleteTask from "@/actions/tasks/deleteTask"
+import PostTask from "@/actions/tasks/PostTask";
+import SaveTask from "@/actions/tasks/SaveTask";
+import deleteTask from "@/actions/tasks/deleteTask";
 import postAssignProject from "@/actions/projects/postAssignProject";
+import getPdfReport from "@/actions/reports/getPdfReport";
+import ReportDownloadButton from "@/components/reports/ReportDownloadButton";
+import ReportDownloadButtonExcel from "@/components/reports/ReportDownloadButtonExcel";
+
 
 // projecto completo
 
@@ -60,7 +64,7 @@ export default function ProjectsDetailsPage({ params }) {
       } catch (error) {
         console.error("Error:", error);
         // Implementar la lógica para manejar el error
-        alert()
+        alert();
       } finally {
         setLoading(false);
       }
@@ -87,167 +91,173 @@ export default function ProjectsDetailsPage({ params }) {
   const handleAssignUser = async (userId, taskId) => {
     console.log("Asignar usuario ID:", userId, taskId);
     try {
-        const response = await postAssignProject(userId, taskId);
-        alert("Usuario asignado correctamente: " + response.message);
-        window.location.reload();
+      const response = await postAssignProject(userId, taskId);
+      alert("Usuario asignado correctamente: " + response.message);
+      window.location.reload();
     } catch (error) {
-        console.error("Error al asignar usuario:", error);
-        alert("Error al asignar usuario: " + error.message);
+      console.error("Error al asignar usuario:", error);
+      alert("Error al asignar usuario: " + error.message);
     }
-};
+  };
 
   const handleCreateTask = async (formData) => {
     try {
-        const response = await PostTask(formData);
-        setIsModalOpen(false);
+      const response = await PostTask(formData);
+      setIsModalOpen(false);
 
-        if (response && response.task_id) {
-            alert("¡Tarea creada con éxito!"); // Mensaje de éxito
-            setTimeout(() => {
-                window.location.reload();
-            }, 1000); // Refrescar la página después de 1 segundo
-        } else {
-            throw new Error("Error al crear la tarea"); // Manejo de error si la respuesta no es válida
-        }
+      if (response && response.task_id) {
+        alert("¡Tarea creada con éxito!"); // Mensaje de éxito
+        setTimeout(() => {
+          window.location.reload();
+        }, 1000); // Refrescar la página después de 1 segundo
+      } else {
+        throw new Error("Error al crear la tarea"); // Manejo de error si la respuesta no es válida
+      }
     } catch (error) {
-        console.error("Error al crear la tarea:", error);
-        alert("Hubo un error al crear la tarea. Por favor, intenta nuevamente."); // Alerta de error
+      console.error("Error al crear la tarea:", error);
+      alert("Hubo un error al crear la tarea. Por favor, intenta nuevamente."); // Alerta de error
     }
-};
+  };
 
-const handleEditTask = async (formData) => {
-  try {
+  const handleEditTask = async (formData) => {
+    try {
       // console.log("Actualizar tarea:", formData);
       const response = await SaveTask(formData);
       // console.log("Respuesta de actualizar tarea:", response);
-      
+
       // Comprueba si la respuesta es válida
       if (response) {
-          alert("¡Tarea actualizada con éxito!"); 
-          // Refrescar la página 
-          setTimeout(() => {
-              window.location.reload();
-          }, 1000);
+        alert("¡Tarea actualizada con éxito!");
+        // Refrescar la página
+        setTimeout(() => {
+          window.location.reload();
+        }, 1000);
       } else {
-          throw new Error("Error al actualizar la tarea"); 
+        throw new Error("Error al actualizar la tarea");
       }
-      
-  } catch (error) {
+    } catch (error) {
       console.error("Error al actualizar la tarea:", error);
-      alert("Hubo un error al actualizar la tarea. Por favor, intenta nuevamente."); 
-  }
-};
+      alert(
+        "Hubo un error al actualizar la tarea. Por favor, intenta nuevamente."
+      );
+    }
+  };
 
-const handleDeleteTask = async (task_id) => {
-  // Lógica para eliminar una tarea
-  console.log("Eliminar tarea ID:", task_id);
-  try {
+  const handleDeleteTask = async (task_id) => {
+    // Lógica para eliminar una tarea
+    console.log("Eliminar tarea ID:", task_id);
+    try {
       // Llamar a la función para eliminar la tarea
       await deleteTask(task_id);
-      
+
       // Mostrar alerta de éxito
       alert("Tarea eliminada correctamente.");
-      
+
       // Refrescar la página
       window.location.reload();
-  } catch (error) {
+    } catch (error) {
       // Capturar y manejar el error
       console.error("Error al eliminar tarea:", error);
       alert("Error al eliminar tarea. Por favor, intenta nuevamente.");
-  }
+    }
+  };
+
+  // TODO
+  const handleGenerateProjectReportPdf = async (projectId) => {
+    try {
+        console.log("Generando reporte del proyecto PDF...");
+        
+        // Llama a la función para obtener el PDF del servidor
+        const response = await getPdfReport(projectId);
+        
+        // Manejo adicional después de descargar el PDF si es necesario
+        console.log("Reporte del proyecto PDF generado correctamente.");
+    } catch (error) {
+        console.error('Error al generar el reporte del proyecto PDF:', error);
+        alert('Error al generar el reporte del proyecto PDF. Inténtalo de nuevo más tarde.');
+    }
 };
 
-// TODO
-const handleGenerateProjectReportPdf = async () => {
-  // Lógica para generar el reporte del proyecto
-}
-
-// TODO
-const handleGenerateProjectReportExcel = async () => {
-  // Lógica para generar el reporte del proyecto excel 
-
-}
-
+  // TODO
+  const handleGenerateProjectReportExcel = async () => {
+    // Lógica para generar el reporte del proyecto excel
+  };
 
   if (loading) return <Loader />;
 
   return (
-    <div className="container mx-auto px-4 py-8">
-      <div className="flex justify-between items-center mb-6">
-        <h1 className="text-3xl font-bold">{project.name}</h1>
-      </div>
-      <div className="flex">
-        <div className="w-3/4">
-          <p className="mb-4">{project.description}</p>
-          <p className="mb-4">
-            <strong>Start Date:</strong> {project.startDate}
-          </p>
-          <p className="mb-4">
-            <strong>End Date:</strong> {project.endDate}
-          </p>
-          <div className="mb-4 flex items-center">
-            <strong>Status:</strong>
-            <span className="ml-2">
-              <CircularProgressWithLabel value={project.status} />
-            </span>
-          </div>
-          <p className="mb-4">
-            <strong>Weekly Hours:</strong> {project.weeklyHours}
-          </p>
+    <div className="container mx-auto px-4 py-8 grid grid-cols-3 gap-8">
+      {/* Detalles del Proyecto */}
+      <div className="col-span-2 bg-white shadow-md rounded-md p-6">
+        <div className="flex justify-between items-center mb-6">
+          <h1 className="text-3xl font-bold">{project.name}</h1>
         </div>
-        <div className="w-1/4 pl-8">
-          <div className="mb-4">
-            <h2 className="text-2xl font-bold mb-4">Usuarios</h2>
-            <button
-              className="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded mb-2"
-              onClick={handleOpenUserModal}
-            >
-              Agregar Usuario
-            </button>
-            <ul>
-              {users.map((user) => (
-                <li key={user.id} className="mb-2">
-                  {user.firstname} {user.lastnames}
-                </li>
-              ))}
-            </ul>
-          </div>
-          <div>
-            <h2 className="text-2xl font-bold mb-4">Reportes</h2>
-            <button
-              className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded mb-2"
-              onClick={handleGenerateProjectReportPdf}
-            >
-              Reporte PDF
-            </button>
-            <button
-              className="bg-yellow-500 hover:bg-yellow-700 text-white font-bold py-2 px-4 rounded"
-              onClick={handleGenerateProjectReportExcel}
-            >
-              Reporte Excel
-            </button>
-          </div>
+        <p className="mb-4 text-gray-700">{project.description}</p>
+        <p className="mb-4 text-gray-700">
+          <strong>Start Date:</strong> {project.startDate}
+        </p>
+        <p className="mb-4 text-gray-700">
+          <strong>End Date:</strong> {project.endDate}
+        </p>
+        <div className="mb-4 flex items-center text-gray-700">
+          <strong>Status:</strong>
+          <span className="ml-2">
+            <CircularProgressWithLabel value={project.status} />
+          </span>
         </div>
+        <p className="mb-4 text-gray-700">
+          <strong>Weekly Hours:</strong> {project.weeklyHours}
+        </p>
       </div>
-      <div>
-        <h2 className="text-2xl font-bold mb-4">Tareas</h2>
-        {isAdmin && (
-          <div className="p-8">
+
+      {/* Usuarios */}
+      <div className="bg-white shadow-md rounded-md p-6">
+        <h2 className="text-2xl font-bold mb-4 text-gray-700">Usuarios</h2>
+        <button
+          className="bg-green-400 hover:bg-green-500 text-white font-bold py-2 px-4 rounded mb-2"
+          onClick={handleOpenUserModal}
+        >
+          Agregar Usuario
+        </button>
+        <ul>
+          {users.map((user) => (
+            <li key={user.id} className="mb-2 text-gray-700">
+              {user.firstname} {user.lastnames}
+            </li>
+          ))}
+        </ul>
+      </div>
+
+      {/* Reportes */}
+      <div className="bg-white shadow-md rounded-md p-6">
+    <h2 className="text-2xl font-bold mb-4 text-gray-700">Reportes</h2>
+    <div className="space-y-4">
+        <ReportDownloadButton projectId={project_id} />
+        <ReportDownloadButtonExcel projectId={project_id} />
+    </div>
+</div>
+      {/* Tareas */}
+      <div className="col-span-3 mt-8">
+        <div className="text-2xl font-bold mb-4 text-gray-700 flex justify-between items-center">
+          <span>Tareas</span>
+          {isAdmin && (
             <button
-              className="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded"
+              className="bg-green-400 hover:bg-green-500 text-white font-bold py-2 px-4 rounded"
               onClick={handleOpenModal}
             >
               Crear Tarea
             </button>
-            <ModalCreateTask isOpen={isModalOpen} onClose={handleCloseModal}>
-              <FormCreateTask
-                onSubmit={handleCreateTask}
-                onClose={handleCloseModal}
-                project_id={project.projectId}
-              />
-            </ModalCreateTask>
-          </div>
-        )}
+          )}
+        </div>
+        <div>
+          <ModalCreateTask isOpen={isModalOpen} onClose={handleCloseModal}>
+            <FormCreateTask
+              onSubmit={handleCreateTask}
+              onClose={handleCloseModal}
+              project_id={project.projectId}
+            />
+          </ModalCreateTask>
+        </div>
         <TaskList
           tasks={tasks}
           isAdmin={isAdmin}
@@ -259,10 +269,9 @@ const handleGenerateProjectReportExcel = async () => {
           onClose={handleCloseUserModal}
           onAssign={handleAssignUser}
           users={usersAll}
-          projectId={project_id} // Pasar la lista de usuarios al modal
+          projectId={project_id}
         />
       </div>
     </div>
   );
-  
 }

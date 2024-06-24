@@ -35,13 +35,13 @@ export default function TaskList({ tasks, isAdmin, handleEdit, handleDelete }) {
               <>
                 <button
                   onClick={() => openEditModal(task)}
-                  className="bg-yellow-500 hover:bg-yellow-700 text-white font-bold py-1 px-2 rounded"
+                  className="bg-yellow-400 hover:bg-yellow-700 text-white font-bold py-1 px-2 rounded"
                 >
                   Editar
                 </button>
                 <button
                   onClick={() => handleDelete(task.task_id)}
-                  className="bg-red-500 hover:bg-red-700 text-white font-bold py-1 px-2 rounded"
+                  className="bg-red-400 hover:bg-red-700 text-white font-bold py-1 px-2 rounded"
                 >
                   Eliminar
                 </button>
@@ -49,7 +49,7 @@ export default function TaskList({ tasks, isAdmin, handleEdit, handleDelete }) {
             )}
             <Link
               href={`/gestionapp/tasks/${task.task_id}`}
-              className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-1 px-2 rounded"
+              className="bg-blue-400 hover:bg-blue-700 text-white font-bold py-1 px-2 rounded"
             >
               Ver Más
             </Link>

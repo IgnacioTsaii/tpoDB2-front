@@ -1,12 +1,17 @@
-import React, { useState } from 'react';
+import React, { useState } from "react";
 
-export default function FormCreateActivity ({ onClose, onSave,task_id,user_id }) {
+export default function FormCreateActivity({
+    onClose,
+    onSave,
+    task_id,
+    user_id,
+}) {
     const [formData, setFormData] = useState({
         task_id: task_id,
-        user_id: user_id, 
-        description: '',
-        progress_percentage: '',
-        time_worked: ''
+        user_id: user_id,
+        description: "",
+        progress_percentage: "",
+        time_worked: "",
     });
 
     const handleChange = (e) => {
@@ -22,7 +27,10 @@ export default function FormCreateActivity ({ onClose, onSave,task_id,user_id })
     return (
         <form onSubmit={handleSubmit}>
             <div className="mb-4">
-                <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="description">
+                <label
+                    className="block text-gray-700 text-sm font-bold mb-2"
+                    htmlFor="description"
+                >
                     Descripción
                 </label>
                 <input
@@ -35,7 +43,10 @@ export default function FormCreateActivity ({ onClose, onSave,task_id,user_id })
                 />
             </div>
             <div className="mb-4">
-                <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="progress_percentage">
+                <label
+                    className="block text-gray-700 text-sm font-bold mb-2"
+                    htmlFor="progress_percentage"
+                >
                     Porcentaje de Progreso
                 </label>
                 <input
@@ -48,13 +59,18 @@ export default function FormCreateActivity ({ onClose, onSave,task_id,user_id })
                 />
             </div>
             <div className="mb-4">
-                <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="time_worked">
+                <label
+                    className="block text-gray-700 text-sm font-bold mb-2"
+                    htmlFor="time_worked"
+                >
                     Tiempo Trabajado
                 </label>
                 <input
                     id="time_worked"
                     name="time_worked"
                     type="number"
+                    min="0"
+                    max="100"
                     value={formData.time_worked}
                     onChange={handleChange}
                     className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
@@ -77,6 +93,4 @@ export default function FormCreateActivity ({ onClose, onSave,task_id,user_id })
             </div>
         </form>
     );
-};
-
-
+}

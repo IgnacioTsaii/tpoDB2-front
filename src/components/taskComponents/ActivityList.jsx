@@ -5,12 +5,14 @@ import deleteReverseActivities from '@/actions/activities/deleteReverseActivitie
 
 
 export default function ActivityList({ list, task_Id, onEdit, onCreate }) {
+        
     
     const handleRevert = async(task_Id)=>{
         try {
             const response = await deleteReverseActivities(task_Id);
-            console.log(response);
-    
+            // console.log(response);
+            alert("Actividad revertida correctamente");
+            window.location.reload();
         }
         catch (error) {
             console.error("Error al revertir actividades:", error);

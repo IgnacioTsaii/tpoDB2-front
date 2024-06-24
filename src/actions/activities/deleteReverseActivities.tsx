@@ -10,15 +10,15 @@ export default async function deleteReverseActivities(task_id:any) {
                 // "Authorization": `Bearer ${token}`,
             },
         });
+
         if (!response.ok) {
             throw new Error("Error al eliminar la tarea");
         }
 
-        // Si la respuesta del servidor no tiene contenido JSON válido, manejarla de todas formas
-        const responseData = await response.text(); // Leer como texto en lugar de JSON
+        // Leer el cuerpo de la respuesta como texto
+        const responseData = await response.text();
 
-        if (responseData === "Task deleted") {
-            // Manejar lógica adicional si es necesario
+        if (responseData === "Activity deleted successfully") {
             console.log("Tarea eliminada correctamente");
         } else {
             throw new Error("Error al eliminar la tarea");

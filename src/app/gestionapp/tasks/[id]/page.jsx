@@ -133,7 +133,7 @@ export default function TaskPage({ params }) {
                 <div>
                     <p className="mb-4">{task.description}</p>
                     <p className="mb-4">
-                        <strong>Nivel de Habilidad:</strong> {task.skill_level}
+                        <strong>Nivel de Habilidad:</strong> {task.skillLevel}
                     </p>
                     <div className="mb-4 flex items-center">
                         <strong>Status:</strong>
@@ -188,7 +188,7 @@ export default function TaskPage({ params }) {
 
             <ActivityList
                 list={activities}
-                taskId={task_id}
+                task_Id={task_id}
                 onEdit={handleOpenEditModal}
                 onCreate={handleOpenCreateModal}
             />

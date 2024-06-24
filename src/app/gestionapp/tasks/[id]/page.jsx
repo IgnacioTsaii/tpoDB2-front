@@ -117,55 +117,60 @@ export default function TaskPage({ params }) {
   return (
     <div className="container mx-auto px-4 py-8">
       <h1 className="text-3xl font-bold mb-4">{task.name}</h1>
-      <p className="mb-4">{task.description}</p>
-      <p className="mb-4">
-        <strong>Nivel de Habilidad:</strong> {task.skill_level}
-      </p>
-      <div className="mb-4 flex items-center">
-        <strong>Status:</strong>
-        <span className="ml-2">
-          <CircularProgressWithLabel value={task.status} />
-        </span>
-      </div>
-      <p className="mb-4">
-        <strong>Fecha de Inicio:</strong>{" "}
-        {new Date(task.start_date).toLocaleDateString()}
-      </p>
-      <p className="mb-4">
-        <strong>Fecha de Finalización:</strong>{" "}
-        {new Date(task.end_date).toLocaleDateString()}
-      </p>
+            <div className="grid grid-cols-2 gap-4">
+                <div>
+                    <p className="mb-4">{task.description}</p>
+                    <p className="mb-4">
+                        <strong>Nivel de Habilidad:</strong> {task.skill_level}
+                    </p>
+                    <div className="mb-4 flex items-center">
+                        <strong>Status:</strong>
+                        <span className="ml-2">
+                            <CircularProgressWithLabel value={task.status} />
+                        </span>
+                    </div>
+                    <p className="mb-4">
+                        <strong>Fecha de Inicio:</strong>{" "}
+                        {task.start_date}
+                    </p>
+                    <p className="mb-4">
+                        <strong>Fecha de Finalización:</strong>{" "}
+                        {task.end_date}
+                    </p>
+                </div>
+                <div className="flex flex-col items-end">
+                    <div className="mb-4">
+                        <h2 className="text-xl font-bold mb-2">Asignación de Usuario</h2>
+                        {isAdmin && (
+                            <>
+                                {task.user ? (
+                                    <button
+                                        onClick={handleOpenAssignModal}
+                                        className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-1 px-2 rounded"
+                                    >
+                                        Reasignar
+                                    </button>
+                                ) : (
+                                    <button
+                                        onClick={handleOpenAssignModal}
+                                        className="bg-green-500 hover:bg-green-700 text-white font-bold py-1 px-2 rounded"
+                                    >
+                                        Asignar
+                                    </button>
+                                )}
+                            </>
+                        )}
+                    </div>
+                    <div>
+                        {task.user ? (
+                            <p className="text-sm text-gray-600">Asignado a: {task.user.name} {task.user.last_name}</p>
+                        ) : (
+                            <p className="text-sm text-gray-600">Usuario no asignado</p>
+                        )}
+                    </div>
+                </div>
+            </div>
 
-      <div className="flex justify-end items-center mb-4">
-        {isAdmin && (
-          <>
-            {task.user ? (
-              <button
-                onClick={handleOpenAssignModal}
-                className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-1 px-2 rounded"
-              >
-                Reasignar
-              </button>
-            ) : (
-              <button
-                onClick={handleOpenAssignModal}
-                className="bg-green-500 hover:bg-green-700 text-white font-bold py-1 px-2 rounded"
-              >
-                Asignar
-              </button>
-            )}
-          </>
-        )}
-      </div>
-      <div className="text-right mb-4">
-        {task.user ? (
-          <p className="text-sm text-gray-600">
-            Asignado a: {task.user.name} {task.user.last_name}
-          </p>
-        ) : (
-          <p className="text-sm text-gray-600">Usuario no asignado</p>
-        )}
-      </div>
 
       <ActivityList
         list={activities}

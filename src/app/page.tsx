@@ -2,6 +2,7 @@
 import React, { useState } from "react";
 import postLogin from "@/actions/postLogin";
 import { useRouter } from "next/navigation";
+import Image from "next/image";
 
 interface LoginForm {
     email: string;
@@ -53,13 +54,16 @@ const LoginPage: React.FC = () => {
     };
 
     return (
-        <div className="min-h-screen flex items-center justify-center bg-gradient-to-r from-indigo-500 via-purple-500 to-pink-500">
+        <div className="min-h-screen flex items-center justify-center bg-gradient-to-r from-gray-500 via-green-800 to-green-500">
             <div className="bg-white p-8 rounded-lg shadow-lg max-w-md w-full">
                 <div className="flex justify-center mb-4">
-                    <img
-                        className="h-10 w-auto"
-                        src="https://tailwindui.com/img/logos/mark.svg?color=indigo&shade=600"
-                        alt="Your Company"
+                    <Image
+                        className="h-48 w-auto"
+                        src="/images/taskflow.png"
+                        alt="Taskflow logo"
+                        width={300}
+                        height={300}
+                        
                     />
                 </div>
                 <h2 className="text-3xl font-bold text-center text-gray-900 mb-6">

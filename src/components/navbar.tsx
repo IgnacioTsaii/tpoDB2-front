@@ -3,6 +3,8 @@
 import { useState, useEffect } from "react";
 import Link from "next/link";
 import decodingToken from "@/actions/utils/decodingToken";
+import Image from "next/image";
+
 
 export default function Navbar() {
   const [isOpen, setIsOpen] = useState(false);
@@ -77,9 +79,12 @@ export default function Navbar() {
           <div className="flex-1 flex items-center justify-center sm:items-stretch sm:justify-start">
             <div className="flex-shrink-0 flex items-center">
               <Link href="/gestionapp/projects">
-                <h1 className="rounded-md text-lg text-green-400 font-roboto hover:bg-gray-700">
-                  04 Database Group
-                </h1>
+                <Image 
+                src={"/images/taskflow.png"}
+                alt="TaskFlow"
+                width={50}
+                height={50}
+                ></Image>
               </Link>
             </div>
             <div className="hidden md:block">

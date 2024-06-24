@@ -1,9 +1,9 @@
 import React, { useState } from 'react';
 
-export default function FormCreateActivity ({ onClose, onSave,task_id }) {
+export default function FormCreateActivity ({ onClose, onSave,task_id,user_id }) {
     const [formData, setFormData] = useState({
         task_id: task_id,
-        user_id: '', //
+        user_id: user_id, 
         description: '',
         progress_percentage: '',
         time_worked: ''

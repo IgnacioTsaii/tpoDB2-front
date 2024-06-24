@@ -10,31 +10,38 @@ export default function ReportDownloadButton({ projectId }) {
     // Función para manejar la descarga del Excel
     const handleDownload = async () => {
         try {
-            // Indicar que se está realizando la descarga
             setDownloading(true);
+            const response = await fetch(`http://localhost:8081/reports/excel/${projectId}`, {
+                method: 'GET',
+                headers: {
+                    // No necesitas Content-Type ni Authorization headers para descargar un archivo Excel
+                },
+            });
 
-            // Obtener el blob del Excel mediante la función getExcelReport (debe estar implementada)
-            const blob = await getExcelReport(projectId);
+            if (response.ok) {
+                const blob = await response.blob();
 
-            // Crear una URL del blob para descargar o visualizar el Excel
-            const url = window.URL.createObjectURL(blob);
+                // Crear una URL del blob para descargar o visualizar el Excel
+                const url = window.URL.createObjectURL(blob);
 
-            // Crear un enlace dinámico para iniciar la descarga
-            const a = document.createElement('a');
-            a.style.display = 'none';
-            a.href = url;
-            a.download = `reporte_${projectId}.xlsx`; // Nombre del archivo para descargar (extensión .xlsx para Excel)
-            document.body.appendChild(a);
-            a.click();
-            document.body.removeChild(a);
+                // Crear un enlace dinámico para iniciar la descarga
+                const a = document.createElement('a');
+                a.style.display = 'none';
+                a.href = url;
+                a.download = `reporte_${projectId}.xlsx`; // Nombre del archivo para descargar
+                document.body.appendChild(a);
+                a.click();
+                document.body.removeChild(a);
 
-            // Finalizar la descarga y cambiar el estado del botón
+                // Revocar la URL del objeto después de la descarga
+                window.URL.revokeObjectURL(url);
+            } else {
+                console.error('Error al descargar el Excel:', response.statusText);
+            }
             setDownloading(false);
         } catch (error) {
-            // Manejar errores en la consola y restablecer el estado del botón
             console.error('Error al descargar el Excel:', error);
             setDownloading(false);
-            // Podrías añadir aquí un manejo de errores más específico, como mostrar un mensaje al usuario
         }
     };
 

@@ -15,7 +15,7 @@ import getUserAll from "@/actions/users/getUserAll";
 import PostTask from "@/actions/tasks/PostTask"
 import SaveTask from "@/actions/tasks/SaveTask"
 import deleteTask from "@/actions/tasks/deleteTask"
-import postAssignEmployee from "@/actions/projects/postAssignEmployee";
+import postAssignProject from "@/actions/projects/postAssignProject";
 
 // projecto completo
 
@@ -84,19 +84,17 @@ export default function ProjectsDetailsPage({ params }) {
     setIsModalUserOpen(false);
   };
 
-  const handleAssignUser = async (userId, projectId) => {
-    // Implementar lógica para asignar usuario a la tarea
-    console.log("Asignar usuario ID:", userId,projectId);
+  const handleAssignUser = async (userId, taskId) => {
+    console.log("Asignar usuario ID:", userId, taskId);
     try {
-      await postAssignEmployee(userId, projectId);
-      alert("Usuario asignado correctamente.");
-      window.location.reload();
+        const response = await postAssignProject(userId, taskId);
+        alert("Usuario asignado correctamente: " + response.message);
+        window.location.reload();
     } catch (error) {
-      console.error("Error:", error);
-      // Implementar la lógica para manejar el error
-      alert("Error al asignar usuario.");
+        console.error("Error al asignar usuario:", error);
+        alert("Error al asignar usuario: " + error.message);
     }
-  };
+};
 
   const handleCreateTask = async (formData) => {
     try {

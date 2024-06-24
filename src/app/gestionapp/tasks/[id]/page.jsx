@@ -12,6 +12,7 @@ import getTaskById from "@/actions/tasks/getTaskById";
 import getActitiesByTask from "@/actions/activities/getActitiesByTask";
 import getCommentsByTask from "@/actions/comments/getCommentsByTask";
 import decodingToken from "@/actions/utils/decodingToken";
+import putAssignTask from "@/actions/tasks/putAssignTask";
 
 
 export default function TaskPage({ params }) {
@@ -26,8 +27,7 @@ export default function TaskPage({ params }) {
   const [isCreateModalOpen, setIsCreateModalOpen] = useState(false);
   const [isAssignModalOpen, setIsAssignModalOpen] = useState(false); // Estado para el modal de asignación
   const [currentActivity, setCurrentActivity] = useState(null);
-  const [users, setUsers] = useState([]); // Estado para la lista de usuarios
-
+  
   useEffect(() => {
     const fetchTask = async () => {
       try {
@@ -47,6 +47,7 @@ export default function TaskPage({ params }) {
         // Comentarios por tarea
         const commentsData = await getCommentsByTask(task_id);
         setComments(commentsData);
+        // usuario asignado
       } catch (error) {
         console.error(error);
       }
@@ -54,12 +55,6 @@ export default function TaskPage({ params }) {
     fetchTask();
   }, [task_id]);
 
-  const fetchUsers = async () => {
-    // Lógica para obtener usuarios (puedes reemplazar esta parte con tu propia lógica)
-    const response = await fetch("http://localhost:3001/users");
-    const data = await response.json();
-    return data;
-  };
 
   const handleOpenEditModal = (activity) => {
     setCurrentActivity(activity);
@@ -97,10 +92,17 @@ export default function TaskPage({ params }) {
   };
 
   const assignTask = async (userId, task_id) => {
-    // Lógica para asignar la tarea (puedes reemplazar esta parte con tu propia lógica)
-    console.log(`Asignar tarea ${task_id} a usuario ${userId}`);
-    setTask({ ...task, user: users.find((user) => user.id === userId) }); // Actualiza el estado de la tarea
+    console.log(userId,task_id)
+    try{
+      const response = await putAssignTask(userId,task_id)
+      alert("Usuario asignado correctamente: " + response.message);
+        window.location.reload();
+    } catch (error) {
+        console.error("Error al asignar usuario:", error);
+        alert("Error al asignar usuario: " + error.message);
+    }
   };
+    
 
   const handleOpenAssignModal = () => {
     setIsAssignModalOpen(true);
@@ -158,7 +160,7 @@ export default function TaskPage({ params }) {
       <div className="text-right mb-4">
         {task.user ? (
           <p className="text-sm text-gray-600">
-            Asignado a: {task.user.firstname} {task.user.lastnames}
+            Asignado a: {task.user.name} {task.user.last_name}
           </p>
         ) : (
           <p className="text-sm text-gray-600">Usuario no asignado</p>

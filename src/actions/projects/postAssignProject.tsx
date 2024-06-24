@@ -1,6 +1,6 @@
 "use server";
 
-const postAssignEmployee = async (userId:any,projectId:any) => {
+const postAssignProject = async (userId:any,projectId:any) => {
     const formData = {
         projectId: projectId,
         userId: userId
@@ -14,21 +14,21 @@ const postAssignEmployee = async (userId:any,projectId:any) => {
             body: JSON.stringify(formData),
         });
         
-        let data = await response.json();
-        
+        console.log(response)
+        var data = await response.json();
+        console.log(data);
         if (!response.ok) {
             throw new Error(data.message || 'Something went wrong');
-        }else{
-            data.ok=true;
+        } else {
+            data.ok = true;
             console.log("Data:", data);
         }
-        // agregar un .ok a data para verificar si la respuesta es correcta
         
         return data;
     } catch (error) {
         console.error("Error al enviar la solicitud:", error);
-        throw error;
+        throw error;  // Throw the caught error
     }
 };
 
-export default postAssignEmployee;
+export default postAssignProject;

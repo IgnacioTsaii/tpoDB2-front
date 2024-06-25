@@ -1,21 +1,19 @@
-
 import { Inter } from "next/font/google";
 
 import Navbar from "@/components/navbar";
 
 const inter = Inter({ subsets: ["latin"] });
 
-
 export default function RootLayout({
-  children,
+    children,
 }: Readonly<{
-  children: React.ReactNode;
+    children: React.ReactNode;
 }>) {
-  return (
-    <>
-        <Navbar/>
-        {children}
-    </>
-    
-  );
+    return (
+        <>
+            <Navbar />
+
+            <div className="pt-16">{children}</div>
+        </>
+    );
 }

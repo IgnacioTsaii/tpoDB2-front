@@ -4,17 +4,16 @@ import { useState, useEffect } from "react";
 import Link from "next/link";
 import decodingToken from "@/actions/utils/decodingToken";
 import Image from "next/image";
-
+import {useRouter} from "next/navigation";
+import logOut from "@/actions/logOut";
 
 export default function Navbar() {
   const [isOpen, setIsOpen] = useState(false);
-  const [isScrolled, setIsScrolled] = useState(false);
   const [isAdmin, setIsAdmin] = useState(false);
 
   useEffect(() => {
     const fetchUserRole = async () => {
       const decodedToken = await decodingToken();
-      console.log(decodedToken);
       if (decodedToken && decodedToken.userType === "Admin") {
         setIsAdmin(true);
       } else {
@@ -24,15 +23,60 @@ export default function Navbar() {
     fetchUserRole();
   }, []);
 
+  const router = useRouter();
+
+  const handlelogOut = async() => {
+  try{
+    const response = await logOut();
+    if(response){
+      router.push("/");
+    }
+  }catch(error){
+    console.log(error);
+  }}
+
+
   return (
-    <nav
-      className={`block w-full z-10 bg-gray-700 text-gray-200 shadow ${
-        isScrolled ? "shadow-md" : ""
-      }`}
-    >
-      <div className="max-w-7xl mx-auto px-2 sm:px-6 lg:px-8">
-        <div className="relative flex items-center justify-between h-16">
-          <div className="absolute inset-y-0 left-0 flex items-center sm:hidden">
+    <nav className="fixed w-full z-10 bg-gradient-to-r from-gray-800 via-gray-900 to-black shadow-lg">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="flex items-center justify-between h-16">
+          <div className="flex items-center">
+            <Link href="/gestionapp/projects">
+              <Image
+                src={"/images/taskflow.png"}
+                alt="TaskFlow"
+                width={50}
+                height={50}
+              />
+            </Link>
+            <div className="hidden md:flex md:ml-10">
+              <div className="flex items-baseline space-x-4">
+                {isAdmin && (
+                  <Link
+                    href="/gestionapp/empleado"
+                    className="px-3 py-2 rounded-md text-md font-medium text-gray-300 hover:text-white hover:bg-gray-700 transition duration-300"
+                  >
+                    Gestión de empleados
+                  </Link>
+                )}
+                <Link
+                  href="/gestionapp/projects"
+                  className="px-3 py-2 rounded-md text-md font-medium text-gray-300 hover:text-white hover:bg-gray-700 transition duration-300"
+                >
+                  Proyectos
+                </Link>
+              </div>
+            </div>
+          </div>
+          <div className="hidden md:flex md:items-center">
+            <button
+            onClick={() => handlelogOut()}
+              className="ml-4 px-3 py-2 text-red-600 rounded-md font-medium hover:bg-gray-700 transition duration-300"
+            >
+              Sign Out
+            </button>
+          </div>
+          <div className="flex md:hidden">
             <button
               onClick={() => setIsOpen(!isOpen)}
               type="button"
@@ -76,56 +120,31 @@ export default function Navbar() {
               )}
             </button>
           </div>
-          <div className="flex-1 flex items-center justify-center sm:items-stretch sm:justify-start">
-            <div className="flex-shrink-0 flex items-center">
-              <Link href="/gestionapp/projects">
-                <Image 
-                src={"/images/taskflow.png"}
-                alt="TaskFlow"
-                width={50}
-                height={50}
-                ></Image>
-              </Link>
-            </div>
-            <div className="hidden md:block">
-              <div className="ml-10 flex items-baseline space-x-4">
-                {isAdmin && (
-                  <Link
-                    href="/gestionapp/empleado"
-                    className="px-3 py-2 rounded-md text-md font-medium hover:text-gray-700 hover:bg-gray-300"
-                  >
-                    Gestion de empleados
-                  </Link>
-                )}
-                <Link
-                  href="/gestionapp/projects"
-                  className="px-3 py-2 rounded-md text-md font-medium hover:text-gray-700 hover:bg-gray-300"
-                >
-                  Proyectos
-                </Link>
-              </div>
-            </div>
-          </div>
         </div>
       </div>
 
       {isOpen && (
         <div className="md:hidden" id="mobile-menu">
-          <div className="px-2 pt-2 pb-3 text-center space-y-1 sm:px-3 flex flex-col items-center">
+          <div className="px-2 pt-2 pb-3 space-y-1 sm:px-3">
             {isAdmin && (
               <Link
                 href="/gestionapp/empleado"
-                className="block px-3 py-2 rounded-md text-base font-medium hover:bg-gray-700"
+                className="block px-3 py-2 rounded-md text-base font-medium text-gray-300 hover:text-white hover:bg-gray-700 transition duration-300"
               >
-                Gestion de empleados
+                Gestión de empleados
               </Link>
             )}
             <Link
               href="/gestionapp/projects"
-              className="block px-3 py-2 rounded-md text-base font-medium hover:bg-gray-700"
+              className="block px-3 py-2 rounded-md text-base font-medium text-gray-300 hover:text-white hover:bg-gray-700 transition duration-300"
             >
               Proyectos
             </Link>
+            <button onClick={()=>handlelogOut()}
+              className="w-full mt-2 px-3 py-2  text-red-600 rounded-md font-medium hover:bg-gray-700 transition duration-300"
+            >
+              Sign Out
+            </button>
           </div>
         </div>
       )}

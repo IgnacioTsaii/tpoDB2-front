@@ -16,9 +16,9 @@ import PostTask from "@/actions/tasks/PostTask";
 import SaveTask from "@/actions/tasks/SaveTask";
 import deleteTask from "@/actions/tasks/deleteTask";
 import postAssignProject from "@/actions/projects/postAssignProject";
-import getPdfReport from "@/actions/reports/getPdfReport";
 import ReportDownloadButton from "@/components/reports/ReportDownloadButton";
 import ReportDownloadButtonExcel from "@/components/reports/ReportDownloadButtonExcel";
+import UnassignUserModal from "@/components/modals/proyects/UnassingUserModal"
 
 // projecto completo
 
@@ -32,6 +32,7 @@ export default function ProjectsDetailsPage({ params }) {
   const [isModalUserOpen, setIsModalUserOpen] = useState(false);
   // const [isModalEditOpen, setIsModalEditOpen] = useState(false);
   const project_id = params.id; // Renombramos id a project_id para ser consistente
+  const [isUnassignModalOpen, setIsUnassignModalOpen] = useState(false);
 
   const [project, setProject] = useState(null);
   const [loading, setLoading] = useState(true);
@@ -162,6 +163,30 @@ export default function ProjectsDetailsPage({ params }) {
   };
   
 
+    const handleOpenUnassignModal = () => {
+        setIsUnassignModalOpen(true);
+    };
+
+    const handleCloseUnassignModal = () => {
+        setIsUnassignModalOpen(false);
+    };
+
+    const handleUnassignUser = async (userId, projectId) => {
+        try {
+            // Lógica para desasignar al usuario de la tarea
+            // Aquí deberías implementar la lógica específica para tu aplicación
+            console.log("Desasignando usuario con ID:", userId);
+            // Ejemplo: await unassignUserFromTask(task.task_id, userId);
+            alert(`Usuario desasignado correctamente de la tarea.`);
+            // Actualizar la vista después de desasignar el usuario si es necesario
+        } catch (error) {
+            console.error("Error al desasignar usuario:", error);
+            alert("Error al desasignar usuario: " + error.message);
+        }
+    };
+
+  
+
   const formatDate = (time) =>{
     // Obtener el timestamp como una cadena
     const timestampString = time;
@@ -211,7 +236,7 @@ export default function ProjectsDetailsPage({ params }) {
             Agregar Usuario
           </button><button
             className="bg-blue-400 hover:bg-blue-500 text-white font-bold py-2 px-4 rounded mb-2"
-            // onClick={}
+            onClick={handleOpenUnassignModal}
           >
               Desasignar Usuario
             </button>
@@ -273,6 +298,16 @@ export default function ProjectsDetailsPage({ params }) {
           users={usersAll}
           projectId={project_id}
         />
+        {isUnassignModalOpen && (
+                // Aquí deberías agregar el modal de desasignación de usuario
+                <UnassignUserModal
+                    isOpen={isUnassignModalOpen}
+                    onClose={handleCloseUnassignModal}
+                    onUnassign={handleUnassignUser}
+                    users={users}
+                    projectId={project_id}
+                />
+            )}
       </div>
     </div>
   );

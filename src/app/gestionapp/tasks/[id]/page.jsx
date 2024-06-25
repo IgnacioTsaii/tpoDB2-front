@@ -21,6 +21,8 @@ import PostActiviy from "@/actions/activities/postActivity";
 import PutActiviy from "@/actions/activities/putActivity";
 import postComment from "@/actions/comments/postComment";
 
+
+
 export default function TaskPage({ params }) {
     const task_id = params.id;
 
@@ -126,7 +128,7 @@ export default function TaskPage({ params }) {
             alert("Error al asignar usuario: " + error.message);
         }
     };
-
+    
     const handleOpenAssignModal = () => {
         setIsAssignModalOpen(true);
     };
@@ -149,9 +151,9 @@ export default function TaskPage({ params }) {
         <div className="container mx-auto px-4 py-8">
             <h1 className="text-3xl font-bold mb-4">{task.name}</h1>
             <div className="grid grid-cols-2 gap-4">
-                <div className="bg-white shadow-md rounded-md p-6">
-                    <p className="mb-4 text-gray-700">{task.description}</p>
-                    <p className="mb-4 text-gray-700">
+                <div class Name="bg-white shadow-md rounded-md p-6">
+                    <p cla ssName="mb-4 text-gray-700">{task.description}</p>
+                    <p cla ssName="mb-4 text-gray-700">
                         <strong>Nivel de Habilidad:</strong> {task.skillLevel}
                     </p>
                     <div className="mb-4 flex items-center text-gray-700">
@@ -262,6 +264,7 @@ export default function TaskPage({ params }) {
                     taskId={task.task_id}
                 />
             )}
+            
         </div>
     );
 }

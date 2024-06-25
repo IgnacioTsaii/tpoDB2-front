@@ -203,12 +203,19 @@ export default function ProjectsDetailsPage({ params }) {
       <div className="bg-white shadow-md rounded-md p-6">
         <h2 className="text-2xl font-bold mb-4 text-gray-700">Usuarios Asignados</h2>
       {isAdmin && (
+          <>
           <button
             className="bg-green-400 hover:bg-green-500 text-white font-bold py-2 px-4 rounded mb-2"
             onClick={handleOpenUserModal}
           >
             Agregar Usuario
-          </button>
+          </button><button
+            className="bg-blue-400 hover:bg-blue-500 text-white font-bold py-2 px-4 rounded mb-2"
+            // onClick={}
+          >
+              Desasignar Usuario
+            </button>
+          </>
       )}
           <ul>
             {users.map((user) => (
@@ -241,6 +248,7 @@ export default function ProjectsDetailsPage({ params }) {
             >
               Crear Tarea
             </button>
+
           )}
         </div>
         <div>

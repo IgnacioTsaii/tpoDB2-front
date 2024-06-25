@@ -4,14 +4,21 @@ import getskillLevels from "@/actions/utils/getSkillLevels";
 
 
 export default function FormEditTask({ task, onClose, onSave }) {
+  const formatDate = (dateArray) => {
+    if (!Array.isArray(dateArray) || dateArray.length !== 3) {
+      return ""; // Retorna cadena vacía si el formato no es válido
+    }
+    const [year, month, day] = dateArray;
+    return `${year}-${month.toString().padStart(2, "0")}-${day.toString().padStart(2, "0")}`;
+  };
   const [formData, setFormData] = useState({
     id: task.task_id,
     name: task.name,
     description: task.description,
     project: task.project.projectId,
     skillLevel: task.skillLevel,
-    startDate: task.start_date, // Ajuste del formato
-    endDate: task.end_date,
+    startDate: formatDate(task.start_date), // Ajuste del formato
+    endDate: formatDate(task.end_date),
     status: task.status,
   });
   const [skillLevels, setSkillLevels] = useState([]);

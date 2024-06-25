@@ -5,21 +5,26 @@ export default function FormEditProject({ project, onSubmit,handleModalClose }) 
     projectId: project.projectId,
     name: project.name,
     description: project.description,
-    startDate: project.startDate,
-    endDate: project.endDate,
-    status: project.status, // Asegurando que status sea un string
-    weeklyHours: project.weeklyHours, // Asegurando que weeklyHours sea un string
+    startDate: "", // Inicializar como string vacío
+    endDate: "", // Inicializar como string vacío
+    status: project.status.toString(), // Convertir a string
+    weeklyHours: project.weeklyHours.toString(), // Convertir a string
   });
 
   useEffect(() => {
+    // Convertir las fechas de arrays a strings YYYY-MM-DD
+    const formattedStartDate = formatDate(project.startDate);
+    const formattedEndDate = formatDate(project.endDate);
+
+    // Actualizar el estado cuando cambia el proyecto
     setFormData({
       projectId: project.projectId,
       name: project.name,
       description: project.description,
-      startDate: project.startDate,
-      endDate: project.endDate,
-      status: project.status,
-      weeklyHours: project.weeklyHours,
+      startDate: formattedStartDate,
+      endDate: formattedEndDate,
+      status: project.status.toString(),
+      weeklyHours: project.weeklyHours.toString(),
     });
   }, [project]);
 
@@ -27,8 +32,7 @@ export default function FormEditProject({ project, onSubmit,handleModalClose }) 
     const { name, value } = e.target;
     setFormData((prevState) => ({
       ...prevState,
-      [name]:
-        name === "start_date" || name === "end_date" ? value : value,
+      [name]: value,
     }));
   };
 
@@ -37,6 +41,14 @@ export default function FormEditProject({ project, onSubmit,handleModalClose }) 
     onSubmit(formData); // Llamar a la función onSubmit pasando los datos actualizados
   };
 
+  // Función para formatear fecha de array a YYYY-MM-DD
+  const formatDate = (dateArray) => {
+    if (!Array.isArray(dateArray) || dateArray.length !== 3) {
+      return ""; // Retorna cadena vacía si el formato no es válido
+    }
+    const [year, month, day] = dateArray;
+    return `${year}-${month.toString().padStart(2, "0")}-${day.toString().padStart(2, "0")}`;
+  };
   return (
     <form
       onSubmit={handleSubmit}

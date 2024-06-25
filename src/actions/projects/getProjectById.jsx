@@ -11,12 +11,9 @@ export default async function getProjectById(Id) {
       `http://localhost:8081/projects/${projectId}`,
       {
         method: "GET",
-        headers: {
-          "Content-Type": "application/json",
           headers: {
             "Content-Type": "application/json",
             "Authorization": `Bearer ${token}`,
-        },
         },
       }
     );

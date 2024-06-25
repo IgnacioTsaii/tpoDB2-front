@@ -28,7 +28,7 @@ export default function AssignUserModal({ isOpen, onClose, onAssign, users = [],
             value={selectedUser}
             onChange={handleSelectUser}
           >
-            <option value="">Seleccione un Usuario</option>
+            <option value="null">Seleccione un Usuario</option>
             {users.map((user) => (
               <option key={user.id} value={user.id}>
                 {user.firstname} {user.lastname}

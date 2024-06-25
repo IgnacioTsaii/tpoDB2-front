@@ -28,7 +28,7 @@ export default function TaskList({ tasks, isAdmin, handleEdit, handleDelete }) {
         <div key={task.task_id} className="p-4 border rounded shadow-md">
           <p className="text-xl font-bold">{task.name}</p>
           <p>{task.description}</p>
-          <p>Skill Level: {task.skillLevel}</p>
+          <p>Skill Level:<strong> {task.skillLevel}</strong> </p>
           {/* resaltar el uduario asignado */}
 
           <p>usuario asignado: <strong>{task.user.name}</strong></p>

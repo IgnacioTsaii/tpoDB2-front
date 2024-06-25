@@ -1,7 +1,7 @@
 "use client";
-import Link from "next/link";
-import React, { useState } from "react";
 import EditTaskModal from "@/components/modals/task/EditTaskModal";
+import Link from "next/link";
+import { useState } from "react";
 
 export default function TaskList({ tasks, isAdmin, handleEdit, handleDelete }) {
   const [selectedTask, setSelectedTask] = useState(null);
@@ -31,7 +31,7 @@ export default function TaskList({ tasks, isAdmin, handleEdit, handleDelete }) {
           <p>Skill Level:<strong> {task.skillLevel}</strong> </p>
           {/* resaltar el uduario asignado */}
 
-          <p>usuario asignado: <strong>{task.user.name}</strong></p>
+          <p>usuario asignado: <strong>{task.user ? task.user.name : 'No asignado'}</strong></p>
 
           <div className="flex justify-end mt-4 space-x-2">
             {isAdmin && (

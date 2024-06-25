@@ -26,9 +26,12 @@ export default function TaskList({ tasks, isAdmin, handleEdit, handleDelete }) {
     <div className="grid grid-cols-1 gap-4">
       {tasks.map((task) => (
         <div key={task.task_id} className="p-4 border rounded shadow-md">
-          <p className="text-lg font-bold">{task.name}</p>
+          <p className="text-xl font-bold">{task.name}</p>
           <p>{task.description}</p>
           <p>Skill Level: {task.skillLevel}</p>
+          {/* resaltar el uduario asignado */}
+
+          <p>usuario asignado: <strong>{task.user.name}</strong></p>
 
           <div className="flex justify-end mt-4 space-x-2">
             {isAdmin && (

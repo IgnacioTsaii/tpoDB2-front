@@ -183,27 +183,38 @@ export default function TaskPage({ params }) {
                 </div>
 
                 {isAdmin && (
-                    
-                        <div className="bg-white shadow-md rounded-md p-6 flex flex-col justify-between">
-                            <div className="mb-4">
-                                <h2 className="text-xl font-bold mb-2 text-gray-700">
-                                    Asignación de Usuario
-                                </h2>
-                                {task.user ? (
-                                    <button
-                                        onClick={handleOpenAssignModal}
-                                        className="bg-blue-400 hover:bg-blue-600 text-white font-bold py-1 px-2 rounded mt-2">
-                                        Reasignar
-                                    </button>
-                                ) : (
-                                    <button
-                                        onClick={handleOpenAssignModal}
-                                        className="bg-green-400 hover:bg-green-600 text-white font-bold py-1 px-2 rounded mt-2">
-                                        Asignar
-                                    </button>
-                                )}
-                            </div>
+                    <div className="bg-white shadow-md rounded-md p-6 flex flex-col justify-between">
+                        <div className="mb-4">
+                            <h2 className="text-xl font-bold mb-2 text-gray-700">
+                                Asignación de Usuario
+                            </h2>
+                            {task.user ? (
+                                <button
+                                    onClick={handleOpenAssignModal}
+                                    className="bg-blue-400 hover:bg-blue-600 text-white font-bold py-1 px-2 rounded mt-2">
+                                    Reasignar
+                                </button>
+                            ) : (
+                                <button
+                                    onClick={handleOpenAssignModal}
+                                    className="bg-green-400 hover:bg-green-600 text-white font-bold py-1 px-2 rounded mt-2">
+                                    Asignar
+                                </button>
+                            )}
                         </div>
+                        <div>
+                            {task.user ? (
+                                <p className="text-sm text-gray-600">
+                                    Asignado a: {task.user.name}{" "}
+                                    {task.user.last_name}
+                                </p>
+                            ) : (
+                                <p className="text-sm text-gray-600">
+                                    Usuario no asignado
+                                </p>
+                            )}
+                        </div>
+                    </div>
                 )}
             </div>
 

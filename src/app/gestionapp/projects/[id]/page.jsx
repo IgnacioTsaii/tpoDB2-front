@@ -19,6 +19,7 @@ import postAssignProject from "@/actions/projects/postAssignProject";
 import ReportDownloadButton from "@/components/reports/ReportDownloadButton";
 import ReportDownloadButtonExcel from "@/components/reports/ReportDownloadButtonExcel";
 import UnassignUserModal from "@/components/modals/proyects/UnassingUserModal"
+import deleteProjectAssing from "@/actions/projects/deleteProjectAssing";
 
 // projecto completo
 
@@ -92,7 +93,7 @@ export default function ProjectsDetailsPage({ params }) {
     console.log("Asignar usuario ID:", userId, taskId);
     try {
       const response = await postAssignProject(userId, taskId);
-      alert("Usuario asignado correctamente: " + response.message);
+      alert(response.message);
       window.location.reload();
     } catch (error) {
       console.error("Error al asignar usuario:", error);
@@ -173,12 +174,10 @@ export default function ProjectsDetailsPage({ params }) {
 
     const handleUnassignUser = async (userId, projectId) => {
         try {
-            // Lógica para desasignar al usuario de la tarea
-            // Aquí deberías implementar la lógica específica para tu aplicación
-            console.log("Desasignando usuario con ID:", userId);
-            // Ejemplo: await unassignUserFromTask(task.task_id, userId);
-            alert(`Usuario desasignado correctamente de la tarea.`);
-            // Actualizar la vista después de desasignar el usuario si es necesario
+            const response = await deleteProjectAssing(userId, projectId);
+            console.log("Usuario desasignado:", response);
+            alert(response.message);
+            window.location.reload();
         } catch (error) {
             console.error("Error al desasignar usuario:", error);
             alert("Error al desasignar usuario: " + error.message);

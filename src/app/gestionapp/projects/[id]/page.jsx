@@ -223,7 +223,7 @@ export default function ProjectsDetailsPage({ params }) {
         <ul>
           {users.map((user) => (
             <li key={user.id} className="mb-2 text-gray-700">
-              {user.firstname} {user.lastnames}
+              {user.firstname} {user.lastname}
             </li>
           ))}
         </ul>

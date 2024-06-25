@@ -1,20 +1,24 @@
 // Importar useState y getPdfReport
-import React, { useState } from 'react';
-// import getPdfReport from '@/actions/reports/getPdfReport';
+import React, { useEffect, useState } from 'react';
+import decodingToken from '@/actions/utils/decodingToken';
 
 // Definir el componente funcional ReportDownloadButton
 export default function ReportDownloadButton({ projectId }) {
     // Estado para manejar la descarga y el estado del botón
     const [downloading, setDownloading] = useState(false);
 
+    
     // Función para manejar la descarga del PDF
     const handleDownload = async () => {
         try {
+            // Obtener el token de acceso del usuario autenticado
+            const data = await decodingToken();
             setDownloading(true);
             const response = await fetch(`http://localhost:8081/reports/pdf/${projectId}`, {
                 method: 'GET',
                 headers: {
                     // No necesitas Content-Type ni Authorization headers para descargar un archivo PDF
+                    'Authorization': `Bearer ${data.token}`
                 },
             });
 

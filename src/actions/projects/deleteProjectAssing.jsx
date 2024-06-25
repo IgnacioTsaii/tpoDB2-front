@@ -4,7 +4,7 @@ import { cookies } from "next/headers";
 export default async function deleteProjectAssing(userId,projectId) {
     const cookieStore = cookies();
     const token = cookieStore.get("access_token")?.value || "";
-    // convierto el id a int
+    // convierto el any a int
     const id = parseInt(userId);
     const project_id = parseInt(projectId);
     console.log("user_id:", id);

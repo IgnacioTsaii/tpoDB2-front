@@ -1,6 +1,6 @@
 // Importar useState y getPdfReport
 import React, { useState } from 'react';
-import getExcelReport from '@/actions/reports/getExcelReport'; // Asegúrate de tener una función similar para obtener el reporte Excel
+import decodingToken from '@/actions/utils/decodingToken';
 
 // Definir el componente funcional ReportDownloadButton
 export default function ReportDownloadButton({ projectId }) {
@@ -10,11 +10,13 @@ export default function ReportDownloadButton({ projectId }) {
     // Función para manejar la descarga del Excel
     const handleDownload = async () => {
         try {
+            // Obtener el token de acceso del usuario autenticado
+            const data = await decodingToken();
             setDownloading(true);
             const response = await fetch(`http://localhost:8081/reports/excel/${projectId}`, {
                 method: 'GET',
                 headers: {
-                    // No necesitas Content-Type ni Authorization headers para descargar un archivo Excel
+                    'Authorization': `Bearer ${data.token}`
                 },
             });
 

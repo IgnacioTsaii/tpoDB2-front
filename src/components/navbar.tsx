@@ -51,20 +51,20 @@ export default function Navbar() {
             </Link>
             <div className="hidden md:flex md:ml-10">
               <div className="flex items-baseline space-x-4">
-                {isAdmin && (
-                  <Link
-                    href="/gestionapp/empleado"
-                    className="px-3 py-2 rounded-md text-md font-medium text-gray-300 hover:text-white hover:bg-gray-700 transition duration-300"
-                  >
-                    Gestión de empleados
-                  </Link>
-                )}
                 <Link
                   href="/gestionapp/projects"
                   className="px-3 py-2 rounded-md text-md font-medium text-gray-300 hover:text-white hover:bg-gray-700 transition duration-300"
-                >
+                  >
                   Proyectos
                 </Link>
+                  {isAdmin && (
+                    <Link
+                      href="/gestionapp/empleado"
+                      className="px-3 py-2 rounded-md text-md font-medium text-gray-300 hover:text-white hover:bg-gray-700 transition duration-300"
+                    >
+                      Gestión de empleados
+                    </Link>
+                  )}
               </div>
             </div>
           </div>

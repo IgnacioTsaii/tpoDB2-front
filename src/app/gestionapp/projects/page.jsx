@@ -7,9 +7,11 @@ import Loader from "@/components/Loader";
 import getallProjects from "@/actions/projects/getallProjects";
 import deleteProject from "@/actions/projects/deleteProject";
 import putProject from "@/actions/projects/putProject";
+import getProjectsByUserId from "@/actions/projects/getProjectsByUserId";
 
 export default function ProjectsPage() {
     const [isAdmin, setIsAdmin] = useState(true);
+    const [userId, setUserId] = useState("")
     const [selectedProject, setSelectedProject] = useState(null);
     const [showEditModal, setShowEditModal] = useState(false);
     const [projects, setProjects] = useState([]);
@@ -20,11 +22,13 @@ export default function ProjectsPage() {
             console.log(decodedToken);
             if (decodedToken.userType === "Admin") {
                 setIsAdmin(true);
-            } else {
+                const projects = await getallProjects();
+                setProjects(projects);
+            } else{
                 setIsAdmin(false);
             }
+            setUserId(decodedToken.userId);
         };
-
         fetchData();
 
         // si el usuario es admin, se le permite ver toda la lista de los proyectos
@@ -32,6 +36,10 @@ export default function ProjectsPage() {
         const response2 = async () => {
             if (isAdmin) {
                 const projects = await getallProjects();
+                setProjects(projects);
+            }
+            if (!isAdmin) {
+                const projects = await getProjectsByUserId(userId);
                 setProjects(projects);
             }
         };

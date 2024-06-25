@@ -134,7 +134,15 @@ export default function TaskPage({ params }) {
   const handleCloseAssignModal = () => {
     setIsAssignModalOpen(false);
   };
-
+  const formatDate = (time) =>{
+    // Obtener el timestamp como una cadena
+    const timestampString = time;
+    // Crear un objeto Date a partir del timestamp
+    const dateObject = new Date(timestampString);
+    // Formatear la fecha y hora en formato legible
+    const formattedTimestamp = `${dateObject.toLocaleDateString()}`;
+    return formattedTimestamp;
+  }
   if (!task) return <Loader />;
 
   return (
@@ -153,10 +161,10 @@ export default function TaskPage({ params }) {
             </span>
           </div>
           <p className="mb-4 text-gray-700">
-            <strong>Fecha de Inicio:</strong> {task.start_date}
+            <strong>Fecha de Inicio:</strong> {formatDate(task.start_date)}
           </p>
           <p className="mb-4 text-gray-700">
-            <strong>Fecha de Finalización:</strong> {task.end_date}
+            <strong>Fecha de Finalización:</strong> {formatDate(task.end_date)}
           </p>
         </div>
         <div className="bg-white shadow-md rounded-md p-6 flex flex-col justify-between">

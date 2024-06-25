@@ -43,7 +43,6 @@ const LoginPage: React.FC = () => {
             } else {
                 try {
                     setError("");
-                    alert("Logged in successfully");
                     router.push("/gestionapp/projects");
                 } catch (error) {
                     console.error("Error:", error);

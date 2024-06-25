@@ -160,29 +160,7 @@ export default function ProjectsDetailsPage({ params }) {
       alert("Error al eliminar tarea. Por favor, intenta nuevamente.");
     }
   };
-
-  // TODO
-  const handleGenerateProjectReportPdf = async (projectId) => {
-    try {
-      console.log("Generando reporte del proyecto PDF...");
-
-      // Llama a la función para obtener el PDF del servidor
-      const response = await getPdfReport(projectId);
-
-      // Manejo adicional después de descargar el PDF si es necesario
-      console.log("Reporte del proyecto PDF generado correctamente.");
-    } catch (error) {
-      console.error("Error al generar el reporte del proyecto PDF:", error);
-      alert(
-        "Error al generar el reporte del proyecto PDF. Inténtalo de nuevo más tarde."
-      );
-    }
-  };
-
-  // TODO
-  const handleGenerateProjectReportExcel = async () => {
-    // Lógica para generar el reporte del proyecto excel
-  };
+  
 
   if (loading) return <Loader />;
 
@@ -213,24 +191,23 @@ export default function ProjectsDetailsPage({ params }) {
 
       {/* Usuarios */}
       <div className="bg-white shadow-md rounded-md p-6">
-        <h2 className="text-2xl font-bold mb-4 text-gray-700">Usuarios</h2>
-        <button
-          className="bg-green-400 hover:bg-green-500 text-white font-bold py-2 px-4 rounded mb-2"
-          onClick={handleOpenUserModal}
-        >
-          Agregar Usuario
-        </button>
-        <ul>
-          {users.map((user) => (
-            <li key={user.id} className="mb-2 text-gray-700">
-              {user.firstname} {user.lastname}
-            </li>
-          ))}
-        </ul>
-      </div>
-
-      {/* Reportes */}
-      {/* Reportes */}
+        <h2 className="text-2xl font-bold mb-4 text-gray-700">Usuarios Asignados</h2>
+      {isAdmin && (
+          <button
+            className="bg-green-400 hover:bg-green-500 text-white font-bold py-2 px-4 rounded mb-2"
+            onClick={handleOpenUserModal}
+          >
+            Agregar Usuario
+          </button>
+      )}
+          <ul>
+            {users.map((user) => (
+              <li key={user.id} className="mb-2 text-gray-700">
+                {user.firstname} {user.lastname}
+              </li>
+            ))}
+          </ul>
+        </div>
       <div className="bg-white shadow-md rounded-md p-6">
         <h2 className="text-2xl font-bold mb-4 text-gray-700 text-center">
           Reportes

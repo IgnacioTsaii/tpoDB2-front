@@ -31,7 +31,18 @@ export default function TaskList({ tasks, isAdmin, handleEdit, handleDelete }) {
           <p>Skill Level:<strong> {task.skillLevel}</strong> </p>
           {/* resaltar el uduario asignado */}
 
-          <p>usuario asignado: <strong>{task.user.name}</strong></p>
+          <div>
+                        {task.user ? (
+                            <p className="text-sm text-gray-600">
+                                Asignado a: {task.user.name}{" "}
+                                {task.user.last_name}
+                            </p>
+                        ) : (
+                            <p className="text-sm text-gray-600">
+                                Usuario no asignado
+                            </p>
+                        )}
+                    </div>
 
           <div className="flex justify-end mt-4 space-x-2">
             {isAdmin && (

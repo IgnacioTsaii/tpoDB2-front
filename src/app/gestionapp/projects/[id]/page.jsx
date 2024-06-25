@@ -184,6 +184,16 @@ export default function ProjectsDetailsPage({ params }) {
     // Lógica para generar el reporte del proyecto excel
   };
 
+  const formatDate = (time) =>{
+    // Obtener el timestamp como una cadena
+    const timestampString = time;
+    // Crear un objeto Date a partir del timestamp
+    const dateObject = new Date(timestampString);
+    // Formatear la fecha y hora en formato legible
+    const formattedTimestamp = `${dateObject.toLocaleDateString()}`;
+    return formattedTimestamp;
+  }
+
   if (loading) return <Loader />;
 
   return (
@@ -195,10 +205,10 @@ export default function ProjectsDetailsPage({ params }) {
         </div>
         <p className="mb-4 text-gray-700">{project.description}</p>
         <p className="mb-4 text-gray-700">
-          <strong>Start Date:</strong> {project.startDate}
+          <strong>Start Date:</strong> {formatDate(project.startDate)}
         </p>
         <p className="mb-4 text-gray-700">
-          <strong>End Date:</strong> {project.endDate}
+          <strong>End Date:</strong> {formatDate(project.endDate)}
         </p>
         <div className="mb-4 flex items-center text-gray-700">
           <strong>Status:</strong>
